@@ -1,0 +1,917 @@
+package flash.display;
+
+
+import flash.filters.BitmapFilter;
+import flash.geom.ColorTransform;
+import flash.geom.Matrix;
+import flash.geom.Point;
+import flash.geom.Rectangle;
+import flash.utils.ByteArray;
+import flash.Lib;
+import haxe.io.Bytes;
+
+
+@:autoBuild(pazu.Assets.embedBitmap())
+class BitmapData implements IBitmapDrawable {
+	
+	
+	@:deprecated public inline static var CLEAR = 0x00000000;
+	@:deprecated public inline static var BLACK = 0xFF000000;
+	@:deprecated public inline static var WHITE = 0xFF000000;
+	@:deprecated public inline static var RED = 0xFFFF0000;
+	@:deprecated public inline static var GREEN = 0xFF00FF00;
+	@:deprecated public inline static var BLUE = 0xFF0000FF;
+	@:deprecated public inline static var PNG = "png";
+	@:deprecated public inline static var JPG = "jpg";
+	public inline static var TRANSPARENT = 0x0001;
+	public inline static var HARDWARE = 0x0002;
+	public inline static var FORMAT_8888 = 0;
+	public inline static var FORMAT_4444 = 1; //16 bit with alpha channel
+	public inline static var FORMAT_565 = 2;  //16 bit 565 without alpha
+	
+	public var height (get, null):Int;
+	public var rect (get, null):Rectangle;
+	public var transparent (get, null):Bool;
+	public var width (get, null):Int;
+	
+	public var __handle:Dynamic;
+	private var __transparent:Bool;
+	
+	
+	public function new (width:Int, height:Int, transparent:Bool = true, fillColor:Int = 0xFFFFFFFF, gpuMode:Null<Bool> = null) {
+		
+		__transparent = transparent;
+		
+		if (width < 1 || width < 1) {
+			
+			__handle = null;
+			
+		} else {
+			
+			var flags = HARDWARE;
+			if (transparent) flags |= TRANSPARENT;
+			
+			__handle = nme_bitmap_data_create (width, height, flags, fillColor & 0xFFFFFF, fillColor >>> 24, gpuMode);
+			
+		}
+		
+	}
+	
+	
+	public function applyFilter (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, filter:BitmapFilter):Void {
+		
+		nme_bitmap_data_apply_filter (__handle, sourceBitmapData.__handle, sourceRect, destPoint, filter);
+		
+	}
+	
+	
+	public function clear (color:Int):Void {
+		
+		nme_bitmap_data_clear (__handle, color);
+		
+	}
+	
+	
+	public function clone ():BitmapData {
+		
+		var bitmapData = new BitmapData (0, 0, transparent);
+		bitmapData.__handle = nme_bitmap_data_clone (__handle);
+		return bitmapData;
+		
+	}
+	
+	
+	public function colorTransform (rect:Rectangle, colorTransform:ColorTransform):Void {
+		
+		nme_bitmap_data_color_transform (__handle, rect, colorTransform);
+		
+	}
+	
+	
+	public function copyChannel (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, sourceChannel:Int, destChannel:Int):Void {
+		
+		nme_bitmap_data_copy_channel (sourceBitmapData.__handle, sourceRect, __handle, destPoint, sourceChannel, destChannel);
+		
+	}
+	
+	
+	public function copyPixels (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, alphaBitmapData:BitmapData = null, alphaPoint:Point = null, mergeAlpha:Bool = false):Void {
+		
+		nme_bitmap_data_copy (sourceBitmapData.__handle, sourceRect, __handle, destPoint, mergeAlpha);
+		
+	}
+	
+	
+	@:deprecated public static inline function createColor (rgb:Int, alpha:Int = 0xFF):Int {
+		
+		return rgb | (alpha << 24);
+		
+	}
+	
+	
+	#if cpp
+	public function createHardwareSurface ():Void {
+		
+		nme_bitmap_data_create_hardware_surface (__handle);
+		
+	}
+	
+	
+	public function destroyHardwareSurface ():Void {
+		
+		nme_bitmap_data_destroy_hardware_surface (__handle);
+		
+	}
+	#end
+	
+	
+	public function dispose ():Void {
+		
+		__handle = null;
+		
+	}
+	
+	
+	public function draw (source:IBitmapDrawable, matrix:Matrix = null, colorTransform:ColorTransform = null, blendMode:BlendMode = null, clipRect:Rectangle = null, smoothing:Bool = false):Void {
+		
+		source.__drawToSurface (__handle, matrix, colorTransform, Std.string (blendMode), clipRect, smoothing);
+		
+	}
+	
+	
+	public function dumpBits ():Void {
+		
+		nme_bitmap_data_dump_bits (__handle);
+		
+	}
+	
+	
+	public function encode (format:String, quality:Float = 0.9):ByteArray {
+		
+		return nme_bitmap_data_encode (__handle, format, quality);
+		
+	}
+	
+	
+	@:deprecated public static inline function extractAlpha (argb:Int):Int {
+		
+		return argb >>> 24;
+		
+	}
+	
+	
+	@:deprecated public static inline function extractColor (argb:Int):Int {
+		
+		return argb & 0xFFFFFF;
+		
+	}
+	
+	
+	public function fillRect (rect:Rectangle, color:Int):Void {
+		
+		nme_bitmap_data_fill (__handle, rect, color & 0xFFFFFF, color >>> 24);
+		
+	}
+	
+	
+	public function fillRectEx (rect:Rectangle, color:Int, alpha:Int = 0xFF):Void {
+		
+		nme_bitmap_data_fill (__handle, rect, color, alpha);
+		
+	}
+	
+	
+	public function floodFill (x:Int, y:Int, color:Int):Void {
+		
+		nme_bitmap_data_flood_fill (__handle, x, y, color);
+		
+	}
+	
+	
+	public function generateFilterRect (sourceRect:Rectangle, filter:BitmapFilter):Rectangle {
+		
+		var result = new Rectangle ();
+		nme_bitmap_data_generate_filter_rect (sourceRect, filter, result);
+		return result;
+		
+	}
+	
+	
+	public function getColorBoundsRect (mask:Int, color:Int, findColor:Bool = true):Rectangle {
+		
+		var result = new Rectangle ();
+		nme_bitmap_data_get_color_bounds_rect (__handle, mask, color, findColor, result);
+		return result;
+		
+	}
+	
+	
+	public function getPixel (x:Int, y:Int):Int {
+		
+		return nme_bitmap_data_get_pixel (__handle, x, y);
+		
+	}
+	
+	
+	public function getPixel32 (x:Int, y:Int):Int {
+		
+		return nme_bitmap_data_get_pixel32 (__handle, x, y);
+		
+	}
+	
+	
+	public function getPixels (rect:Rectangle):ByteArray {
+		
+		var result:ByteArray = nme_bitmap_data_get_pixels (__handle, rect);
+		if (result != null) result.position = result.length;
+		return result;
+		
+	}
+	
+	
+	public inline static function getRGBAPixels (bitmapData:BitmapData):ByteArray {
+		
+		var data = bitmapData.getPixels (new Rectangle (0, 0, bitmapData.width, bitmapData.height));
+		var size = bitmapData.width * bitmapData.height;
+		
+		for (i in 0...size) {
+			
+			var alpha = data[i * 4];
+			var red = data[i * 4 + 1];
+			var green = data[i * 4 + 2];
+			var blue = data[i * 4 + 3];
+			
+			data[i * 4] = red;
+			data[i * 4 + 1] = green;
+			data[i * 4 + 2] = blue;
+			data[i * 4 + 3] = alpha;
+			
+		}
+		
+		return data;
+		
+	}
+	
+	
+	public function getVector (rect:Rectangle):Array<Int> {
+		
+		var pixels = Std.int (rect.width * rect.height);
+		if (pixels < 1) return [];
+		
+		var result = new Array<Int> ();
+		result[pixels - 1] = 0;
+		
+		#if cpp
+		nme_bitmap_data_get_array (__handle, rect, result);
+		#else
+		var bytes:ByteArray = nme_bitmap_data_get_pixels (__handle, rect);
+		bytes.position = 0;
+		for (i in 0...pixels) result[i] = bytes.readInt ();
+		#end
+		
+		return result;
+		
+	}
+	
+	
+	public static function load (filename:String, format:Int = 0):BitmapData {
+		
+		var result = new BitmapData (0, 0);
+		result.__handle = nme_bitmap_data_load (filename, format);
+		return result;
+		
+	}
+	
+	
+	public static function loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):BitmapData {
+		
+		var result = new BitmapData (0, 0);
+		result.__loadFromBytes (bytes, rawAlpha);
+		return result;
+		
+	}
+	
+	
+	public static function loadFromHaxeBytes (bytes:Bytes, rawAlpha:Bytes = null):BitmapData {
+		
+		return loadFromBytes (ByteArray.fromBytes (bytes), rawAlpha == null ? null : ByteArray.fromBytes (rawAlpha));
+		
+	}
+	
+	
+	public function lock ():Void {
+		
+		// Handled internally...
+		
+	}
+	
+	
+	public function noise (randomSeed:Int, low:Int = 0, high:Int = 255, channelOptions:Int = 7, grayScale:Bool = false):Void {
+		
+		nme_bitmap_data_noise (__handle, randomSeed, low, high, channelOptions, grayScale);
+		
+	}
+	
+
+	public function perlinNoise (baseX:Float, baseY:Float, numOctaves:Int, randomSeed:Int, stitch:Bool, fractalNoise:Bool, channelOptions:Int = 7, grayScale:Bool = false, ?offsets:Array<Point>):Void {
+		
+		var perlin = new OptimizedPerlin (randomSeed, numOctaves);
+		perlin.fill (this, baseX, baseY, 0);
+		
+	}
+	
+	
+	@:deprecated private static inline function sameValue (a:Int, b:Int):Bool {
+		
+		return a == b;
+		
+	}
+	
+	
+	public function scroll (x:Int, y:Int):Void {
+		
+		nme_bitmap_data_scroll (__handle, x, y);
+		
+	}
+	
+	
+	public function setFlags (flags:Int):Void {
+		
+		// Used for optimization
+		nme_bitmap_data_set_flags (__handle, flags);
+		
+	}
+	
+	
+	public function setFormat (format:Int):Void {
+		
+		nme_bitmap_data_set_format (__handle, format);
+		
+	}
+	
+	
+	public function setPixel (x:Int, y:Int, color:Int):Void {
+		
+		nme_bitmap_data_set_pixel (__handle, x, y, color);
+		
+	}
+	
+	
+	public function setPixel32 (x:Int, y:Int, color:Int):Void {
+		
+		nme_bitmap_data_set_pixel32 (__handle, x, y, color);
+		
+	}
+	
+	
+	public function setPixels (rect:Rectangle, pixels:ByteArray):Void {
+		
+		var size = Std.int (rect.width * rect.height * 4);
+		pixels.checkData (Std.int (size));
+		nme_bitmap_data_set_bytes (__handle, rect, pixels, pixels.position);
+		pixels.position += size;
+		
+	}
+	
+	
+	public function setVector (rect:Rectangle, pixels:Array<Int>):Void {
+		
+		var count = Std.int (rect.width * rect.height);
+		if (pixels.length < count) return;
+		
+		#if cpp
+		nme_bitmap_data_set_array (__handle, rect, pixels);
+		#else
+		var bytes = new ByteArray ();
+		
+		for (i in 0...count) {
+			
+			bytes.writeInt (pixels[i]);
+			
+		}
+		
+		nme_bitmap_data_set_bytes (__handle, rect, bytes, 0);
+		#end
+		
+	}
+	
+	
+	public function threshold (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, operation:String, threshold:Int, color:Int = 0x00000000, mask:Int = 0xFFFFFFFF, copySource:Bool = false):Int {
+		
+		if (sourceBitmapData == this && sourceRect.equals(rect) && destPoint.x == 0 && destPoint.y == 0) {
+			
+			var hits = 0;
+			
+			threshold = __flipPixel (threshold);
+			color = __flipPixel (color);
+			
+			var memory = new ByteArray ();
+			memory.setLength ((width * height) * 4);
+			memory = getPixels (rect);
+			memory.position = 0;
+			Memory.select (memory);
+			
+			var thresholdMask:Int = cast threshold & mask;
+			
+			for (yy in 0...height) {
+				
+				var width_yy:Int = width * yy;
+				
+				for (xx in 0...width) {
+					
+					var position:Int = (width_yy + xx) * 4;
+					var pixelValue = Memory.getI32 (position);
+					var pixelMask:Int = cast pixelValue & mask;
+					
+					var i = __ucompare (pixelMask, thresholdMask);
+					var test = false;
+					
+					if (operation == "==") { test = (i == 0); }
+					else if (operation == "<") { test = (i == -1);}
+					else if (operation == ">") { test = (i == 1); }
+					else if (operation == "!=") { test = (i != 0); }
+					else if (operation == "<=") { test = (i == 0 || i == -1); }
+					else if (operation == ">=") { test = (i == 0 || i == 1); }
+					
+					if (test) {
+						
+						Memory.setI32 (position, color);
+						hits++;
+						
+					}
+					
+				}
+				
+			}
+			
+			memory.position = 0;
+			setPixels (rect, memory);
+			Memory.select (null);
+			return hits;
+			
+		} else {
+			
+			var sx = Std.int (sourceRect.x);
+			var sy = Std.int (sourceRect.y);
+			var sw = Std.int (sourceBitmapData.width);
+			var sh = Std.int (sourceBitmapData.height);
+			
+			var dx = Std.int (destPoint.x);
+			var dy = Std.int (destPoint.y);
+			
+			var bw:Int = width - sw - dx;
+			var bh:Int = height - sh - dy;
+			
+			var dw:Int = (bw < 0) ? sw + (width - sw - dx) : sw;
+			var dh:Int = (bw < 0) ? sh + (height - sh - dy) : sh;
+			
+			var hits = 0;
+			
+			threshold = __flipPixel (threshold);
+			color = __flipPixel (color);
+			
+			var canvasMemory = (sw * sh) * 4;
+			var sourceMemory = 0;
+			
+			if (copySource) {
+				
+				sourceMemory = (sw * sh) * 4;
+				
+			}
+			
+			var totalMemory = (canvasMemory + sourceMemory);
+			var memory = new ByteArray();
+			memory.setLength (totalMemory);
+			memory.position = 0;
+			var bitmapData = sourceBitmapData.clone ();
+			var pixels = bitmapData.getPixels (sourceRect);
+			memory.writeBytes (pixels);
+			memory.position = canvasMemory;
+			
+			if (copySource) {
+				
+				memory.writeBytes (pixels);
+				
+			}
+			
+			memory.position = 0;
+			Memory.select (memory);
+			
+			var thresholdMask:Int = cast threshold & mask;
+			
+			for (yy in 0...dh) {
+				
+				for (xx in 0...dw) {
+					
+					var position:Int = ((xx + sx) + (yy + sy) * sw) * 4;
+					var pixelValue = Memory.getI32 (position);
+					var pixelMask:Int = cast pixelValue & mask;
+					
+					var i = __ucompare (pixelMask, thresholdMask);
+					var test = false;
+					
+					if (operation == "==") { test = (i == 0); }
+					else if (operation == "<") { test = (i == -1);}
+					else if (operation == ">") { test = (i == 1); }
+					else if (operation == "!=") { test = (i != 0); }
+					else if (operation == "<=") { test = (i == 0 || i == -1); }
+					else if (operation == ">=") { test = (i == 0 || i == 1); }
+					
+					if (test) {
+						
+						Memory.setI32 (position, color);
+						hits++;
+						
+					} else if (copySource) {
+						
+						Memory.setI32 (position, Memory.getI32 (canvasMemory + position));
+						
+					}
+					
+				}
+				
+			}
+			
+			memory.position = 0;	
+			bitmapData.setPixels (sourceRect, memory);
+			copyPixels (bitmapData, bitmapData.rect, destPoint);
+			Memory.select (null);
+			return hits;
+			
+		}
+		
+	}
+	
+	
+	public function unlock (changeRect:Rectangle = null):Void {
+		
+		// Handled internally...
+		
+	}
+	
+	
+	public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
+		
+		nme_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
+		
+	}
+	
+	
+	private static inline function __flipPixel (pixel:Int):Int {
+		
+		return (pixel & 0xFF) << 24 | (pixel >>  8 & 0xFF) << 16 | (pixel >> 16 & 0xFF) <<  8 | (pixel >> 24 & 0xFF);
+		
+	}
+	
+	
+	private inline function __loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):Void {
+		
+		__handle = nme_bitmap_data_from_bytes (bytes, rawAlpha);
+		
+	}
+	
+	
+	static public function __ucompare (n1:Int, n2:Int) : Int {
+		
+		var tmp1 : Int;
+		var tmp2 : Int;
+		
+		tmp1 = (n1 >> 24) & 0x000000FF;
+		tmp2 = (n2 >> 24) & 0x000000FF;
+		
+		if (tmp1 != tmp2) {
+			
+			return (tmp1 > tmp2 ? 1 : -1);
+			
+		} else {
+			
+			tmp1 = (n1 >> 16) & 0x000000FF;
+			tmp2 = (n2 >> 16) & 0x000000FF;
+			
+			if (tmp1 != tmp2) {
+				
+				return (tmp1 > tmp2 ? 1 : -1);
+				
+			} else {
+				
+				tmp1 = (n1 >> 8) & 0x000000FF;
+				tmp2 = (n2 >> 8) & 0x000000FF;
+				
+				if (tmp1 != tmp2) {
+					
+					return (tmp1 > tmp2 ? 1 : -1);
+					
+				} else {
+					
+					tmp1 = n1 & 0x000000FF;
+					tmp2 = n2 & 0x000000FF;
+					
+					if (tmp1 != tmp2) {
+						
+						return (tmp1 > tmp2 ? 1 : -1);
+						
+					} else {
+						
+						return 0;
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+	// Getters & Setters
+	
+	
+	
+	
+	private function get_rect ():Rectangle { return new Rectangle (0, 0, width, height); }
+	private function get_width ():Int { return nme_bitmap_data_width (__handle); }
+	private function get_height ():Int { return nme_bitmap_data_height (__handle); }
+	private function get_transparent ():Bool { return __transparent; }
+	
+	
+	
+	
+	// Native Methods
+	
+	
+	
+	
+	private static var nme_bitmap_data_create = Lib.load ("nme", "nme_bitmap_data_create", -1);
+	private static var nme_bitmap_data_load = Lib.load ("nme", "nme_bitmap_data_load", 2);
+	private static var nme_bitmap_data_from_bytes = Lib.load ("nme", "nme_bitmap_data_from_bytes", 2);
+	private static var nme_bitmap_data_clear = Lib.load ("nme", "nme_bitmap_data_clear", 2);
+	private static var nme_bitmap_data_clone = Lib.load ("nme", "nme_bitmap_data_clone", 1);
+	private static var nme_bitmap_data_apply_filter = Lib.load ("nme", "nme_bitmap_data_apply_filter", 5);
+	private static var nme_bitmap_data_color_transform = Lib.load ("nme", "nme_bitmap_data_color_transform", 3);
+	private static var nme_bitmap_data_copy = Lib.load ("nme", "nme_bitmap_data_copy", 5);
+	private static var nme_bitmap_data_copy_channel = Lib.load ("nme", "nme_bitmap_data_copy_channel", -1);
+	private static var nme_bitmap_data_fill = Lib.load ("nme", "nme_bitmap_data_fill", 4);
+	private static var nme_bitmap_data_get_pixels = Lib.load ("nme", "nme_bitmap_data_get_pixels", 2);
+	private static var nme_bitmap_data_get_pixel = Lib.load ("nme", "nme_bitmap_data_get_pixel", 3);
+	private static var nme_bitmap_data_get_pixel32 = Lib.load ("nme", "nme_bitmap_data_get_pixel32", 3);
+	private static var nme_bitmap_data_get_pixel_rgba = Lib.load ("nme", "nme_bitmap_data_get_pixel_rgba", 3);
+	#if cpp
+	private static var nme_bitmap_data_get_array = Lib.load ("nme", "nme_bitmap_data_get_array", 3);
+	#end
+	private static var nme_bitmap_data_get_color_bounds_rect = Lib.load ("nme", "nme_bitmap_data_get_color_bounds_rect", 5);
+	private static var nme_bitmap_data_scroll = Lib.load ("nme", "nme_bitmap_data_scroll", 3);
+	private static var nme_bitmap_data_set_pixel = Lib.load ("nme", "nme_bitmap_data_set_pixel", 4);
+	private static var nme_bitmap_data_set_pixel32 = Lib.load ("nme", "nme_bitmap_data_set_pixel32", 4);
+	private static var nme_bitmap_data_set_pixel_rgba = Lib.load ("nme", "nme_bitmap_data_set_pixel_rgba", 4);
+	private static var nme_bitmap_data_set_bytes = Lib.load ("nme", "nme_bitmap_data_set_bytes", 4);
+	private static var nme_bitmap_data_set_format = Lib.load ("nme", "nme_bitmap_data_set_format", 2);
+	#if cpp
+	private static var nme_bitmap_data_set_array = Lib.load ("nme", "nme_bitmap_data_set_array", 3);
+	private static var nme_bitmap_data_create_hardware_surface = Lib.load ("nme", "nme_bitmap_data_create_hardware_surface", 1);
+	private static var nme_bitmap_data_destroy_hardware_surface = Lib.load ("nme", "nme_bitmap_data_destroy_hardware_surface", 1);
+	#end
+	private static var nme_bitmap_data_generate_filter_rect = Lib.load ("nme", "nme_bitmap_data_generate_filter_rect", 3);
+	private static var nme_render_surface_to_surface = Lib.load ("nme", "nme_render_surface_to_surface", -1);
+	private static var nme_bitmap_data_height = Lib.load ("nme", "nme_bitmap_data_height", 1);
+	private static var nme_bitmap_data_width = Lib.load ("nme", "nme_bitmap_data_width", 1);
+	private static var nme_bitmap_data_get_transparent = Lib.load ("nme", "nme_bitmap_data_get_transparent", 1);
+	private static var nme_bitmap_data_set_flags = Lib.load ("nme", "nme_bitmap_data_set_flags", 1);
+	private static var nme_bitmap_data_encode = Lib.load ("nme", "nme_bitmap_data_encode", 3);
+	private static var nme_bitmap_data_dump_bits = Lib.load ("nme", "nme_bitmap_data_dump_bits", 1);
+	private static var nme_bitmap_data_noise = Lib.load ("nme", "nme_bitmap_data_noise", -1);
+	private static var nme_bitmap_data_flood_fill = Lib.load ("nme", "nme_bitmap_data_flood_fill", 4);
+	
+	
+}
+
+
+class OptimizedPerlin {
+	
+	
+	private static var P = [
+		151,160,137,91,90,15,131,13,201,95,
+		96,53,194,233,7,225,140,36,103,30,69,
+		142,8,99,37,240,21,10,23,190,6,148,
+		247,120,234,75,0,26,197,62,94,252,
+		219,203,117,35,11,32,57,177,33,88,
+		237,149,56,87,174,20,125,136,171,
+		168,68,175,74,165,71,134,139,48,27,
+		166,77,146,158,231,83,111,229,122,
+		60,211,133,230,220,105,92,41,55,46,
+		245,40,244,102,143,54,65,25,63,161,
+		1,216,80,73,209,76,132,187,208,89,
+		18,169,200,196,135,130,116,188,159,
+		86,164,100,109,198,173,186,3,64,52,
+		217,226,250,124,123,5,202,38,147,118,
+		126,255,82,85,212,207,206,59,227,47,
+		16,58,17,182,189,28,42,223,183,170,
+		213,119,248,152,2,44,154,163,70,221,
+		153,101,155,167,43,172,9,129,22,39,
+		253,19,98,108,110,79,113,224,232,
+		178,185,112,104,218,246,97,228,251,
+		34,242,193,238,210,144,12,191,179,
+		162,241,81,51,145,235,249,14,239,
+		107,49,192,214,31,181,199,106,157,
+		184,84,204,176,115,121,50,45,127,4,
+		150,254,138,236,205,93,222,114,67,29,
+		24,72,243,141,128,195,78,66,215,61,
+		156,180,151,160,137,91,90,15,131,13,
+		201,95,96,53,194,233,7,225,140,36,
+		103,30,69,142,8,99,37,240,21,10,23,
+		190,6,148,247,120,234,75,0,26,197,
+		62,94,252,219,203,117,35,11,32,57,
+		177,33,88,237,149,56,87,174,20,125,
+		136,171,168,68,175,74,165,71,134,139,
+		48,27,166,77,146,158,231,83,111,229,
+		122,60,211,133,230,220,105,92,41,55,
+		46,245,40,244,102,143,54,65,25,63,
+		161,1,216,80,73,209,76,132,187,208,
+		89,18,169,200,196,135,130,116,188,
+		159,86,164,100,109,198,173,186,3,64,
+		52,217,226,250,124,123,5,202,38,147,
+		118,126,255,82,85,212,207,206,59,
+		227,47,16,58,17,182,189,28,42,223,
+		183,170,213,119,248,152,2,44,154,
+		163,70,221,153,101,155,167,43,172,9,
+		129,22,39,253,19,98,108,110,79,113,
+		224,232,178,185,112,104,218,246,97,
+		228,251,34,242,193,238,210,144,12,
+		191,179,162,241,81,51,145,235,249,
+		14,239,107,49,192,214,31,181,199,
+		106,157,184,84,204,176,115,121,50,
+		45,127,4,150,254,138,236,205,93,
+		222,114,67,29,24,72,243,141,128,
+		195,78,66,215,61,156,180
+	];
+
+	private var octaves:Int;
+
+	private var aOctFreq:Array<Float>; // frequency per octave
+	private var aOctPers:Array<Float>; // persistence per octave
+	private var fPersMax:Float;// 1 / max persistence
+
+	private var iXoffset:Float;
+	private var iYoffset:Float;
+	private var iZoffset:Float;
+
+	private var baseFactor:Float;
+	
+	
+	public function new (seed = 123, octaves = 4, falloff = 0.5) {
+		
+		baseFactor = 1 / 64;
+		seedOffset (seed);
+		octFreqPers (falloff);
+		
+	}
+	
+	
+	public function fill (bitmap:BitmapData, _x:Float, _y:Float, _z:Float, ?_):Void {
+		
+		var baseX:Float;
+		
+		baseX = _x * baseFactor + iXoffset;
+		_y = _y * baseFactor + iYoffset;
+		_z = _z * baseFactor + iZoffset;
+		
+		var width:Int = bitmap.width;
+		var height:Int = bitmap.height;
+		
+		var p = P;
+		var octaves = octaves;
+		var aOctFreq = aOctFreq;
+		var aOctPers = aOctPers;
+		
+		for (py in 0...height) {
+			
+			_x = baseX;
+			
+			for (px in 0...width) {
+				
+				var s = 0.;
+				
+				for (i in 0...octaves) {
+					
+					var fFreq = aOctFreq[i];
+					var fPers = aOctPers[i];
+					
+					var x = _x * fFreq;
+					var y = _y * fFreq;
+					var z = _z * fFreq;
+					
+					var xf = x - (x % 1);
+					var yf = y - (y % 1);
+					var zf = z - (z % 1);
+					
+					var X = Std.int (xf) & 255;
+					var Y = Std.int (yf) & 255;
+					var Z = Std.int (zf) & 255;
+					
+					x -= xf;
+					y -= yf;
+					z -= zf;
+					
+					var u = x * x * x * (x * (x*6 - 15) + 10);
+					var v = y * y * y * (y * (y*6 - 15) + 10);
+					var w = z * z * z * (z * (z*6 - 15) + 10);
+					
+					var A  =(p[X]) + Y;
+					var AA =(p[A]) + Z;
+					var AB =(p[A+1]) + Z;
+					var B  =(p[X+1]) + Y;
+					var BA =(p[B]) + Z;
+					var BB =(p[B+1]) + Z;
+					
+					var x1 = x - 1;
+					var y1 = y - 1;
+					var z1 = z - 1;
+					
+					var hash =(p[BB+1]) & 15;
+					var g1 = ((hash & 1) == 0 ?(hash < 8 ? x1 : y1) :(hash < 8 ? -x1 : -y1)) + ((hash & 2) == 0 ? hash < 4 ? y1 :( hash == 12 ? x1 : z1 ) : hash < 4 ? -y1 :( hash == 14 ? -x1 : -z1 ));
+					
+					hash =(p[AB+1]) & 15;
+					var g2 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z1 ) : hash<4 ? -y1 :( hash==14 ? -x : -z1 ));
+					
+					hash =(p[BA+1]) & 15;
+					var g3 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z1 ) : hash<4 ? -y  :( hash==14 ? -x1 : -z1 ));
+					
+					hash =(p[AA+1]) & 15;
+					var g4 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z1 ) : hash<4 ? -y  :( hash==14 ? -x  : -z1 ));
+					
+					hash =(p[BB]) & 15;
+					var g5 =((hash&1) == 0 ?(hash<8 ? x1 : y1) :(hash<8 ? -x1 : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x1 : z  ) : hash<4 ? -y1 :( hash==14 ? -x1 : -z  ));
+					
+					hash =(p[AB]) & 15;
+					var g6 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z  ) : hash<4 ? -y1 :( hash==14 ? -x  : -z  ));
+					
+					hash =(p[BA]) & 15;
+					var g7 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z  ) : hash<4 ? -y  :( hash==14 ? -x1 : -z  ));
+					
+					hash =(p[AA]) & 15;
+					var g8 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z  ) : hash<4 ? -y  :( hash==14 ? -x  : -z  ));
+					
+					g2 += u * (g1 - g2);
+					g4 += u * (g3 - g4);
+					g6 += u * (g5 - g6);
+					g8 += u * (g7 - g8);
+					
+					g4 += v * (g2 - g4);
+					g8 += v * (g6 - g8);
+					
+					s += ( g8 + w * (g4 - g8)) * fPers;
+					
+				}
+				
+				var color = Std.int (( s * fPersMax + 1 ) * 128);
+				var pixel = 0xff000000 | color << 16 | color << 8 | color;
+				
+				bitmap.setPixel32 (px, py, pixel);
+				
+				_x += baseFactor;
+				
+			}
+			
+			_y += baseFactor;
+			
+		}
+		
+	}
+	
+	
+	private function octFreqPers (fPersistence) {
+		
+		var fFreq:Float, fPers:Float;
+		
+		aOctFreq = [];
+		aOctPers = [];
+		fPersMax = 0;
+		
+		for (i in 0...octaves) {
+			
+			fFreq = Math.pow (2, i);
+			fPers = Math.pow (fPersistence, i);
+			fPersMax += fPers;
+			aOctFreq.push (fFreq);
+			aOctPers.push (fPers);
+			
+		}
+		
+		fPersMax = 1 / fPersMax;
+		
+	}
+	
+	
+	private function seedOffset (iSeed:Int) {
+		
+		iXoffset = iSeed = Std.int((iSeed * 16807.) % 2147483647);
+		iYoffset = iSeed = Std.int((iSeed * 16807.) % 2147483647);
+		iZoffset = iSeed = Std.int((iSeed * 16807.) % 2147483647);
+		
+	}
+	
+	
+}
