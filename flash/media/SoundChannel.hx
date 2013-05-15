@@ -23,7 +23,7 @@ class SoundChannel extends EventDispatcher {
 	public var __dataProvider:EventDispatcher;
 	
 	
-	public function new (__handle:Dynamic, startTime:Float, loops:Int, soundTransform:SoundTransform) {
+	public function new (handle:Dynamic, startTime:Float, loops:Int, soundTransform:SoundTransform) {
 		
 		super ();
 		
@@ -33,13 +33,13 @@ class SoundChannel extends EventDispatcher {
 			
 		}
 		
-		if (__handle != null) {
+		if (handle != null) {
 			
-			this.__handle = nme_sound_channel_create (__handle, startTime, loops, __transform);
+			__handle = nme_sound_channel_create (handle, startTime, loops, __transform);
 			
 		}
 		
-		if (this.__handle != null) {
+		if (__handle != null) {
 			
 			__incompleteList.push (this);
 			
@@ -48,12 +48,12 @@ class SoundChannel extends EventDispatcher {
 	}
 	
 	
-	public static function createDynamic (__handle:Dynamic, soundTransform:SoundTransform, dataProvider:EventDispatcher):SoundChannel {
+	public static function createDynamic (handle:Dynamic, soundTransform:SoundTransform, dataProvider:EventDispatcher):SoundChannel {
 		
 		var result = new SoundChannel (null, 0, 0, soundTransform);
 		
 		result.__dataProvider = dataProvider;
-		result.__handle = __handle;
+		result.__handle = handle;
 		__incompleteList.push (result);
 		
 		__dynamicSoundCount ++;

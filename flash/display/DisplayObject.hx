@@ -52,12 +52,12 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	private var __scrollRect:Rectangle;
 	
 	
-	public function new (__handle:Dynamic, type:String) {
+	public function new (handle:Dynamic, type:String) {
 		
 		super (this);
 		
 		__parent = null;
-		this.__handle = __handle;
+		__handle = handle;
 		__id = nme_display_object_get_id (__handle);
 		this.name = type + " " + __id;
 		

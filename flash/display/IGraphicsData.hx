@@ -7,9 +7,9 @@ class IGraphicsData {
 	public var __handle:Dynamic;
 	
 	
-	public function new (__handle:Dynamic) {
+	public function new (handle:Dynamic) {
 		
-		this.__handle = __handle;
+		__handle = handle;
 		
 	}
 	

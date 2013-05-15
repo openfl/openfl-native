@@ -18,9 +18,9 @@ class DisplayObjectContainer extends InteractiveObject {
 	private var __children:Array<DisplayObject>;
 	
 	
-	public function new (__handle:Dynamic, type:String) {
+	public function new (handle:Dynamic, type:String) {
 		
-		super (__handle, type);
+		super (handle, type);
 		__children = [];
 		
 	}

@@ -15,12 +15,12 @@ class InteractiveObject extends DisplayObject {
 	private var __mouseEnabled:Bool;
 	
 	
-	public function new (__handle:Dynamic, type:String) {
+	public function new (handle:Dynamic, type:String) {
 		
 		doubleClickEnabled = false;
 		__mouseEnabled = true;
 		
-		super (__handle, type);
+		super (handle, type);
 		
 	}
 	

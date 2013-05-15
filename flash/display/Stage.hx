@@ -77,9 +77,9 @@ class Stage extends DisplayObjectContainer {
 	private var __touchInfo:Map <Int, TouchInfo>;
 	
 	
-	public function new (__handle:Dynamic, width:Int, height:Int) {
+	public function new (handle:Dynamic, width:Int, height:Int) {
 		
-		super (__handle, "Stage");
+		super (handle, "Stage");
 		
 		__mouseOverObjects = [];
 		__focusOverObjects = [];
@@ -102,13 +102,6 @@ class Stage extends DisplayObjectContainer {
 		__joyAxisData = new Map <Int, Array<Float>> ();
 		
 	}
-	
-	
-	#if android
-	@:keep private function dummyTrace ():Void { trace (""); }
-	@:functionCode("try {") 
-	@:functionTailCode(' } catch(Dynamic e) { __hx_dump_stack(); ::haxe::Log_obj::trace(HX_CSTRING("Uncaught exception: ") + e,hx::SourceInfo(HX_CSTRING("Stage.hx"),0,HX_CSTRING("nme.display.Stage"),HX_CSTRING("nmeDoProcessStageEvent")));}')
-	#end
 	
 	
 	public static dynamic function getOrientation ():Int {
@@ -287,6 +280,11 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
+	#if android
+	@:keep private function dummyTrace ():Void { trace (""); }
+	@:functionCode("try {") 
+	@:functionTailCode(' } catch(Dynamic e) { __hx_dump_stack(); ::haxe::Log_obj::trace(HX_CSTRING("Uncaught exception: ") + e,hx::SourceInfo(HX_CSTRING("Stage.hx"),0,HX_CSTRING("flash.display.Stage"),HX_CSTRING("__doProcessStageEvent")));}')
+	#end
 	private function __doProcessStageEvent (event:Dynamic):Float {
 		
 		var result = 0.0;

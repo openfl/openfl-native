@@ -65,7 +65,7 @@ class Lib {
 	}
 	
 	
-	public static function create (onLoaded:Void->Void, width:Int, height:Int, frameRate:Float = 60.0, color:Int = 0xffffff, flags:Int = 0x0f, title:String = "NME", icon:BitmapData = null, stageClass:Class<Stage> = null):Void {
+	public static function create (onLoaded:Void->Void, width:Int, height:Int, frameRate:Float = 60.0, color:Int = 0xffffff, flags:Int = 0x0f, title:String = "Pazu", icon:BitmapData = null, stageClass:Class<Stage> = null):Void {
 		
 		if (__isInit) {
 			
@@ -76,7 +76,7 @@ class Lib {
 				
 			}
 			
-			throw ("nme.Lib.create called multiple times. This function is automatically called by the project code.");
+			throw ("flash.Lib.create called multiple times. This function is automatically called by the project code.");
 			
 		}
 		
@@ -241,9 +241,9 @@ class Lib {
 		
 		#if cpp
 		var get_env = cpp.Lib.load ("std", "get_env", 1);
-		var debug = (get_env ("NME_LOAD_DEBUG") != null);
+		var debug = (get_env ("PAZU_LOAD_DEBUG") != null);
 		#else
-		var debug = (Sys.getEnv ("NME_LOAD_DEBUG") !=null);
+		var debug = (Sys.getEnv ("PAZU_LOAD_DEBUG") !=null);
 		#end
 		
 		if (debug) {
