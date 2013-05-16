@@ -32,13 +32,13 @@ class Int16Array extends ArrayBufferView implements ArrayAccess<Int> {
 				
 			}
 			
-			super (length << 1);
+			super (this.length << 1);
 			
 			#if !cpp
 			buffer.position = 0;
 			#end
 			
-			for (i in 0...length) {
+			for (i in 0...this.length) {
 				
 				#if cpp
 				untyped __global__.__hxcpp_memory_set_i16 (bytes, (i << 1), ints[i]);

@@ -32,13 +32,13 @@ class UInt8Array extends ArrayBufferView implements ArrayAccess<Int> {
 				
 			}
 			
-			super (length);
+			super (this.length);
 			
 			#if !cpp
 			buffer.position = 0;
 			#end
 			
-			for (i in 0...length) {
+			for (i in 0...this.length) {
 				
 				#if cpp
 				untyped __global__.__hxcpp_memory_set_byte (bytes, i, ints[i]);

@@ -26,7 +26,7 @@ class ArrayBufferView implements IMemoryRange {
 		if (Std.is (lengthOrBuffer, Int)) {
 			
 			byteLength = Std.int (lengthOrBuffer);
-			byteOffset = 0;
+			this.byteOffset = 0;
 			buffer = new ArrayBuffer (Std.int (lengthOrBuffer));
 			
 		} else {
