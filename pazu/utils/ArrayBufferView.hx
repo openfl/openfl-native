@@ -39,7 +39,7 @@ class ArrayBufferView implements IMemoryRange {
 				
 			}
 			
-			byteOffset = byteOffset;
+			this.byteOffset = byteOffset;
 			
 			if (byteOffset > buffer.length) {
 				
