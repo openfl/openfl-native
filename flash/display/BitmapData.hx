@@ -503,9 +503,6 @@ class BitmapData implements IBitmapDrawable {
 			
 			var thresholdMask:Int = cast threshold & mask;
 			
-			var hey = new flash.display.Sprite();
-			hey.
-			
 			var position:Int, pixelMask:Int, pixelValue, i, test;
 			
 			for (yy in 0...dh) {
