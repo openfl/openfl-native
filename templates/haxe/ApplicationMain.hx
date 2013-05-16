@@ -49,6 +49,27 @@ class ApplicationMain
 		});
 		#else
 		
+		#if ios
+		flash.display.Stage.shouldRotateInterface = function(orientation:Int):Bool
+		{
+			::if (WIN_ORIENTATION == "portrait")::
+			if (orientation == flash.display.Stage.OrientationPortrait || orientation == flash.display.Stage.OrientationPortraitUpsideDown)
+			{
+				return true;
+			}
+			return false;
+			::elseif (WIN_ORIENTATION == "landscape")::
+			if (orientation == flash.display.Stage.OrientationLandscapeLeft || orientation == flash.display.Stage.OrientationLandscapeRight)
+			{
+				return true;
+			}
+			return false;
+			::else::
+			return true;
+			::end::
+		}
+		#end
+		
 		flash.Lib.create(function()
 			{ 
 				//if ((::WIN_WIDTH:: == 0 && ::WIN_HEIGHT:: == 0) || ::WIN_FULLSCREEN::)
