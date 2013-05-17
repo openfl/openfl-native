@@ -216,9 +216,11 @@ class DisplayObjectContainer extends InteractiveObject {
 		
 		if (__children.length > 0) {
 			
+			var child;
+			
 			while (true) {
 				
-				var child = __children[i];
+				child = __children[i];
 				child.__broadcast (event);
 				
 				if (i >= __children.length) {

@@ -415,10 +415,7 @@ class BitmapData implements IBitmapDrawable {
 			
 			var thresholdMask:Int = cast threshold & mask;
 
-			var width_yy:Int;
-			var position:Int;
-			var pixelMask:Int;
-			var pixelValue, i, test;
+			var width_yy:Int, position:Int, pixelMask:Int, pixelValue, i, test;
 			
 			for (yy in 0...height) {
 				
@@ -506,9 +503,7 @@ class BitmapData implements IBitmapDrawable {
 			
 			var thresholdMask:Int = cast threshold & mask;
 			
-			var position:Int;
-			var pixelMask:Int;
-			var pixelValue, i, test;
+			var position:Int, pixelMask:Int, pixelValue, i, test;
 			
 			for (yy in 0...dh) {
 				

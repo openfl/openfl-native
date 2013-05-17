@@ -70,10 +70,12 @@ class EventDispatcher implements IEventDispatcher {
 			
 			var index = 0;
 			
+			var listItem, listener;
+			
 			while (index < list.length) {
 				
-				var listItem = list[index];
-				var listener = (listItem != null ? listItem.get () : null);
+				listItem = list[index];
+				listener = (listItem != null ? listItem.get () : null);
 				
 				if (listener == null) {
 					

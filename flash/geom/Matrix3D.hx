@@ -437,9 +437,13 @@ class Matrix3D {
 	public function transformVectors (vin:Vector<Float>, vout:Vector<Float>):Void {
 		
 		var i = 0;
+		var x:Float, y:Float, z:Float;
+		
 		while (i + 3 <= vin.length) {
 			
-			var x:Float = vin[i], y:Float = vin[i + 1], z:Float = vin[i + 2];
+			x = vin[i];
+			y = vin[i + 1];
+			z = vin[i + 2];
 			vout[i] = x * rawData[0] + y * rawData[4] + z * rawData[8] + rawData[12];
 			vout[i + 1] = x * rawData[1] + y * rawData[5] + z * rawData[9] + rawData[13];
 			vout[i + 2] = x * rawData[2] + y * rawData[6] + z * rawData[10] + rawData[14];
