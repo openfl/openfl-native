@@ -154,10 +154,11 @@ class Timer {
 	static public function __nextWake (limit:Float):Float {
 		
 		var now = nme_time_stamp () * 1000.0;
+		var sleep;
 		
 		for (timer in sRunningTimers) {
 			
-			var sleep = timer.mFireAt - now;
+			sleep = timer.mFireAt - now;
 			
 			if (sleep < limit) {
 				

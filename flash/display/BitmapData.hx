@@ -414,19 +414,24 @@ class BitmapData implements IBitmapDrawable {
 			Memory.select (memory);
 			
 			var thresholdMask:Int = cast threshold & mask;
+
+			var width_yy:Int;
+			var position:Int;
+			var pixelMask:Int;
+			var pixelValue, i, test;
 			
 			for (yy in 0...height) {
 				
-				var width_yy:Int = width * yy;
+				width_yy = width * yy;
 				
 				for (xx in 0...width) {
 					
-					var position:Int = (width_yy + xx) * 4;
-					var pixelValue = Memory.getI32 (position);
-					var pixelMask:Int = cast pixelValue & mask;
+					position = (width_yy + xx) * 4;
+					pixelValue = Memory.getI32 (position);
+					pixelMask = cast pixelValue & mask;
 					
-					var i = __ucompare (pixelMask, thresholdMask);
-					var test = false;
+					i = __ucompare (pixelMask, thresholdMask);
+					test = false;
 					
 					if (operation == "==") { test = (i == 0); }
 					else if (operation == "<") { test = (i == -1);}
@@ -501,16 +506,20 @@ class BitmapData implements IBitmapDrawable {
 			
 			var thresholdMask:Int = cast threshold & mask;
 			
+			var position:Int;
+			var pixelMask:Int;
+			var pixelValue, i, test;
+			
 			for (yy in 0...dh) {
 				
 				for (xx in 0...dw) {
 					
-					var position:Int = ((xx + sx) + (yy + sy) * sw) * 4;
-					var pixelValue = Memory.getI32 (position);
-					var pixelMask:Int = cast pixelValue & mask;
+					position = ((xx + sx) + (yy + sy) * sw) * 4;
+					pixelValue = Memory.getI32 (position);
+					pixelMask = cast pixelValue & mask;
 					
-					var i = __ucompare (pixelMask, thresholdMask);
-					var test = false;
+					i = __ucompare (pixelMask, thresholdMask);
+					test = false;
 					
 					if (operation == "==") { test = (i == 0); }
 					else if (operation == "<") { test = (i == -1);}
@@ -788,7 +797,7 @@ class OptimizedPerlin {
 		var aOctFreq = aOctFreq;
 		var aOctPers = aOctPers;
 		
-		var s, fFreq, fPers, x, y, z, xf, yf, zf, X, Y, Z, u, v, w, A, AA, AB, BA, BB, x1, y1, z1, hash, g1, g2, g3, g4, g5, g6, g7, g8, color, pixel;
+		var s, fFreq, fPers, x, y, z, xf, yf, zf, X, Y, Z, u, v, w, A, AA, AB, B, BA, BB, x1, y1, z1, hash, g1, g2, g3, g4, g5, g6, g7, g8, color, pixel;
 		
 		for (py in 0...height) {
 			
