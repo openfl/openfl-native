@@ -12,7 +12,7 @@ class InteractiveObject extends DisplayObject {
 	public var moveForSoftKeyboard (get, set):Bool;
 	public var needsSoftKeyboard (get, set):Bool;
 	
-	private var __mouseEnabled:Bool;
+	@:noCompletion private var __mouseEnabled:Bool;
 	
 	
 	public function new (handle:Dynamic, type:String) {
@@ -32,7 +32,7 @@ class InteractiveObject extends DisplayObject {
 	}
 	
 	
-	override private function __asInteractiveObject ():InteractiveObject {
+	@:noCompletion override private function __asInteractiveObject ():InteractiveObject {
 		
 		return this;
 		

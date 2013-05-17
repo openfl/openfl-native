@@ -23,9 +23,9 @@ class Sound extends EventDispatcher {
 	public var length (get, null):Float;
 	public var url (default, null):String;
 	
-	private var __handle:Dynamic;
-	private var __loading:Bool;
-	private var __dynamicSound:Bool;
+	@:noCompletion private var __handle:Dynamic;
+	@:noCompletion private var __loading:Bool;
+	@:noCompletion private var __dynamicSound:Bool;
 	
 	
 	public function new (stream:URLRequest = null, context:SoundLoaderContext = null, forcePlayAsMusic:Bool = false) {
@@ -207,7 +207,7 @@ class Sound extends EventDispatcher {
 	}
 	
 	
-	private function __checkLoading ():Void {
+	@:noCompletion private function __checkLoading ():Void {
 		
 		if (!__dynamicSound && __loading && __handle != null) {
 			
@@ -234,7 +234,7 @@ class Sound extends EventDispatcher {
 	}
 	
 	
-	private function __onError (msg:String):Void {
+	@:noCompletion private function __onError (msg:String):Void {
 		
 		dispatchEvent (new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, msg));
 		__handle = null;

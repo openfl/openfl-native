@@ -15,8 +15,8 @@ class Font {
 	public var fontStyle (default, null):FontStyle;
 	public var fontType (default, null):FontType;
 	
-	private static var __registeredFonts = new Array<Font>();
-	private static var __deviceFonts:Array<Font>;
+	@:noCompletion private static var __registeredFonts = new Array<Font>();
+	@:noCompletion private static var __deviceFonts:Array<Font>;
 	
 	
 	public function new (filename:String = "", style:FontStyle = null, type:FontType = null):Void {

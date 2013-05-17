@@ -20,16 +20,16 @@ class URLLoader extends EventDispatcher {
 	public var data:Dynamic;
 	public var dataFormat:URLLoaderDataFormat;
 	
-	private static var activeLoaders = new List<URLLoader> ();
-	private static inline var urlInvalid = 0;
-	private static inline var urlInit = 1;
-	private static inline var urlLoading = 2;
-	private static inline var urlComplete = 3;
-	private static inline var urlError = 4;
+	@:noCompletion private static var activeLoaders = new List<URLLoader> ();
+	@:noCompletion private static inline var urlInvalid = 0;
+	@:noCompletion private static inline var urlInit = 1;
+	@:noCompletion private static inline var urlLoading = 2;
+	@:noCompletion private static inline var urlComplete = 3;
+	@:noCompletion private static inline var urlError = 4;
 	
-	private var state:Int;
-	private var __handle:Dynamic;
-	public var __onComplete:Dynamic -> Bool;
+	@:noCompletion private var state:Int;
+	@:noCompletion private var __handle:Dynamic;
+	@:noCompletion public var __onComplete:Dynamic -> Bool;
 	
 	
 	public function new (request:URLRequest = null) {
@@ -212,7 +212,7 @@ class URLLoader extends EventDispatcher {
 	}
 	
 	
-	private function __dataComplete ():Void {
+	@:noCompletion private function __dataComplete ():Void {
 		
 		activeLoaders.remove (this);
 		
@@ -237,14 +237,14 @@ class URLLoader extends EventDispatcher {
 	}
 	
 	
-	public static function __loadPending ():Bool {
+	@:noCompletion public static function __loadPending ():Bool {
 		
 		return !activeLoaders.isEmpty ();
 		
 	}
 	
 	
-	public static function __pollData ():Void {
+	@:noCompletion public static function __pollData ():Void {
 		
 		if (!activeLoaders.isEmpty ()) {
 			

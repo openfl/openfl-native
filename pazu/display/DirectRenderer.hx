@@ -27,7 +27,7 @@ class DirectRenderer extends DisplayObject {
 	}
 	
 	
-	private function __onRender (rect:Dynamic):Void {
+	@:noCompletion private function __onRender (rect:Dynamic):Void {
 		
 		if (render != null) render (new Rectangle (rect.x, rect.y, rect.width, rect.height));
 		

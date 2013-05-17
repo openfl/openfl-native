@@ -15,12 +15,12 @@ class SoundChannel extends EventDispatcher {
 	public var position (get, set):Float;
 	public var soundTransform (get, set):SoundTransform;
 	
-	public static var __dynamicSoundCount = 0;
-	private static var __incompleteList = new Array<SoundChannel> ();
+	@:noCompletion public static var __dynamicSoundCount = 0;
+	@:noCompletion private static var __incompleteList = new Array<SoundChannel> ();
 	
-	private var __handle:Dynamic;
-	private var __transform:SoundTransform;
-	public var __dataProvider:EventDispatcher;
+	@:noCompletion private var __handle:Dynamic;
+	@:noCompletion private var __transform:SoundTransform;
+	@:noCompletion public var __dataProvider:EventDispatcher;
 	
 	
 	public function new (handle:Dynamic, startTime:Float, loops:Int, soundTransform:SoundTransform) {
@@ -71,7 +71,7 @@ class SoundChannel extends EventDispatcher {
 	}
 	
 	
-	private function __checkComplete ():Bool {
+	@:noCompletion private function __checkComplete ():Bool {
 		
 		if (__handle != null ) {
 			
@@ -112,14 +112,14 @@ class SoundChannel extends EventDispatcher {
 	}
 	
 	
-	public static function __completePending ():Bool {
+	@:noCompletion public static function __completePending ():Bool {
 		
 		return __incompleteList.length > 0;
 		
 	}
 	
 	
-	public static function __pollComplete ():Void {
+	@:noCompletion public static function __pollComplete ():Void {
 		
 		if (__incompleteList.length > 0) {
 			

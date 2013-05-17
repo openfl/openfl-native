@@ -38,14 +38,14 @@ class Event {
 	public var target (get, set):Dynamic;
 	public var type (get, never):String;
 
-	private var __bubbles:Bool;
-	private var __cancelable:Bool;
-	private var __currentTarget:Dynamic;
-	private var __eventPhase:EventPhase;
-	private var __isCancelled:Bool;
-	private var __isCancelledNow:Bool;
-	private var __target:Dynamic;
-	private var __type:String;
+	@:noCompletion private var __bubbles:Bool;
+	@:noCompletion private var __cancelable:Bool;
+	@:noCompletion private var __currentTarget:Dynamic;
+	@:noCompletion private var __eventPhase:EventPhase;
+	@:noCompletion private var __isCancelled:Bool;
+	@:noCompletion private var __isCancelledNow:Bool;
+	@:noCompletion private var __target:Dynamic;
+	@:noCompletion private var __type:String;
 	
 	
 	public function new (type:String, bubbles:Bool = false, cancelable:Bool = false) {
@@ -99,21 +99,21 @@ class Event {
 	}
 	
 	
-	public function __getIsCancelled ():Bool {
+	@:noCompletion public function __getIsCancelled ():Bool {
 		
 		return __isCancelled;
 		
 	}
 	
 	
-	public function __getIsCancelledNow ():Bool {
+	@:noCompletion public function __getIsCancelledNow ():Bool {
 		
 		return __isCancelledNow;
 		
 	}
 	
 	
-	public function __setPhase (value:EventPhase):Void {
+	@:noCompletion public function __setPhase (value:EventPhase):Void {
 		
 		__eventPhase = value;
 		

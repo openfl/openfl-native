@@ -199,7 +199,7 @@ class ApplicationMain
 	
 	
 	#if neko
-	public static function __init__ () {
+	@:noCompletion public static function __init__ () {
 		
 		untyped $loader.path = $array ("@executable_path/", $loader.path);
 		

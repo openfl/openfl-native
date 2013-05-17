@@ -151,7 +151,7 @@ class Timer {
 	/**
 	 * @private
 	 */
-	static public function __nextWake (limit:Float):Float {
+	@:noCompletion static public function __nextWake (limit:Float):Float {
 		
 		var now = nme_time_stamp () * 1000.0;
 		var sleep;
@@ -179,7 +179,7 @@ class Timer {
 	}
 	
 
-	function __check (inTime:Float) {
+	@:noCompletion function __check (inTime:Float) {
 		
 		if (inTime >= mFireAt) {
 			
@@ -194,7 +194,7 @@ class Timer {
 	/**
 	 * @private
 	 */
-	public static function __checkTimers () {
+	@:noCompletion public static function __checkTimers () {
 		
 		var now = GetMS ();
 		

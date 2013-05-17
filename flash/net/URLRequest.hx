@@ -24,7 +24,7 @@ class URLRequest {
 	public var url:String;
 	public var verbose:Bool;
 	
-	public var __bytes:ByteArray;
+	@:noCompletion public var __bytes:ByteArray;
 	
 	
 	public function new (url:String = null) {
@@ -63,7 +63,7 @@ class URLRequest {
 	}
 	
 	
-	public function __prepare ():Void {
+	@:noCompletion public function __prepare ():Void {
 		
 		if (data == null) {
 			

@@ -43,13 +43,13 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	public var x (get, set):Float;
 	public var y (get, set):Float;
 	
-	public var __handle:Dynamic;
-	private var __filters:Array<Dynamic>;
-	private var __graphicsCache:Graphics;
-	private var __id:Int;
-	private var __parent:DisplayObjectContainer;
-	private var __scale9Grid:Rectangle;
-	private var __scrollRect:Rectangle;
+	@:noCompletion public var __handle:Dynamic;
+	@:noCompletion private var __filters:Array<Dynamic>;
+	@:noCompletion private var __graphicsCache:Graphics;
+	@:noCompletion private var __id:Int;
+	@:noCompletion private var __parent:DisplayObjectContainer;
+	@:noCompletion private var __scale9Grid:Rectangle;
+	@:noCompletion private var __scrollRect:Rectangle;
 	
 	
 	public function new (handle:Dynamic, type:String) {
@@ -159,21 +159,21 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	private function __asInteractiveObject ():InteractiveObject {
+	@:noCompletion private function __asInteractiveObject ():InteractiveObject {
 		
 		return null;
 		
 	}
 	
 	
-	public function __broadcast (event:Event):Void {
+	@:noCompletion public function __broadcast (event:Event):Void {
 		
 		__dispatchEvent (event);
 		
 	}
 	
 	
-	public function __dispatchEvent (event:Event):Bool {
+	@:noCompletion public function __dispatchEvent (event:Event):Bool {
 		
 		if (event.target == null) {
 			
@@ -187,14 +187,14 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
+	@:noCompletion public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
 		
 		nme_display_object_draw_to_surface (__handle, surface, matrix, colorTransform, blendMode, clipRect);
 		
 	}
 	
 	
-	private function __findByID (id:Int):DisplayObject {
+	@:noCompletion private function __findByID (id:Int):DisplayObject {
 		
 		if (__id == id) {
 			
@@ -207,7 +207,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	private function __fireEvent (event:Event):Void {
+	@:noCompletion private function __fireEvent (event:Event):Void {
 		
 		var stack:Array<InteractiveObject> = [];
 		
@@ -270,7 +270,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getColorTransform ():ColorTransform {
+	@:noCompletion public function __getColorTransform ():ColorTransform {
 		
 		var colorTransform = new ColorTransform ();
 		nme_display_object_get_color_transform (__handle, colorTransform, false);
@@ -279,7 +279,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getConcatenatedColorTransform ():ColorTransform {
+	@:noCompletion public function __getConcatenatedColorTransform ():ColorTransform {
 		
 		var colorTransform = new ColorTransform();
 		nme_display_object_get_color_transform (__handle, colorTransform, true);
@@ -288,7 +288,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getConcatenatedMatrix ():Matrix {
+	@:noCompletion public function __getConcatenatedMatrix ():Matrix {
 		
 		var matrix = new Matrix();
 		nme_display_object_get_matrix (__handle, matrix, true);
@@ -297,7 +297,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getInteractiveObjectStack (stack:Array<InteractiveObject>):Void {
+	@:noCompletion public function __getInteractiveObjectStack (stack:Array<InteractiveObject>):Void {
 		
 		var interactive = __asInteractiveObject ();
 		
@@ -316,7 +316,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getMatrix ():Matrix {
+	@:noCompletion public function __getMatrix ():Matrix {
 		
 		var matrix = new Matrix ();
 		nme_display_object_get_matrix (__handle, matrix, false);
@@ -325,7 +325,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
+	@:noCompletion public function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
 		Sys.println("Hey, " + (__handle == null));
 		if (nme_display_object_hit_test_point (__handle, point.x, point.y, true, false)) {
 			
@@ -337,7 +337,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __getPixelBounds ():Rectangle {
+	@:noCompletion public function __getPixelBounds ():Rectangle {
 		
 		var bounds = new Rectangle();
 		nme_display_object_get_pixel_bounds (__handle, bounds);
@@ -346,7 +346,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	private function __onAdded (object:DisplayObject, isOnStage:Bool):Void {
+	@:noCompletion private function __onAdded (object:DisplayObject, isOnStage:Bool):Void {
 		
 		if (object == this) {
 			
@@ -367,7 +367,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	private function __onRemoved (object:DisplayObject, wasOnStage:Bool):Void {
+	@:noCompletion private function __onRemoved (object:DisplayObject, wasOnStage:Bool):Void {
 		
 		if (object == this) {
 			
@@ -388,21 +388,21 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
-	public function __setColorTransform (colorTransform:ColorTransform):Void {
+	@:noCompletion public function __setColorTransform (colorTransform:ColorTransform):Void {
 		
 		nme_display_object_set_color_transform (__handle, colorTransform);
 		
 	}
 	
 	
-	public function __setMatrix (matrix:Matrix):Void {
+	@:noCompletion public function __setMatrix (matrix:Matrix):Void {
 		
 		nme_display_object_set_matrix (__handle, matrix);
 		
 	}
 	
 	
-	public function __setParent (parent:DisplayObjectContainer):DisplayObjectContainer {
+	@:noCompletion public function __setParent (parent:DisplayObjectContainer):DisplayObjectContainer {
 		
 		if (parent == __parent) {
 			

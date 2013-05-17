@@ -20,7 +20,7 @@ class Loader extends Sprite {
 	public var content (default, null):DisplayObject;
 	public var contentLoaderInfo (default, null):LoaderInfo;
 	
-	private var __image:BitmapData;
+	@:noCompletion private var __image:BitmapData;
 	
 	
 	public function new () {
@@ -87,7 +87,7 @@ class Loader extends Sprite {
 	}
 	
 	
-	private function __onComplete (bytes:ByteArray):Bool {
+	@:noCompletion private function __onComplete (bytes:ByteArray):Bool {
 		
 		if (bytes == null) {
 			

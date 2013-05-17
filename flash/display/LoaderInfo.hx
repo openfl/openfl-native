@@ -27,7 +27,7 @@ class LoaderInfo extends URLLoader {
 	public var url (default, null):String;
 	public var width (default, null):Int;
 	
-	private var __pendingURL:String;
+	@:noCompletion private var __pendingURL:String;
 	
 	
 	private function new () {

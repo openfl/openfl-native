@@ -15,7 +15,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	public var numChildren (get, null):Int;
 	public var tabChildren (get, set):Bool;
 	
-	private var __children:Array<DisplayObject>;
+	@:noCompletion private var __children:Array<DisplayObject>;
 	
 	
 	public function new (handle:Dynamic, type:String) {
@@ -187,7 +187,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	private inline function __addChild (child:DisplayObject):Void {
+	@:noCompletion private inline function __addChild (child:DisplayObject):Void {
 		
 		if (child == this) {
 			
@@ -210,7 +210,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	override public function __broadcast (event:Event):Void {
+	@:noCompletion override public function __broadcast (event:Event):Void {
 		
 		var i = 0;
 		
@@ -250,7 +250,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	override private function __findByID (id:Int):DisplayObject {
+	@:noCompletion override private function __findByID (id:Int):DisplayObject {
 		
 		if (__id == id) {
 			
@@ -277,7 +277,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	private function __getChildIndex (child:DisplayObject):Int {
+	@:noCompletion private function __getChildIndex (child:DisplayObject):Int {
 		
 		for (i in 0...__children.length) {
 			
@@ -294,7 +294,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	public override function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
+	@:noCompletion public override function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
 		
 		super.__getObjectsUnderPoint (point, result);
 		
@@ -307,7 +307,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	override private function __onAdded (object:DisplayObject, isOnStage:Bool):Void {
+	@:noCompletion override private function __onAdded (object:DisplayObject, isOnStage:Bool):Void {
 		
 		super.__onAdded (object, isOnStage);
 		
@@ -320,7 +320,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	override private function __onRemoved (object:DisplayObject, wasOnStage:Bool):Void {
+	@:noCompletion override private function __onRemoved (object:DisplayObject, wasOnStage:Bool):Void {
 		
 		super.__onRemoved (object, wasOnStage);
 		
@@ -333,7 +333,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	public function __removeChildFromArray (child:DisplayObject):Void {
+	@:noCompletion public function __removeChildFromArray (child:DisplayObject):Void {
 		
 		var i = __getChildIndex (child);
 		
@@ -347,7 +347,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	private inline function __setChildIndex (child:DisplayObject, index:Int):Void {
+	@:noCompletion private inline function __setChildIndex (child:DisplayObject, index:Int):Void {
 		
 		if (index > __children.length) {
 			
@@ -425,7 +425,7 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 	
 	
-	private inline function __swapChildrenAt (index1:Int, index2:Int):Void {
+	@:noCompletion private inline function __swapChildrenAt (index1:Int, index2:Int):Void {
 		
 		if (index1 < 0 || index2 < 0 || index1 > __children.length || index2 > __children.length) {
 			

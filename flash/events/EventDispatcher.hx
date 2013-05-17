@@ -9,8 +9,8 @@ import pazu.utils.WeakRef;
 class EventDispatcher implements IEventDispatcher {
 	
 	
-	private var __eventMap:EventMap;
-	private var __target:IEventDispatcher;
+	@:noCompletion private var __eventMap:EventMap;
+	@:noCompletion private var __target:IEventDispatcher;
 	
 	
 	public function new (target:IEventDispatcher = null):Void {
@@ -185,14 +185,14 @@ class EventDispatcher implements IEventDispatcher {
 	}
 	
 	
-	public function __dispatchCompleteEvent ():Void {
+	@:noCompletion public function __dispatchCompleteEvent ():Void {
 		
 		dispatchEvent (new Event (Event.COMPLETE));
 		
 	}
 	
 	
-	public function __dispatchIOErrorEvent ():Void {
+	@:noCompletion public function __dispatchIOErrorEvent ():Void {
 		
 		dispatchEvent (new IOErrorEvent (IOErrorEvent.IO_ERROR));
 		

@@ -11,9 +11,9 @@ class StorageVolumeInfo extends EventDispatcher {
 	public static inline var isSupported = true;
 	public static var storageVolumeInfo (get, null):StorageVolumeInfo;
 	
-	private static var __storageVolumeInfo:StorageVolumeInfo;
+	@:noCompletion private static var __storageVolumeInfo:StorageVolumeInfo;
 	
-	private var __volumes:Array<StorageVolume>;
+	@:noCompletion private var __volumes:Array<StorageVolume>;
 	
 	
 	private function new () {

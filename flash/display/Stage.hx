@@ -22,7 +22,7 @@ import pazu.events.SystemEvent;
 class Stage extends DisplayObjectContainer {
 	
 	
-	public static var __earlyWakeup = 0.005;
+	@:noCompletion public static var __earlyWakeup = 0.005;
 	
 	public static var OrientationPortrait = 1;
 	public static var OrientationPortraitUpsideDown = 2;
@@ -48,33 +48,33 @@ class Stage extends DisplayObjectContainer {
 	public var stageHeight (get, null):Int;
 	public var stageWidth (get, null):Int;
 	
-	private static var efLeftDown = 0x0001;
-	private static var efShiftDown = 0x0002;
-	private static var efCtrlDown = 0x0004;
-	private static var efAltDown = 0x0008;
-	private static var efCommandDown = 0x0010;
-	private static var efLocationRight = 0x4000;
-	private static var efNoNativeClick = 0x10000;
-	private static var sClickEvents = [ "click", "middleClick", "rightClick" ];
-	private static var sDownEvents = [ "mouseDown", "middleMouseDown", "rightMouseDown" ];
-	private static var sUpEvents = [ "mouseUp", "middleMouseUp", "rightMouseUp" ];
+	@:noCompletion private static var efLeftDown = 0x0001;
+	@:noCompletion private static var efShiftDown = 0x0002;
+	@:noCompletion private static var efCtrlDown = 0x0004;
+	@:noCompletion private static var efAltDown = 0x0008;
+	@:noCompletion private static var efCommandDown = 0x0010;
+	@:noCompletion private static var efLocationRight = 0x4000;
+	@:noCompletion private static var efNoNativeClick = 0x10000;
+	@:noCompletion private static var sClickEvents = [ "click", "middleClick", "rightClick" ];
+	@:noCompletion private static var sDownEvents = [ "mouseDown", "middleMouseDown", "rightMouseDown" ];
+	@:noCompletion private static var sUpEvents = [ "mouseUp", "middleMouseUp", "rightMouseUp" ];
 	
-	private static var __mouseChanges:Array<String> = [ MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER ];
-	private static var __touchChanges:Array<String> = [ TouchEvent.TOUCH_OUT, TouchEvent.TOUCH_OVER,	TouchEvent.TOUCH_ROLL_OUT, TouchEvent.TOUCH_ROLL_OVER ];
+	@:noCompletion private static var __mouseChanges:Array<String> = [ MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER ];
+	@:noCompletion private static var __touchChanges:Array<String> = [ TouchEvent.TOUCH_OUT, TouchEvent.TOUCH_OVER,	TouchEvent.TOUCH_ROLL_OUT, TouchEvent.TOUCH_ROLL_OVER ];
 	
-	private var __joyAxisData:Map <Int, Array <Float>>;
-	private var __dragBounds:Rectangle;
-	private var __dragObject:Sprite;
-	private var __dragOffsetX:Float;
-	private var __dragOffsetY:Float;
-	private var __focusOverObjects:Array<InteractiveObject>;
-	private var __framePeriod:Float;
-	private var __invalid:Bool;
-	private var __lastClickTime:Float;
-	private var __lastDown:Array<InteractiveObject>;
-	private var __lastRender:Float;
-	private var __mouseOverObjects:Array<InteractiveObject>;
-	private var __touchInfo:Map <Int, TouchInfo>;
+	@:noCompletion private var __joyAxisData:Map <Int, Array <Float>>;
+	@:noCompletion private var __dragBounds:Rectangle;
+	@:noCompletion private var __dragObject:Sprite;
+	@:noCompletion private var __dragOffsetX:Float;
+	@:noCompletion private var __dragOffsetY:Float;
+	@:noCompletion private var __focusOverObjects:Array<InteractiveObject>;
+	@:noCompletion private var __framePeriod:Float;
+	@:noCompletion private var __invalid:Bool;
+	@:noCompletion private var __lastClickTime:Float;
+	@:noCompletion private var __lastDown:Array<InteractiveObject>;
+	@:noCompletion private var __lastRender:Float;
+	@:noCompletion private var __mouseOverObjects:Array<InteractiveObject>;
+	@:noCompletion private var __touchInfo:Map <Int, TouchInfo>;
 	
 	
 	public function new (handle:Dynamic, width:Int, height:Int) {
@@ -147,7 +147,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __checkFocusInOuts (event:Dynamic, stack:Array<InteractiveObject>):Void {
+	@:noCompletion private function __checkFocusInOuts (event:Dynamic, stack:Array<InteractiveObject>):Void {
 		
 		var newLength = stack.length;
 		var newObject = newLength > 0 ? stack[newLength - 1] : null;
@@ -179,7 +179,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __checkInOuts (event:MouseEvent, stack:Array<InteractiveObject>, touchInfo:TouchInfo = null):Bool {
+	@:noCompletion private function __checkInOuts (event:MouseEvent, stack:Array<InteractiveObject>, touchInfo:TouchInfo = null):Bool {
 		
 		var prev = (touchInfo == null ? __mouseOverObjects : touchInfo.touchOverObjects);
 		var events = (touchInfo == null ? __mouseChanges : __touchChanges);
@@ -249,7 +249,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __checkRender ():Void {
+	@:noCompletion private function __checkRender ():Void {
 		
 		if (frameRate > 0) {
 			
@@ -281,11 +281,11 @@ class Stage extends DisplayObjectContainer {
 	
 	
 	#if android
-	@:keep private function dummyTrace ():Void { trace (""); }
+	@:noCompletion @:keep private function dummyTrace ():Void { trace (""); }
 	@:functionCode("try {") 
 	@:functionTailCode(' } catch(Dynamic e) { __hx_dump_stack(); ::haxe::Log_obj::trace(HX_CSTRING("Uncaught exception: ") + e,hx::SourceInfo(HX_CSTRING("Stage.hx"),0,HX_CSTRING("flash.display.Stage"),HX_CSTRING("__doProcessStageEvent")));}')
 	#end
-	private function __doProcessStageEvent (event:Dynamic):Float {
+	@:noCompletion private function __doProcessStageEvent (event:Dynamic):Float {
 		
 		var result = 0.0;
 		var type = Std.int (Reflect.field (event, "type"));
@@ -439,7 +439,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __processStageEvent (event:Dynamic):Dynamic {
+	@:noCompletion private function __processStageEvent (event:Dynamic):Dynamic {
 		
 		__doProcessStageEvent (event);
 		return null;
@@ -447,7 +447,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __drag (mouse:Point):Void {
+	@:noCompletion private function __drag (mouse:Point):Void {
 		
 		var parent = __dragObject.parent;
 		if (parent != null) {
@@ -489,7 +489,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __nextFrameDue (otherTimers:Float) {
+	@:noCompletion private function __nextFrameDue (otherTimers:Float) {
 		
 		if (!active && pauseWhenDeactivated) {
 			
@@ -513,7 +513,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onChange (event:Dynamic):Void {
+	@:noCompletion private function __onChange (event:Dynamic):Void {
 		
 		var object = __findByID (event.id);
 		
@@ -526,7 +526,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onFocus (event:Dynamic):Void {
+	@:noCompletion private function __onFocus (event:Dynamic):Void {
 		
 		var stack = new Array<InteractiveObject>();
 		var object = __findByID (event.id);
@@ -558,7 +558,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onJoystick (event:Dynamic, type:String):Void {
+	@:noCompletion private function __onJoystick (event:Dynamic, type:String):Void {
 		
 		var joystickEvent:JoystickEvent = null;
 		
@@ -629,7 +629,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onKey (event:Dynamic, type:String):Void {
+	@:noCompletion private function __onKey (event:Dynamic, type:String):Void {
 		
 		var stack = new Array<InteractiveObject> ();
 		var object = __findByID (event.id);
@@ -678,7 +678,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onMouse (event:Dynamic, type:String, fromMouse:Bool):Void {
+	@:noCompletion private function __onMouse (event:Dynamic, type:String, fromMouse:Bool):Void {
 		
 		var button:Int = event.value;
 		
@@ -795,7 +795,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onResize (width:Float, height:Float):Void {
+	@:noCompletion private function __onResize (width:Float, height:Float):Void {
 		
 		var event = new Event (Event.RESIZE);
 		__dispatchEvent (event);
@@ -803,7 +803,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onSysWM (event:Dynamic):Void {
+	@:noCompletion private function __onSysWM (event:Dynamic):Void {
 		
 		var event = new SystemEvent (SystemEvent.SYSTEM, false, false, event.value);
 		__dispatchEvent (event);
@@ -811,7 +811,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function __onTouch (event:Dynamic, type:String, touchInfo:TouchInfo):Void {
+	@:noCompletion private function __onTouch (event:Dynamic, type:String, touchInfo:TouchInfo):Void {
 		
 		var stack = new Array<InteractiveObject> ();
 		var object = __findByID (event.id);
@@ -858,7 +858,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __pollTimers ():Void {
+	@:noCompletion public function __pollTimers ():Void {
 		
 		Timer.__checkTimers ();
 		SoundChannel.__pollComplete ();
@@ -868,7 +868,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __render (sendEnterFrame:Bool):Void {
+	@:noCompletion public function __render (sendEnterFrame:Bool):Void {
 		
 		if (!active) {
 			
@@ -894,7 +894,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __setActive (value:Bool):Void {
+	@:noCompletion public function __setActive (value:Bool):Void {
 		
 		if (active != value) {
 			
@@ -920,7 +920,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __startDrag (sprite:Sprite, lockCenter:Bool, bounds:Rectangle):Void {
+	@:noCompletion public function __startDrag (sprite:Sprite, lockCenter:Bool, bounds:Rectangle):Void {
 		
 		__dragBounds = (bounds == null) ? null : bounds.clone ();
 		__dragObject = sprite;
@@ -953,7 +953,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __stopDrag (sprite:Sprite):Void {
+	@:noCompletion public function __stopDrag (sprite:Sprite):Void {
 		
 		__dragBounds = null;
 		__dragObject = null;
@@ -961,7 +961,7 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	public function __updateNextWake ():Float {
+	@:noCompletion public function __updateNextWake ():Float {
 		
 		var nextWake = Timer.__nextWake (315000000.0);
 		

@@ -32,7 +32,7 @@ class Bitmap extends DisplayObject {
 	}
 	
 	
-	private function __rebuild ():Void {
+	@:noCompletion private function __rebuild ():Void {
 		
 		if (__handle != null) {
 			

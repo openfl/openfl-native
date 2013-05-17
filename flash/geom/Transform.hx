@@ -13,7 +13,7 @@ class Transform {
 	public var matrix (get, set):Matrix;
 	public var pixelBounds (get, null):Rectangle;
 	
-	private var __parent:DisplayObject;
+	@:noCompletion private var __parent:DisplayObject;
 	
 	
 	public function new (parent:DisplayObject) {

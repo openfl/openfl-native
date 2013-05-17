@@ -14,8 +14,8 @@ class Timer extends EventDispatcher {
 	public var repeatCount:Int;
 	public var running:Bool;
 	
-	private var __delay:Float;
-	private var __timer:haxe.Timer;
+	@:noCompletion private var __delay:Float;
+	@:noCompletion private var __timer:haxe.Timer;
 	
 	
 	public function new (delay:Float, repeatCount:Int = 0) {

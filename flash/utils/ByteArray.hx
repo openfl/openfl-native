@@ -661,7 +661,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	}
 	
 	
-	private inline function __fromBytes (bytes:Bytes):Void {
+	@:noCompletion private inline function __fromBytes (bytes:Bytes):Void {
 		
 		b = bytes.b;
 		length = bytes.length;
@@ -673,7 +673,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	}
 	
 	
-	@:keep inline public function __get (pos:Int):Int {
+	@:noCompletion @:keep inline public function __get (pos:Int):Int {
 		
 		#if cpp
 		return untyped b[pos];
@@ -686,7 +686,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	
 	#if !no_nme_io
 	
-	private static function __init__ ():Void {
+	@:noCompletion private static function __init__ ():Void {
 		
 		var factory = function (length:Int) { return new ByteArray (length); };
 		var resize = function (bytes:ByteArray, length:Int):Void {
@@ -712,7 +712,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	#end
 	
 	
-	@:keep inline public function __set (pos:Int, v:Int):Void {
+	@:noCompletion @:keep inline public function __set (pos:Int, v:Int):Void {
 		
 		#if cpp
 		untyped b[pos] = v;
@@ -723,7 +723,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	}
 	
 	
-	private function __throwEOFi ():Int {
+	@:noCompletion private function __throwEOFi ():Int {
 		
 		throw new EOFError ();
 		return 0;

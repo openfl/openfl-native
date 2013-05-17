@@ -58,8 +58,8 @@ class UInt8Array extends ArrayBufferView implements ArrayAccess<Int> {
 	}
 	
 	
-	@:keep inline public function __get (index:Int):Int { return getUInt8 (index); }
-	@:keep inline public function __set (index:Int, value:Int):Void { setUInt8 (index, value); }
+	@:noCompletion @:keep inline public function __get (index:Int):Int { return getUInt8 (index); }
+	@:noCompletion @:keep inline public function __set (index:Int, value:Int):Void { setUInt8 (index, value); }
 	
 	
 }

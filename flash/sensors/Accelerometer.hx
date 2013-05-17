@@ -15,8 +15,8 @@ class Accelerometer extends EventDispatcher {
 	
 	public var muted (default, null):Bool;
 	
-	private static var __defaultInterval:Int = 34;
-	private var __timer:Timer;
+	@:noCompletion private static var __defaultInterval:Int = 34;
+	@:noCompletion private var __timer:Timer;
 	
 	
 	public function new () {
@@ -64,7 +64,7 @@ class Accelerometer extends EventDispatcher {
 	}
 	
 	
-	private function __update ():Void {
+	@:noCompletion private function __update ():Void {
 		
 		var event = new AccelerometerEvent (AccelerometerEvent.UPDATE);
 		var data = nme_input_get_acceleration ();

@@ -35,7 +35,7 @@ class TouchEvent extends MouseEvent {
 	}
 	
 	
-	public static function __create (type:String, event:Dynamic, local:Point, target:InteractiveObject, sizeX:Float, sizeY:Float):TouchEvent {
+	@:noCompletion public static function __create (type:String, event:Dynamic, local:Point, target:InteractiveObject, sizeX:Float, sizeY:Float):TouchEvent {
 		
 		var flags:Int = event.flags;
 		var touchEvent = new TouchEvent (type, true, false, local.x, local.y, sizeX, sizeY, null, (flags & MouseEvent.efCtrlDown) != 0, (flags & MouseEvent.efAltDown) != 0, (flags & MouseEvent.efShiftDown) != 0, (flags & MouseEvent.efLeftDown) != 0, 0, 0);
@@ -47,7 +47,7 @@ class TouchEvent extends MouseEvent {
 	}
 	
 	
-	override public function __createSimilar (type:String, related:InteractiveObject = null, target:InteractiveObject = null):MouseEvent {
+	@:noCompletion override public function __createSimilar (type:String, related:InteractiveObject = null, target:InteractiveObject = null):MouseEvent {
 		
 		var touchEvent = new TouchEvent (type, bubbles, cancelable, localX, localY, sizeX, sizeY, related == null ? relatedObject : related, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, clickCount);
 		

@@ -9,8 +9,8 @@ class MovieClip extends Sprite {
 	public var framesLoaded (get, null):Int;
 	public var totalFrames (get, null):Int;
 	
-	private var __currentFrame:Int;
-	private var __totalFrames:Int;
+	@:noCompletion private var __currentFrame:Int;
+	@:noCompletion private var __totalFrames:Int;
 	
 	
 	public function new () {
@@ -44,7 +44,7 @@ class MovieClip extends Sprite {
 	}
 	
 	
-	override private function __getType ():String {
+	@:noCompletion override private function __getType ():String {
 		
 		return "MovieClip";
 		

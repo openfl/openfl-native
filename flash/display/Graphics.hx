@@ -18,7 +18,7 @@ class Graphics {
 	public static inline var TILE_BLEND_NORMAL = 0x00000000;
 	public static inline var TILE_BLEND_ADD = 0x00010000;
 	
-	private var __handle:Dynamic;
+	@:noCompletion private var __handle:Dynamic;
 	
 	
 	public function new (handle:Dynamic) {
@@ -213,7 +213,7 @@ class Graphics {
 	}
 	
 	
-	@:deprecated public static inline function RGBA (rgb:Int, alpha:Int = 0xff):Int {
+	@:noCompletion @:deprecated public static inline function RGBA (rgb:Int, alpha:Int = 0xff):Int {
 		
 		return rgb | (alpha << 24);
 		

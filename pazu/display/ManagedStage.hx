@@ -88,7 +88,7 @@ class ManagedStage extends Stage {
 	}
 	
 	
-	override function __doProcessStageEvent (event:Dynamic):Float {
+	@:noCompletion override function __doProcessStageEvent (event:Dynamic):Float {
 		
 		__pollTimers ();
 		
@@ -100,7 +100,7 @@ class ManagedStage extends Stage {
 	}
 	
 	
-	override public function __render (sendEnterFrame:Bool):Void {
+	@:noCompletion override public function __render (sendEnterFrame:Bool):Void {
 		
 		beginRender ();
 		super.__render (sendEnterFrame);

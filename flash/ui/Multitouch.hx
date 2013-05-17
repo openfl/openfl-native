@@ -15,7 +15,7 @@ class Multitouch {
 	public static var supportsTouchEvents (get, null):Bool;
 	
 	
-	public static function __init__():Void {
+	@:noCompletion public static function __init__():Void {
 		
 		maxTouchPoints = 2;
 		supportedGestures = [];

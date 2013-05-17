@@ -20,8 +20,8 @@ class Tilesheet {
 	public static inline var TILE_BLEND_NORMAL = 0x00000000;
 	public static inline var TILE_BLEND_ADD = 0x00010000;
 	
-	public var __bitmap:BitmapData;
-	public var __handle:Dynamic;
+	@:noCompletion public var __bitmap:BitmapData;
+	@:noCompletion public var __handle:Dynamic;
 	
 	
 	public function new (image:BitmapData) {

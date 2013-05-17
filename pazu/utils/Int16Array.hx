@@ -71,8 +71,8 @@ class Int16Array extends ArrayBufferView implements ArrayAccess<Int> {
 	}
 	
 	
-	@:keep inline public function __get (index:Int):Int { return getInt16 (index << 1); }
-	@:keep inline public function __set (index:Int, value:Int):Void { setInt16 (index << 1, value); }
+	@:noCompletion @:keep inline public function __get (index:Int):Int { return getInt16 (index << 1); }
+	@:noCompletion @:keep inline public function __set (index:Int, value:Int):Void { setInt16 (index << 1, value); }
 	
 	
 }

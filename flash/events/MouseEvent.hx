@@ -83,7 +83,7 @@ class MouseEvent extends Event {
 	}
 	
 	
-	public static function __create (type:String, event:Dynamic, local:Point, target:InteractiveObject):MouseEvent {
+	@:noCompletion public static function __create (type:String, event:Dynamic, local:Point, target:InteractiveObject):MouseEvent {
 		
 		var flags:Int = event.flags;
 		var mouseEvent = new MouseEvent (type, true, true, local.x, local.y, null, (flags & efCtrlDown) != 0, (flags & efAltDown) != 0, (flags & efShiftDown) != 0, (flags & efLeftDown) != 0, 0, 0);
@@ -95,7 +95,7 @@ class MouseEvent extends Event {
 	}
 	
 	
-	public function __createSimilar (type:String, related:InteractiveObject = null, target:InteractiveObject = null):MouseEvent {
+	@:noCompletion public function __createSimilar (type:String, related:InteractiveObject = null, target:InteractiveObject = null):MouseEvent {
 		
 		var mouseEvent = new MouseEvent (type, bubbles, cancelable, localX, localY, related == null ? relatedObject : related, ctrlKey, altKey, shiftKey, buttonDown, delta, commandKey, clickCount);
 		

@@ -34,8 +34,8 @@ class BitmapData implements IBitmapDrawable {
 	public var transparent (get, null):Bool;
 	public var width (get, null):Int;
 	
-	public var __handle:Dynamic;
-	private var __transparent:Bool;
+	@:noCompletion public var __handle:Dynamic;
+	@:noCompletion private var __transparent:Bool;
 	
 	
 	public function new (width:Int, height:Int, transparent:Bool = true, fillColor:Int = 0xFFFFFFFF, gpuMode:Null<Bool> = null) {
@@ -503,6 +503,9 @@ class BitmapData implements IBitmapDrawable {
 			
 			var thresholdMask:Int = cast threshold & mask;
 			
+			var hey = new flash.display.Sprite();
+			hey.
+			
 			var position:Int, pixelMask:Int, pixelValue, i, test;
 			
 			for (yy in 0...dh) {
@@ -556,28 +559,28 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
-	public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
+	@:noCompletion public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
 		
 		nme_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
 		
 	}
 	
 	
-	private static inline function __flipPixel (pixel:Int):Int {
+	@:noCompletion private static inline function __flipPixel (pixel:Int):Int {
 		
 		return (pixel & 0xFF) << 24 | (pixel >>  8 & 0xFF) << 16 | (pixel >> 16 & 0xFF) <<  8 | (pixel >> 24 & 0xFF);
 		
 	}
 	
 	
-	private inline function __loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):Void {
+	@:noCompletion private inline function __loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):Void {
 		
 		__handle = nme_bitmap_data_from_bytes (bytes, rawAlpha);
 		
 	}
 	
 	
-	static public function __ucompare (n1:Int, n2:Int) : Int {
+	@:noCompletion static public function __ucompare (n1:Int, n2:Int) : Int {
 		
 		var tmp1 : Int;
 		var tmp2 : Int;

@@ -36,11 +36,11 @@ class Lib {
 	public static var stage (get, null):Stage;
 	static public var version (default, null):String;
 	
-	private static var __current:MovieClip = null;
-	private static var __isInit = false;
-	private static var __mainFrame:Dynamic = null;
-	private static var __moduleNames:Map<String, String> = null;
-	private static var __stage:Stage = null;
+	@:noCompletion private static var __current:MovieClip = null;
+	@:noCompletion private static var __isInit = false;
+	@:noCompletion private static var __mainFrame:Dynamic = null;
+	@:noCompletion private static var __moduleNames:Map<String, String> = null;
+	@:noCompletion private static var __stage:Stage = null;
 	
 	
 	public inline static function as<T> (v:Dynamic, c:Class<T>):Null<T> {
@@ -408,7 +408,7 @@ class Lib {
 	}
 	
 	
-	public static function __setCurrentStage (stage:Stage):Void {
+	@:noCompletion public static function __setCurrentStage (stage:Stage):Void {
 		
 		__stage = stage;
 		
