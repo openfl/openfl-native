@@ -234,12 +234,14 @@ class BitmapData implements IBitmapDrawable {
 		var data = bitmapData.getPixels (new Rectangle (0, 0, bitmapData.width, bitmapData.height));
 		var size = bitmapData.width * bitmapData.height;
 		
+		var alpha, red, green, blue;
+		
 		for (i in 0...size) {
 			
-			var alpha = data[i * 4];
-			var red = data[i * 4 + 1];
-			var green = data[i * 4 + 2];
-			var blue = data[i * 4 + 3];
+			alpha = data[i * 4];
+			red = data[i * 4 + 1];
+			green = data[i * 4 + 2];
+			blue = data[i * 4 + 3];
 			
 			data[i * 4] = red;
 			data[i * 4 + 1] = green;
@@ -786,73 +788,75 @@ class OptimizedPerlin {
 		var aOctFreq = aOctFreq;
 		var aOctPers = aOctPers;
 		
+		var s, fFreq, fPers, x, y, z, xf, yf, zf, X, Y, Z, u, v, w, A, AA, AB, BA, BB, x1, y1, z1, hash, g1, g2, g3, g4, g5, g6, g7, g8, color, pixel;
+		
 		for (py in 0...height) {
 			
 			_x = baseX;
 			
 			for (px in 0...width) {
 				
-				var s = 0.;
+				s = 0.;
 				
 				for (i in 0...octaves) {
 					
-					var fFreq = aOctFreq[i];
-					var fPers = aOctPers[i];
+					fFreq = aOctFreq[i];
+					fPers = aOctPers[i];
 					
-					var x = _x * fFreq;
-					var y = _y * fFreq;
-					var z = _z * fFreq;
+					x = _x * fFreq;
+					y = _y * fFreq;
+					z = _z * fFreq;
 					
-					var xf = x - (x % 1);
-					var yf = y - (y % 1);
-					var zf = z - (z % 1);
+					xf = x - (x % 1);
+					yf = y - (y % 1);
+					zf = z - (z % 1);
 					
-					var X = Std.int (xf) & 255;
-					var Y = Std.int (yf) & 255;
-					var Z = Std.int (zf) & 255;
+					X = Std.int (xf) & 255;
+					Y = Std.int (yf) & 255;
+					Z = Std.int (zf) & 255;
 					
 					x -= xf;
 					y -= yf;
 					z -= zf;
 					
-					var u = x * x * x * (x * (x*6 - 15) + 10);
-					var v = y * y * y * (y * (y*6 - 15) + 10);
-					var w = z * z * z * (z * (z*6 - 15) + 10);
+					u = x * x * x * (x * (x*6 - 15) + 10);
+					v = y * y * y * (y * (y*6 - 15) + 10);
+					w = z * z * z * (z * (z*6 - 15) + 10);
 					
-					var A  =(p[X]) + Y;
-					var AA =(p[A]) + Z;
-					var AB =(p[A+1]) + Z;
-					var B  =(p[X+1]) + Y;
-					var BA =(p[B]) + Z;
-					var BB =(p[B+1]) + Z;
+					A  =(p[X]) + Y;
+					AA =(p[A]) + Z;
+					AB =(p[A+1]) + Z;
+					B  =(p[X+1]) + Y;
+					BA =(p[B]) + Z;
+					BB =(p[B+1]) + Z;
 					
-					var x1 = x - 1;
-					var y1 = y - 1;
-					var z1 = z - 1;
+					x1 = x - 1;
+					y1 = y - 1;
+					z1 = z - 1;
 					
-					var hash =(p[BB+1]) & 15;
-					var g1 = ((hash & 1) == 0 ?(hash < 8 ? x1 : y1) :(hash < 8 ? -x1 : -y1)) + ((hash & 2) == 0 ? hash < 4 ? y1 :( hash == 12 ? x1 : z1 ) : hash < 4 ? -y1 :( hash == 14 ? -x1 : -z1 ));
+					hash =(p[BB+1]) & 15;
+					g1 = ((hash & 1) == 0 ?(hash < 8 ? x1 : y1) :(hash < 8 ? -x1 : -y1)) + ((hash & 2) == 0 ? hash < 4 ? y1 :( hash == 12 ? x1 : z1 ) : hash < 4 ? -y1 :( hash == 14 ? -x1 : -z1 ));
 					
 					hash =(p[AB+1]) & 15;
-					var g2 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z1 ) : hash<4 ? -y1 :( hash==14 ? -x : -z1 ));
+					g2 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z1 ) : hash<4 ? -y1 :( hash==14 ? -x : -z1 ));
 					
 					hash =(p[BA+1]) & 15;
-					var g3 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z1 ) : hash<4 ? -y  :( hash==14 ? -x1 : -z1 ));
+					g3 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z1 ) : hash<4 ? -y  :( hash==14 ? -x1 : -z1 ));
 					
 					hash =(p[AA+1]) & 15;
-					var g4 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z1 ) : hash<4 ? -y  :( hash==14 ? -x  : -z1 ));
+					g4 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z1 ) : hash<4 ? -y  :( hash==14 ? -x  : -z1 ));
 					
 					hash =(p[BB]) & 15;
-					var g5 =((hash&1) == 0 ?(hash<8 ? x1 : y1) :(hash<8 ? -x1 : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x1 : z  ) : hash<4 ? -y1 :( hash==14 ? -x1 : -z  ));
+					g5 =((hash&1) == 0 ?(hash<8 ? x1 : y1) :(hash<8 ? -x1 : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x1 : z  ) : hash<4 ? -y1 :( hash==14 ? -x1 : -z  ));
 					
 					hash =(p[AB]) & 15;
-					var g6 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z  ) : hash<4 ? -y1 :( hash==14 ? -x  : -z  ));
+					g6 =((hash&1) == 0 ?(hash<8 ? x  : y1) :(hash<8 ? -x  : -y1)) + ((hash&2) == 0 ? hash<4 ? y1 :( hash==12 ? x  : z  ) : hash<4 ? -y1 :( hash==14 ? -x  : -z  ));
 					
 					hash =(p[BA]) & 15;
-					var g7 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z  ) : hash<4 ? -y  :( hash==14 ? -x1 : -z  ));
+					g7 =((hash&1) == 0 ?(hash<8 ? x1 : y ) :(hash<8 ? -x1 : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x1 : z  ) : hash<4 ? -y  :( hash==14 ? -x1 : -z  ));
 					
 					hash =(p[AA]) & 15;
-					var g8 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z  ) : hash<4 ? -y  :( hash==14 ? -x  : -z  ));
+					g8 =((hash&1) == 0 ?(hash<8 ? x  : y ) :(hash<8 ? -x  : -y )) + ((hash&2) == 0 ? hash<4 ? y  :( hash==12 ? x  : z  ) : hash<4 ? -y  :( hash==14 ? -x  : -z  ));
 					
 					g2 += u * (g1 - g2);
 					g4 += u * (g3 - g4);
@@ -866,8 +870,8 @@ class OptimizedPerlin {
 					
 				}
 				
-				var color = Std.int (( s * fPersMax + 1 ) * 128);
-				var pixel = 0xff000000 | color << 16 | color << 8 | color;
+				color = Std.int (( s * fPersMax + 1 ) * 128);
+				pixel = 0xff000000 | color << 16 | color << 8 | color;
 				
 				bitmap.setPixel32 (px, py, pixel);
 				

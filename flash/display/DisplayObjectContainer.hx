@@ -256,9 +256,11 @@ class DisplayObjectContainer extends InteractiveObject {
 			
 		}
 		
+		var found;
+		
 		for (child in __children) {
 			
-			var found = child.__findByID (id);
+			found = child.__findByID (id);
 			
 			if (found != null) {
 				
@@ -292,19 +294,13 @@ class DisplayObjectContainer extends InteractiveObject {
 	
 	public override function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
 		
-		Sys.println ("hello");
 		super.__getObjectsUnderPoint (point, result);
 		
-		Sys.println (__children);
-		
 		for (child in __children) {
-			Sys.println ("child " + child);
+			
 			child.__getObjectsUnderPoint (point, result);
 			
 		}
-		
-		Sys.println (point);
-		Sys.println (result);
 		
 	}
 	

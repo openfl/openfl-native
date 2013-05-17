@@ -142,12 +142,13 @@ class EventDispatcher implements IEventDispatcher {
 		}
 		
 		var list = __eventMap.get (type);
+		var item;
 		
 		for (i in 0...list.length) {
 			
 			if (list[i] != null) {
 				
-				var item = list[i].get ();
+				item = list[i].get ();
 				if (item != null && item.is (listener, capture)) {
 					
 					list[i] = null;
