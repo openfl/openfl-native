@@ -119,8 +119,27 @@ class DisplayObjectContainer extends InteractiveObject {
 	
 	public function getObjectsUnderPoint (point:Point):Array<DisplayObject> {
 		
+		// The backend currently requires objecfts to be on the stage to pass a hit test
+		var onStage = (stage != null);
+		var cacheVisible = visible;
+		
+		if (!onStage) {
+			
+			visible = false;
+			Lib.stage.addChild (this);
+			
+		}
+		
 		var result = new Array<DisplayObject> ();
 		__getObjectsUnderPoint (point, result);
+		
+		if (!onStage) {
+			
+			Lib.stage.removeChild (this);
+			visible = cacheVisible;
+			
+		}
+		
 		return result;
 		
 	}

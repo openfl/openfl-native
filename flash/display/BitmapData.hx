@@ -50,8 +50,15 @@ class BitmapData implements IBitmapDrawable {
 			
 			var flags = HARDWARE;
 			if (transparent) flags |= TRANSPARENT;
+			var alpha = fillColor >>> 24;
 			
-			__handle = nme_bitmap_data_create (width, height, flags, fillColor & 0xFFFFFF, fillColor >>> 24, gpuMode);
+			if (transparent && alpha == 0) {
+				
+				fillColor = 0;
+				
+			}
+			
+			__handle = nme_bitmap_data_create (width, height, flags, fillColor & 0xFFFFFF, alpha, gpuMode);
 			
 		}
 		

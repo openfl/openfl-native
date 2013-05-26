@@ -39,6 +39,7 @@ class EventDispatcher implements IEventDispatcher {
 		}
 		
 		list.push (new WeakRef<Listener> (new Listener (listener, useCapture, priority), useWeakReference));
+		list.sort (__sortEvents);
 		
 	}
 	
@@ -195,6 +196,36 @@ class EventDispatcher implements IEventDispatcher {
 	@:noCompletion public function __dispatchIOErrorEvent ():Void {
 		
 		dispatchEvent (new IOErrorEvent (IOErrorEvent.IO_ERROR));
+		
+	}
+	
+	
+	@:noCompletion private static inline function __sortEvents (a:WeakRef<Listener>, b:WeakRef<Listener>):Int {
+		
+		if (a == null || b == null) { 
+			
+			return 0;
+			
+		}
+		
+		var al = a.get ();
+		var bl = b.get ();
+		
+		if (al == null || bl == null) {
+			
+			return 0;
+			
+		}
+		
+		if (al.priority == bl.priority) { 
+			
+			return al.id == bl.id ? 0 : ( al.id > bl.id ? 1 : -1 );
+			
+		} else {
+		
+			return al.priority < bl.priority ? 1 : -1;
+			
+		}
 		
 	}
 	
