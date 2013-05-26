@@ -11,7 +11,7 @@ import flash.Lib;
 import haxe.io.Bytes;
 
 
-@:autoBuild(pazu.Assets.embedBitmap())
+@:autoBuild(openfl.Assets.embedBitmap())
 class BitmapData implements IBitmapDrawable {
 	
 	

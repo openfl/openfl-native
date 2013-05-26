@@ -2,7 +2,7 @@
 -cp ::BUILD_DIR::/emscripten/haxe
 -cpp ::CPP_DIR::
 --macro allowPackage("flash")
--lib pazu-native
+-lib openfl-native
 -D emscripten
 -D webgl
 -debug

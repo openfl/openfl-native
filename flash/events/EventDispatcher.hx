@@ -3,7 +3,7 @@ package flash.events;
 
 import flash.events.Event;
 import flash.events.IEventDispatcher;
-import pazu.utils.WeakRef;
+import openfl.utils.WeakRef;
 
 
 class EventDispatcher implements IEventDispatcher {

@@ -3,7 +3,7 @@ package flash.display;
 
 import flash.geom.Matrix;
 import flash.Lib;
-import pazu.display.Tilesheet;
+import openfl.display.Tilesheet;
 
 
 class Graphics {

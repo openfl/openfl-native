@@ -1,4 +1,4 @@
-import pazu.Assets;
+import openfl.Assets;
 
 #if (!macro || !haxe3)
 class ApplicationMain
@@ -7,7 +7,7 @@ class ApplicationMain
 	#if waxe
 	static public var frame : wx.Frame;
 	static public var autoShowFrame : Bool = true;
-	#if pazu
+	#if openfl
 	static public var nmeStage : wx.NMEStage;
 	#end
 	#end
@@ -20,7 +20,7 @@ class ApplicationMain
 	
 	public static function main()
 	{
-		#if pazu
+		#if openfl
 		flash.Lib.setPackage("::APP_COMPANY::", "::APP_FILE::", "::APP_PACKAGE::", "::APP_VERSION::");
 		::if (sslCaCert != "")::
 		flash.net.URLLoader.initialize(flash.installer.Assets.getResourceName("::sslCaCert::"));
@@ -35,7 +35,7 @@ class ApplicationMain
 			::else::
 			frame = wx.Frame.create(null, null, "::APP_TITLE::", null, { width: ::WIN_WIDTH::, height: ::WIN_HEIGHT:: });
 			::end::
-			#if pazu
+			#if openfl
 			var stage = wx.NMEStage.create(frame, null, null, { width: ::WIN_WIDTH::, height: ::WIN_HEIGHT:: });
 			#end
 			
@@ -120,7 +120,7 @@ class ApplicationMain
 				else
 				{
 					var instance = Type.createInstance(DocumentClass, []);
-					#if pazu
+					#if openfl
 					if (Std.is (instance, flash.display.DisplayObject)) {
 						flash.Lib.current.addChild(cast instance);
 					}
@@ -157,22 +157,22 @@ class ApplicationMain
 	
 	public static function applyScale(?_) {
 		
-		var xScale:Float = untyped(flash.Lib.current.stage).nmeStageWidth / forceWidth;
-		var yScale:Float = untyped(flash.Lib.current.stage).nmeStageHeight / forceHeight;
+		var xScale:Float = untyped(flash.Lib.current.stage).stageWidth / forceWidth;
+		var yScale:Float = untyped(flash.Lib.current.stage).stageHeight / forceHeight;
 		
 		if ( xScale < yScale ) {
 			
 			flash.Lib.current.scaleX = xScale;
 			flash.Lib.current.scaleY = xScale;
-			flash.Lib.current.x = (untyped(flash.Lib.current.stage).nmeStageWidth - (forceWidth * xScale)) / 2;
-			flash.Lib.current.y = (untyped(flash.Lib.current.stage).nmeStageHeight - (forceHeight * xScale)) / 2;
+			flash.Lib.current.x = (untyped(flash.Lib.current.stage).stageWidth - (forceWidth * xScale)) / 2;
+			flash.Lib.current.y = (untyped(flash.Lib.current.stage).stageHeight - (forceHeight * xScale)) / 2;
 			
 		} else {
 			
 			flash.Lib.current.scaleX = yScale;
 			flash.Lib.current.scaleY = yScale;
-			flash.Lib.current.x = (untyped(flash.Lib.current.stage).nmeStageWidth - (forceWidth * yScale)) / 2;
-			flash.Lib.current.y = (untyped(flash.Lib.current.stage).nmeStageHeight - (forceHeight * yScale)) / 2;
+			flash.Lib.current.x = (untyped(flash.Lib.current.stage).stageWidth - (forceWidth * yScale)) / 2;
+			flash.Lib.current.y = (untyped(flash.Lib.current.stage).stageHeight - (forceHeight * yScale)) / 2;
 			
 		}
 		
@@ -180,23 +180,23 @@ class ApplicationMain
 			
 			barA.graphics.clear();
 			barA.graphics.beginFill (0x000000);
-			barA.graphics.drawRect (0, 0, flash.Lib.current.x, untyped(flash.Lib.current.stage).nmeStageHeight);
+			barA.graphics.drawRect (0, 0, flash.Lib.current.x, untyped(flash.Lib.current.stage).stageHeight);
 			
 			barB.graphics.clear();
 			barB.graphics.beginFill (0x000000);
 			var x = flash.Lib.current.x + (forceWidth * flash.Lib.current.scaleX);
-			barB.graphics.drawRect (x, 0, untyped(flash.Lib.current.stage).nmeStageWidth - x, untyped(flash.Lib.current.stage).nmeStageHeight);
+			barB.graphics.drawRect (x, 0, untyped(flash.Lib.current.stage).stageWidth - x, untyped(flash.Lib.current.stage).stageHeight);
 			
 		} else {
 			
 			barA.graphics.clear();
 			barA.graphics.beginFill (0x000000);
-			barA.graphics.drawRect (0, 0, untyped(flash.Lib.current.stage).nmeStageWidth, flash.Lib.current.y);
+			barA.graphics.drawRect (0, 0, untyped(flash.Lib.current.stage).stageWidth, flash.Lib.current.y);
 			
 			barB.graphics.clear();
 			barB.graphics.beginFill (0x000000);
 			var y = flash.Lib.current.y + (forceHeight * flash.Lib.current.scaleY);
-			barB.graphics.drawRect (0, y, untyped(flash.Lib.current.stage).nmeStageWidth, untyped(flash.Lib.current.stage).nmeStageHeight - y);
+			barB.graphics.drawRect (0, y, untyped(flash.Lib.current.stage).stageWidth, untyped(flash.Lib.current.stage).stageHeight - y);
 			
 		}
 		

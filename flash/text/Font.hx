@@ -7,7 +7,7 @@ import flash.Lib;
 import haxe.Resource;
 
 
-@:autoBuild(pazu.Assets.embedFont())
+@:autoBuild(openfl.Assets.embedFont())
 class Font {
 	
 	

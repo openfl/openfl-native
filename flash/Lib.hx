@@ -7,7 +7,7 @@ import flash.display.Stage;
 import flash.net.URLRequest;
 import flash.Lib;
 import haxe.Timer;
-import pazu.display.ManagedStage;
+import openfl.display.ManagedStage;
 import sys.io.Process;
 
 
@@ -65,7 +65,7 @@ class Lib {
 	}
 	
 	
-	public static function create (onLoaded:Void->Void, width:Int, height:Int, frameRate:Float = 60.0, color:Int = 0xffffff, flags:Int = 0x0f, title:String = "Pazu", icon:BitmapData = null, stageClass:Class<Stage> = null):Void {
+	public static function create (onLoaded:Void->Void, width:Int, height:Int, frameRate:Float = 60.0, color:Int = 0xffffff, flags:Int = 0x0f, title:String = "OpenFL", icon:BitmapData = null, stageClass:Class<Stage> = null):Void {
 		
 		if (__isInit) {
 			
@@ -206,7 +206,7 @@ class Lib {
 		if (result == null) {
 			
 			var slash = (sysName ().substr (7).toLowerCase () == "windows") ? "\\" : "/";
-			var haxelib = findHaxeLib ("pazu-native");
+			var haxelib = findHaxeLib ("openfl-native");
 			
 			if (haxelib != "") {
 				
@@ -241,9 +241,9 @@ class Lib {
 		
 		#if cpp
 		var get_env = cpp.Lib.load ("std", "get_env", 1);
-		var debug = (get_env ("PAZU_LOAD_DEBUG") != null);
+		var debug = (get_env ("OPENFL_LOAD_DEBUG") != null);
 		#else
-		var debug = (Sys.getEnv ("PAZU_LOAD_DEBUG") !=null);
+		var debug = (Sys.getEnv ("OPENFL_LOAD_DEBUG") !=null);
 		#end
 		
 		if (debug) {

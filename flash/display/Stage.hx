@@ -15,8 +15,8 @@ import flash.ui.Keyboard;
 import flash.Lib;
 import flash.Vector;
 import haxe.Timer;
-import pazu.events.JoystickEvent;
-import pazu.events.SystemEvent;
+import openfl.events.JoystickEvent;
+import openfl.events.SystemEvent;
 
 
 class Stage extends DisplayObjectContainer {

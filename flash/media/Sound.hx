@@ -12,7 +12,7 @@ import flash.utils.Endian;
 import flash.Lib;
 
 
-@:autoBuild(pazu.Assets.embedSound())
+@:autoBuild(openfl.Assets.embedSound())
 class Sound extends EventDispatcher {
 	
 	

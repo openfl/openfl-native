@@ -6,7 +6,7 @@ import flash.utils.CompressionAlgorithm;
 import flash.Lib;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
-import pazu.utils.IMemoryRange;
+import openfl.utils.IMemoryRange;
 
 #if neko
 import neko.zip.Compress;
@@ -19,7 +19,7 @@ import cpp.zip.Flush;
 #end
 
 
-@:autoBuild(pazu.Assets.embedFile())
+@:autoBuild(openfl.Assets.embedFile())
 class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput implements IMemoryRange {
 	
 
