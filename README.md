@@ -1,5 +1,11 @@
-openfl-native
-=============
+Install
+-------
+
+https://github.com/openfl/openfl/wiki/Get-Started
+
+
+Development Build
+-----------------
 
     git clone https://github.com/openfl/openfl-native
     git clone https://github.com/haxenme/NME nme
