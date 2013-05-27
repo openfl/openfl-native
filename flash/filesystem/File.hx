@@ -4,7 +4,7 @@ package flash.filesystem;
 import flash.Lib;
 
 #if android
-import flash.JNI;
+import openfl.utils.JNI;
 #end
 
 
