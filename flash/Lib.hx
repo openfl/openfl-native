@@ -222,7 +222,7 @@ class Lib {
 			
 		}
 		
-		loaderTrace ("Result : " + result );
+		loaderTrace ("Result : " + result);
 		
 		#if neko
 		if (library == "nme") {
@@ -272,7 +272,7 @@ class Lib {
 		try {
 			
 			#if cpp
-			var result =  cpp.Lib.load (name, func, args);
+			var result = cpp.Lib.load (name, func, args);
 			#elseif (neko)
 			var result = neko.Lib.load (name, func, args);
 			#else
