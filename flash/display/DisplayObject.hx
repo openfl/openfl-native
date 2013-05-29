@@ -326,11 +326,10 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	
 	
 	@:noCompletion public function __getObjectsUnderPoint (point:Point, result:Array<DisplayObject>):Void {
-		Sys.println("Hey, " + (__handle == null));
+		
 		if (nme_display_object_hit_test_point (__handle, point.x, point.y, true, false)) {
 			
 			result.push (this);
-			Sys.println ("found");
 			
 		}
 		

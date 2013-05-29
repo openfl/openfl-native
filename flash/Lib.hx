@@ -167,9 +167,12 @@ class Lib {
 	
 	public static function load (library:String, method:String, args:Int = 0):Dynamic {
 		
-		if (__moduleNames == null) __moduleNames = new Map<String, String> ();
+		#if (iphone || emscripten || android)
+		return cpp.Lib.load (library, method, args);
+		#end
 		
-		if (__moduleNames.exists (library) #if (iphone || emscripten || android) || library == "nme" #end) {
+		if (__moduleNames == null) __moduleNames = new Map<String, String> ();
+		if (__moduleNames.exists (library)) {
 			
 			#if cpp
 			return cpp.Lib.load (__moduleNames.get (library), method, args);
