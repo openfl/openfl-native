@@ -25,4 +25,8 @@ The default "rebuild" will compile all binaries. You can add "-debug" and "-rele
 
 There is also a "-rebuild" flag you can use with other commands, for fast testing:
 
-    openfl test windows -rebuild 
+    openfl test windows -rebuild
+
+To return to a release build:
+
+    haxelib dev openfl-native
