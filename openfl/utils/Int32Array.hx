@@ -73,7 +73,7 @@ class Int32Array extends ArrayBufferView implements ArrayAccess<Int> {
 	
 	
 	@:noCompletion @:keep inline public function __get (index:Int):Int { return getInt32 (index << 2); }
-	@:noCompletion @:keep inline public function __set (index:Int, value:Int):Void { setInt32 (index << 2, value);
+	@:noCompletion @:keep inline public function __set (index:Int, value:Int):Void { setInt32 (index << 2, value); }
 	
 	
 }
