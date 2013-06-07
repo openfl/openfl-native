@@ -222,6 +222,7 @@ class ApplicationMain
 	         case FONT: return Assets.getFont(inName);
 	         case IMAGE: return Assets.getBitmapData(inName,false);
 	         case MUSIC, SOUND: return Assets.getSound(inName);
+			 default:
          }
 
       throw "Asset does not exist: " + inName;
