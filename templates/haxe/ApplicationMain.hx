@@ -1,5 +1,15 @@
 import openfl.Assets;
 
+#if display
+import ::APP_MAIN::;
+
+class ApplicationMain {
+	
+	public static function main () { }
+	
+}
+#else
+
 #if (!macro || !haxe3)
 class ApplicationMain
 {
@@ -305,4 +315,6 @@ class DocumentClass {
 	}
 	
 }
+
+#end
 #end
