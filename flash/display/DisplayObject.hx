@@ -570,7 +570,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 			
 			__filters = new Array<Dynamic> ();
 			
-			for (filter in filters) {
+			for (filter in value) {
 				
 				__filters.push (filter.clone ());
 				
