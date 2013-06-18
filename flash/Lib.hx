@@ -185,7 +185,7 @@ class Lib {
 		#if waxe
 		if (library == "nme") {
 			
-			wx.Lib.load ("nme", "wx_boot", 1);
+			flash.Lib.load ("waxe", "wx_boot", 1);
 			
 		}
 		#end

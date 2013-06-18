@@ -48,8 +48,25 @@ class ApplicationMain
 			#if openfl
 			var stage = wx.NMEStage.create(frame, null, null, { width: ::WIN_WIDTH::, height: ::WIN_HEIGHT:: });
 			#end
+
+			var hasMain = false;
+			for (methodName in Type.getClassFields(::APP_MAIN::)) {
+				if (methodName == "main") {
+					hasMain = true;
+					break;
+				}
+			}
 			
-			::APP_MAIN::.main();
+			if (hasMain) {
+				Reflect.callMethod(::APP_MAIN::, Reflect.field(::APP_MAIN::, "main"), []);
+			}else {
+				var instance = Type.createInstance(::APP_MAIN::, []);
+			}
+			
+			/*if (Reflect.hasField(::APP_MAIN::, "main")) {
+				::APP_MAIN::.main();			
+			}*/
+			
 			
 			if (autoShowFrame)
 			{
