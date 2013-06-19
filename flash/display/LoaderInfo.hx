@@ -6,12 +6,14 @@ import flash.events.EventDispatcher;
 import flash.net.URLLoader;
 import flash.net.URLLoaderDataFormat;
 import flash.net.URLRequest;
+import flash.system.ApplicationDomain;
 import flash.utils.ByteArray;
 
 
 class LoaderInfo extends URLLoader {
 	
 	
+	public var applicationDomain:ApplicationDomain;
 	public var bytes (get, null):ByteArray;
 	public var childAllowsParent (default, null):Bool;
 	public var content:DisplayObject;
@@ -34,6 +36,7 @@ class LoaderInfo extends URLLoader {
 		
 		super ();
 		
+		applicationDomain = ApplicationDomain.currentDomain;
 		childAllowsParent = true;
 		frameRate = 0;
 		dataFormat = URLLoaderDataFormat.BINARY;
