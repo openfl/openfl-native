@@ -658,7 +658,7 @@ class Stage extends DisplayObjectContainer {
 			}
 			
 			#if (windows || linux)
-			if (flags & efAltDown > 0 && event.result != -1 && event.code == Keyboard.ENTER) {
+			else if (flags & efAltDown > 0 && type == KeyboardEvent.KEY_DOWN && event.code == Keyboard.ENTER) {
 				
 				if (displayState == StageDisplayState.NORMAL) {
 					
