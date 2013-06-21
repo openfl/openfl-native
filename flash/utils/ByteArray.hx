@@ -100,6 +100,12 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var src = this;
 		#end
 		
+		if (algorithm == null) {
+			
+			algorithm = CompressionAlgorithm.ZLIB;
+			
+		}
+		
 		var result:Bytes;
 		
 		if (algorithm == CompressionAlgorithm.LZMA) {
