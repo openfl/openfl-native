@@ -418,6 +418,13 @@ class Lib {
 	}
 	
 	
+	public static function trace (arg:Dynamic):Void {
+		
+		trace (arg);
+		
+	}
+	
+	
 	
 	
 	// Getters & Setters
