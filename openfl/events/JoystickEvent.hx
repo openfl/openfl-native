@@ -30,7 +30,7 @@ class JoystickEvent extends Event {
 		this.y = y;
 		this.z = z;
 
-		axis = [ x, y, z ];
+		axis = [ x, y, z, 0, 0, 0 ];
 		
 	}
 	
