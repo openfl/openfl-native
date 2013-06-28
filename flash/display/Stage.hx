@@ -62,6 +62,9 @@ class Stage extends DisplayObjectContainer {
 	@:noCompletion private static var __mouseChanges:Array<String> = [ MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER ];
 	@:noCompletion private static var __touchChanges:Array<String> = [ TouchEvent.TOUCH_OUT, TouchEvent.TOUCH_OVER,	TouchEvent.TOUCH_ROLL_OUT, TouchEvent.TOUCH_ROLL_OVER ];
 	
+	#if android
+	@:noCompletion private var __hatValue:Int;
+	#end
 	@:noCompletion private var __joyAxisData:Map <Int, Array <Float>>;
 	@:noCompletion private var __dragBounds:Rectangle;
 	@:noCompletion private var __dragObject:Sprite;
@@ -87,6 +90,7 @@ class Stage extends DisplayObjectContainer {
 		pauseWhenDeactivated = true;
 		
 		#if android
+		__hatValue = 0;
 		renderRequest = nme_stage_request_render;
 		#else
 		renderRequest = null;
@@ -621,7 +625,47 @@ class Stage extends DisplayObjectContainer {
 				joystickEvent = new JoystickEvent (type, false, false, event.id, event.code, x, y);
 				
 			default:
+				
+				#if android
+				if (event.code >= 19 && event.code <= 22) {
+					
+					if (type == JoystickEvent.BUTTON_DOWN) {
+						
+						switch (event.code) {
+							
+							case 19: __hatValue |= 0x01; //up
+							case 20: __hatValue |= 0x04; //down
+							case 21: __hatValue |= 0x08; //left
+							case 22: __hatValue |= 0x02; //right
+							
+						}
+						
+					} else {
+						
+						switch (event.code) {
+							
+							case 19: __hatValue &= ~0x01; //up
+							case 20: __hatValue &= ~0x04; //down
+							case 21: __hatValue &= ~0x08; //left
+							case 22: __hatValue &= ~0x02; //right
+							
+						}
+						
+					}
+					
+					event.value = __hatValue;
+					__onJoystick (event, JoystickEvent.HAT_MOVE);
+					return;
+					
+				} else {
+					
+					event.code -= 96;
+					
+				}
+				#end
+				
 				joystickEvent = new JoystickEvent (type, false, false, event.id, event.code);
+			
 		}
 		
 		__dispatchEvent (joystickEvent);
