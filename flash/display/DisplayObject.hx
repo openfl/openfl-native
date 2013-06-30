@@ -562,7 +562,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	
 	private function set_filters (value:Array<Dynamic>):Array<Dynamic> {
 		
-		if (filters == null) {
+		if (filters == null || value == null) {
 			
 			__filters = null;
 			
