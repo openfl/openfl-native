@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [],
 	"description": "OpenFL support for native platforms",
-	"version": "1.0.3",
-	"releasenote": "OUYA update",
+	"version": "1.0.4",
+	"releasenote": "Android gamepad improvement",
 	"contributors": [ "singmajesty" ],
 	"dependencies": {}
 }
