@@ -272,7 +272,7 @@ class MainView extends GLSurfaceView {
 							
 							public void run () {
 								
-								me.HandleResult (NME.onJoyMotion (deviceId, axis, value));
+								me.HandleResult (NME.onJoyMotion (deviceId, axis, ((value - range.getMin ()) / (range.getRange ())) * 65535 - 32768));
 								
 							}
 							
@@ -310,17 +310,21 @@ class MainView extends GLSurfaceView {
 		
 		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22)) {
 			
-			final int deviceId = event.getDeviceId ();
-			
-			queueEvent (new Runnable () {
+			if (event.getRepeatCount () == 0) {
 				
-				public void run () {
-					
-					me.HandleResult (NME.onJoyChange (deviceId, inKeyCode, true));
-					
-				}
+				final int deviceId = event.getDeviceId ();
 				
-			});
+				queueEvent (new Runnable () {
+					
+					public void run () {
+						
+						me.HandleResult (NME.onJoyChange (deviceId, inKeyCode, true));
+						
+					}
+					
+				});
+				
+			}
 			
 			return true;
 			
@@ -355,17 +359,21 @@ class MainView extends GLSurfaceView {
 		
 		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22)) {
 			
-			final int deviceId = event.getDeviceId ();
-			
-			queueEvent (new Runnable () {
+			if (event.getRepeatCount () == 0) {
 				
-				public void run () {
-					
-					me.HandleResult (NME.onJoyChange (deviceId, inKeyCode, false));
-					
-				}
+				final int deviceId = event.getDeviceId ();
 				
-			});
+				queueEvent (new Runnable () {
+					
+					public void run () {
+						
+						me.HandleResult (NME.onJoyChange (deviceId, inKeyCode, false));
+						
+					}
+					
+				});
+				
+			}
 			
 			return true;
 			
