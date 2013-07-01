@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 ::if (ANDROID_TARGET_SDK_VERSION > 11)::import android.view.InputDevice;::end::
@@ -308,7 +309,7 @@ class MainView extends GLSurfaceView {
 		
 		final MainView me = this;
 		
-		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22)) {
+		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 && (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22))) {
 			
 			if (event.getRepeatCount () == 0) {
 				
@@ -357,7 +358,7 @@ class MainView extends GLSurfaceView {
 		
 		final MainView me = this;
 		
-		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22)) {
+		::if (ANDROID_TARGET_SDK_VERSION > 11)::if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1 && (event.isGamepadButton (inKeyCode) || (inKeyCode >= 19 && inKeyCode <= 22))) {
 			
 			if (event.getRepeatCount () == 0) {
 				
