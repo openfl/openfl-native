@@ -185,6 +185,14 @@ class Matrix #if cpp implements cpp.rtti.FieldNumericIntegerLookup #end {
 		
 	}
 	
+	public function setTo(a:Float, b:Float, c:Float, d:Float, tx:Float, ty:Float):Void {
+		this.a = a;
+		this.b = b;
+		this.c = c;
+		this.d = d;
+		this.tx = tx;
+		this.ty = ty;
+	}
 	
 	public function setRotation (angle:Float, scale:Float = 1):Void {
 		
