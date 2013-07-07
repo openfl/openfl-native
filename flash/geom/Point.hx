@@ -38,6 +38,13 @@ class Point {
 		
 	}
 	
+	public function setTo (x:Float, y:Float):Void {
+		
+		this.x = x;
+		this.y = y;
+		
+	}
+	
 	
 	public static function distance (pt1:Point, pt2:Point):Float {
 		
