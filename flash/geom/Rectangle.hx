@@ -225,6 +225,12 @@ class Rectangle {
 		
 	}
 	
+	public function copyFrom(sourceRect : Rectangle) : Void {
+		x = sourceRect.x;
+		y = sourceRect.y;
+		width = sourceRect.width;
+		height = sourceRect.height;
+	}
 	
 	public function union (toUnion:Rectangle):Rectangle {
 		
