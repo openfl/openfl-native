@@ -218,5 +218,8 @@ class Matrix #if cpp implements cpp.rtti.FieldNumericIntegerLookup #end {
 		
 	}
 	
+	public function toString():String {
+		return "Matrix(a=" + a + ", b=" + b + ", c=" + c + ", d=" + d + ", tx=" + tx + ", ty=" + ty + ")";
+	}
 	
 }
