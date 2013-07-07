@@ -110,7 +110,7 @@ class Point {
 	
 	public function toString ():String {
 		
-		return "(x=" + x + ", y=" + y + ")";
+		return "Point(x=" + x + ", y=" + y + ")";
 		
 	}
 	

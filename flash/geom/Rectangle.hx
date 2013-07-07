@@ -237,7 +237,7 @@ class Rectangle {
 	}
 	
 	public function toString():String {
-		return "(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
+		return "Rectangle(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
 	}
 	
 	
