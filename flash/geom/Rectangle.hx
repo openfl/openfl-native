@@ -63,6 +63,16 @@ class Rectangle {
 	}
 	
 	
+	public function copyFrom (sourceRect:Rectangle):Void {
+		
+		x = sourceRect.x;
+		y = sourceRect.y;
+		width = sourceRect.width;
+		height = sourceRect.height;
+		
+	}
+	
+	
 	public function equals (toCompare:Rectangle):Bool {
 		
 		return x == toCompare.x && y == toCompare.y && width == toCompare.width && height == toCompare.height;
@@ -193,6 +203,13 @@ class Rectangle {
 	}
 	
 	
+	public function toString ():String {
+		
+		return "(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
+		
+	}
+	
+	
 	public function transform (m:Matrix):Rectangle {
 		
 		var tx0 = m.a * x + m.c * y;
@@ -225,12 +242,6 @@ class Rectangle {
 		
 	}
 	
-	public function copyFrom(sourceRect : Rectangle) : Void {
-		x = sourceRect.x;
-		y = sourceRect.y;
-		width = sourceRect.width;
-		height = sourceRect.height;
-	}
 	
 	public function union (toUnion:Rectangle):Rectangle {
 		
@@ -240,10 +251,6 @@ class Rectangle {
 		var y1 = bottom < toUnion.bottom ? toUnion.bottom : bottom;
 		return new Rectangle (x0, y0, x1 - x0, y1 - y0);
 		
-	}
-	
-	public function toString():String {
-		return "Rectangle(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
 	}
 	
 	

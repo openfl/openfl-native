@@ -100,6 +100,94 @@ class Matrix3D {
 	}
 	
 	
+	public function copyColumnFrom (column:Int, vector3D:Vector3D):Void {
+		
+		if (column > 3) {
+			
+			throw "Column " + column + " out of bounds (3)";
+			
+		}
+		
+		rawData[0 + column] = vector3D.x;
+		rawData[4 + column] = vector3D.y;
+		rawData[8 + column] = vector3D.z;
+		rawData[12 + column] = vector3D.w;
+		
+	}
+	
+	
+	public function copyColumnTo (column:Int, vector3D:Vector3D):Void {
+		
+		if (column > 3) {
+			
+			throw "Column " + column + " out of bounds (3)";
+			
+		}
+		
+		vector3D.x = rawData[0 + column];
+		vector3D.y = rawData[4 + column];
+		vector3D.z = rawData[8 + column];
+		vector3D.w = rawData[12 + column];
+		
+	}
+	
+	
+	public function copyFrom (other:Matrix3D):Void {
+		
+		for (i in 0...16) {
+			
+			rawData[i] = other.rawData[i];
+			
+		}
+		
+	}
+	
+	
+	public function copyRowFrom (row:Int, vector3D:Vector3D):Void {
+		
+		if (row > 3) {
+			
+			throw "Row " + row + " out of bounds (3)";
+			
+		}
+		
+		var i = 4 * row;
+		rawData[i] = vector3D.x;
+		rawData[i + 1] = vector3D.y;
+		rawData[i + 2] = vector3D.z;
+		rawData[i + 3] = vector3D.w;
+		
+	}
+	
+	
+	public function copyRowTo (row:Int, vector3D:Vector3D):Void {
+		
+		if (row > 3) {
+			
+			throw "Row " + row + " out of bounds (3)";
+			
+		}
+		
+		var i = 4 * row;
+		vector3D.x = rawData[i];
+		vector3D.y = rawData[i + 1];
+		vector3D.z = rawData[i + 2];
+		vector3D.w = rawData[i + 3];
+		
+	}
+	
+	
+	public function copyToMatrix3D (other:Matrix3D):Void {
+		
+		for (i in 0...16) {
+			
+			other.rawData[i] = rawData[i];
+			
+		}
+		
+	}
+	
+	
 	public static function create2D (x:Float, y:Float, scale:Float = 1, rotation:Float = 0):Matrix3D {
 		
 		var theta = rotation * Math.PI / 180.0;
@@ -107,10 +195,10 @@ class Matrix3D {
 		var s = Math.sin (theta);
 		
 		return new Matrix3D ([
-			c*scale,  -s*scale, 0,  0,
-			s*scale,  c*scale, 0,  0,
-			0,		  0,		  1,  0,
-			x,		  y,		  0,  1
+			c * scale, -s * scale, 0, 0,
+			s * scale, c * scale, 0, 0,
+			0, 0, 1, 0,
+			x, y, 0, 1
 		]);
 		
 	}
@@ -122,7 +210,7 @@ class Matrix3D {
 			a, b, 0, 0,
 			c, d, 0, 0,
 			0, 0, 1, 0,
-			tx,ty,0, 1
+			tx, ty, 0, 1
 		]);
 		
 	}
@@ -135,10 +223,10 @@ class Matrix3D {
 		var sz = 1.0 / (zFar - zNear);
 		
 		return new Matrix3D ([
-			2.0*sx,		 0,			 0,					  0,
-			0,				2.0*sy,	  0,					  0,
-			0,				0,			 -2.0*sz,			  0,
-			- (x0+x1)*sx, - (y0+y1)*sy, - (zNear+zFar)*sz,  1,
+			2.0 * sx, 0, 0, 0,
+			0, 2.0 * sy, 0, 0,
+			0, 0, -2.0 * sz, 0,
+			-(x0 + x1) * sx, -(y0 + y1) * sy, -(zNear + zFar) * sz, 1
 		]);
 		
 	}
@@ -178,7 +266,7 @@ class Matrix3D {
 		mr[10] /= scale.z;
 		
 		var rot = new Vector3D ();
-		rot.y = Math.asin ( -mr[2]);
+		rot.y = Math.asin (-mr[2]);
 		var C = Math.cos (rot.y);
 		
 		if (C > 0) {
@@ -268,97 +356,6 @@ class Matrix3D {
 		
 	}
 	
-	public function copyFrom(other:Matrix3D):Void {
-		for (i in 0...16) 
-		{
-			rawData[i] = other.rawData[i];
-		}
-	}
-	
-	public function copyToMatrix3D(other:Matrix3D):Void {
-		for (i in 0...16) 
-		{
-			other.rawData[i] = rawData[i];
-		}
-	}
-	
-	public function copyColumnFrom(column:Int, vector3D:Vector3D):Void {
-		if (column > 3) throw "Column " + column + " out of bounds (3)";
-		rawData[0+column] = vector3D.x;
-		rawData[4+column] = vector3D.y;
-		rawData[8+column] = vector3D.z;
-		rawData[12+column] = vector3D.w;
-	}
-	
-	public function copyColumnTo(column:Int, vector3D:Vector3D):Void {
-		if (column > 3) throw "Column " + column + " out of bounds (3)";
-		vector3D.x = rawData[0+column];
-		vector3D.y = rawData[4+column];
-		vector3D.z = rawData[8+column];
-		vector3D.w = rawData[12+column];
-	}
-	
-	public function copyRowFrom(row:Int, vector3D:Vector3D):Void {
-		if (row > 3) throw "Row " + row + " out of bounds (3)";
-		var i:Int = 4 * row;
-		rawData[i] = vector3D.x;
-		rawData[i+1] = vector3D.y;
-		rawData[i+2] = vector3D.z;
-		rawData[i+3] = vector3D.w;
-	}
-	
-	public function copyRowTo(row:Int, vector3D:Vector3D):Void {
-		if (row > 3) throw "Row " + row + " out of bounds (3)";
-		var i:Int = 4 * row;
-		vector3D.x = rawData[i];
-		vector3D.y = rawData[i + 1];
-		vector3D.z = rawData[i + 2];
-		vector3D.w = rawData[i + 3];
-	}
-	
-	public function pointAt(pos:Vector3D, ?at:Vector3D, ?up:Vector3D):Void {
-		if (at == null) at = new Vector3D(0,0,-1);
-		if (up == null) up = new Vector3D(0,-1,0);
-		
-		var dir:Vector3D = at.subtract(pos);
-		var vup:Vector3D = up.clone();
-		var right:Vector3D;
-
-		dir.normalize();
-		vup.normalize();
-		
-		var dir2 = dir.clone();
-		dir2.scaleBy(vup.dotProduct(dir));
-		
-		vup = vup.subtract(dir2);
-		
-		if (vup.length > 0){
-			vup.normalize();
-		} else {
-			vup = dir.x != 0 ? new Vector3D(-dir.y,dir.x,0) : new Vector3D(1,0,0);
-		}
-
-		right = vup.crossProduct(dir);
-		right.normalize();
-
-		rawData[0] = right.x;
-		rawData[4] = right.y;
-		rawData[8] = right.z;
-		rawData[12] = 0.0;
-		rawData[1] = vup.x;
-		rawData[5] = vup.y;
-		rawData[9] = vup.z;
-		rawData[13] = 0.0;
-		rawData[2] = dir.x;
-		rawData[6] = dir.y;
-		rawData[10] = dir.z;
-		rawData[14] = 0.0;
-		rawData[3] = pos.x;
-		rawData[7] = pos.y;
-		rawData[11] = pos.z;
-		rawData[15] = 1.0;
-	}
-
 	
 	public static function interpolate (thisMat:Matrix3D, toMat:Matrix3D, percent:Float):Matrix3D {
 		
@@ -419,6 +416,73 @@ class Matrix3D {
 		}
 		
 		return invertable;
+		
+	}
+	
+	
+	public function pointAt (pos:Vector3D, at:Vector3D = null, up:Vector3D = null):Void {
+		
+		if (at == null) {
+			
+			at = new Vector3D (0, 0, -1);
+			
+		}
+		
+		if (up == null) {
+			
+			up = new Vector3D (0, -1, 0);
+			
+		}
+		
+		var dir = at.subtract(pos);
+		var vup = up.clone();
+		var right:Vector3D;
+		
+		dir.normalize ();
+		vup.normalize ();
+		
+		var dir2 = dir.clone ();
+		dir2.scaleBy (vup.dotProduct (dir));
+		
+		vup = vup.subtract (dir2);
+		
+		if (vup.length > 0) {
+			
+			vup.normalize ();
+			
+		} else {
+			
+			if (dir.x != 0) {
+				
+				vup = new Vector3D (-dir.y, dir.x, 0);
+				
+			} else {
+				
+				vup = new Vector3D (1, 0, 0);
+				
+			}
+			
+		}
+		
+		right = vup.crossProduct (dir);
+		right.normalize ();
+		
+		rawData[0] = right.x;
+		rawData[4] = right.y;
+		rawData[8] = right.z;
+		rawData[12] = 0.0;
+		rawData[1] = vup.x;
+		rawData[5] = vup.y;
+		rawData[9] = vup.z;
+		rawData[13] = 0.0;
+		rawData[2] = dir.x;
+		rawData[6] = dir.y;
+		rawData[10] = dir.z;
+		rawData[14] = 0.0;
+		rawData[3] = pos.x;
+		rawData[7] = pos.y;
+		rawData[11] = pos.z;
+		rawData[15] = 1.0;
 		
 	}
 	
