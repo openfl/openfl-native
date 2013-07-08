@@ -194,6 +194,15 @@ class Matrix #if cpp implements cpp.rtti.FieldNumericIntegerLookup #end {
 		this.ty = ty;
 	}
 	
+	public function copyFrom(other:Matrix):Void {
+		this.a = other.a;
+		this.b = other.b;
+		this.c = other.c;
+		this.d = other.d;
+		this.tx = other.tx;
+		this.ty = other.ty;
+	}
+	
 	public function setRotation (angle:Float, scale:Float = 1):Void {
 		
 		a = Math.cos (angle) * scale;
