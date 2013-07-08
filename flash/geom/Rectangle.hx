@@ -225,6 +225,12 @@ class Rectangle {
 		
 	}
 	
+	public function copyFrom(sourceRect : Rectangle) : Void {
+		x = sourceRect.x;
+		y = sourceRect.y;
+		width = sourceRect.width;
+		height = sourceRect.height;
+	}
 	
 	public function union (toUnion:Rectangle):Rectangle {
 		
@@ -234,6 +240,10 @@ class Rectangle {
 		var y1 = bottom < toUnion.bottom ? toUnion.bottom : bottom;
 		return new Rectangle (x0, y0, x1 - x0, y1 - y0);
 		
+	}
+	
+	public function toString():String {
+		return "Rectangle(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
 	}
 	
 	
