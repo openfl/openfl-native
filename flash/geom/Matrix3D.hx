@@ -268,6 +268,48 @@ class Matrix3D {
 		
 	}
 	
+	public function copyFrom(other:Matrix3D):Void {
+		this.rawData = other.rawData.concat();
+	}
+	
+	public function copyToMatrix3D(other:Matrix3D):Void {
+		other.rawData = rawData.concat();
+	}
+	
+	public function copyColumnFrom(column:Int, vector3D:Vector3D):Void {
+		if (column > 3) throw "Column " + column + " out of bounds (3)";
+		rawData[0+column] = vector3D.x;
+		rawData[4+column] = vector3D.y;
+		rawData[8+column] = vector3D.z;
+		rawData[12+column] = vector3D.w;
+	}
+	
+	public function copyColumnTo(column:Int, vector3D:Vector3D):Void {
+		if (column > 3) throw "Column " + column + " out of bounds (3)";
+		vector3D.x = rawData[0+column];
+		vector3D.y = rawData[4+column];
+		vector3D.z = rawData[8+column];
+		vector3D.w = rawData[12+column];
+	}
+	
+	public function copyRowFrom(row:Int, vector3D:Vector3D):Void {
+		if (row > 3) throw "Row " + row + " out of bounds (3)";
+		var i:Int = 4 * row;
+		rawData[i] = vector3D.x;
+		rawData[i+1] = vector3D.y;
+		rawData[i+2] = vector3D.z;
+		rawData[i+3] = vector3D.w;
+	}
+	
+	public function copyRowTo(row:Int, vector3D:Vector3D):Void {
+		if (row > 3) throw "Row " + row + " out of bounds (3)";
+		var i:Int = 4 * row;
+		vector3D.x = rawData[i];
+		vector3D.y = rawData[i + 1];
+		vector3D.z = rawData[i + 2];
+		vector3D.w = rawData[i + 3];
+	}
+	
 	
 	public static function interpolate (thisMat:Matrix3D, toMat:Matrix3D, percent:Float):Matrix3D {
 		
