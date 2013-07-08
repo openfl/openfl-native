@@ -269,11 +269,17 @@ class Matrix3D {
 	}
 	
 	public function copyFrom(other:Matrix3D):Void {
-		this.rawData = other.rawData.concat();
+		for (i in 0...16) 
+		{
+			rawData[i] = other.rawData[i];
+		}
 	}
 	
 	public function copyToMatrix3D(other:Matrix3D):Void {
-		other.rawData = rawData.concat();
+		for (i in 0...16) 
+		{
+			other.rawData[i] = rawData[i];
+		}
 	}
 	
 	public function copyColumnFrom(column:Int, vector3D:Vector3D):Void {
@@ -310,6 +316,49 @@ class Matrix3D {
 		vector3D.w = rawData[i + 3];
 	}
 	
+	public function pointAt(pos:Vector3D, ?at:Vector3D, ?up:Vector3D):Void {
+		if (at == null) at = new Vector3D(0,0,-1);
+		if (up == null) up = new Vector3D(0,-1,0);
+		
+		var dir:Vector3D = at.subtract(pos);
+		var vup:Vector3D = up.clone();
+		var right:Vector3D;
+
+		dir.normalize();
+		vup.normalize();
+		
+		var dir2 = dir.clone();
+		dir2.scaleBy(vup.dotProduct(dir));
+		
+		vup = vup.subtract(dir2);
+		
+		if (vup.length > 0){
+			vup.normalize();
+		} else {
+			vup = dir.x != 0 ? new Vector3D(-dir.y,dir.x,0) : new Vector3D(1,0,0);
+		}
+
+		right = vup.crossProduct(dir);
+		right.normalize();
+
+		rawData[0] = right.x;
+		rawData[4] = right.y;
+		rawData[8] = right.z;
+		rawData[12] = 0.0;
+		rawData[1] = vup.x;
+		rawData[5] = vup.y;
+		rawData[9] = vup.z;
+		rawData[13] = 0.0;
+		rawData[2] = dir.x;
+		rawData[6] = dir.y;
+		rawData[10] = dir.z;
+		rawData[14] = 0.0;
+		rawData[3] = pos.x;
+		rawData[7] = pos.y;
+		rawData[11] = pos.z;
+		rawData[15] = 1.0;
+	}
+
 	
 	public static function interpolate (thisMat:Matrix3D, toMat:Matrix3D, percent:Float):Matrix3D {
 		
