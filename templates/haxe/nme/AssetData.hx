@@ -5,11 +5,11 @@ import openfl.Assets;
 
 
 class AssetData {
-
 	
-	public static var library = new #if haxe3 Map <String, #else Hash <#end LibraryType> ();
-	public static var path = new #if haxe3 Map <String, #else Hash <#end String> ();
-	public static var type = new #if haxe3 Map <String, #else Hash <#end AssetType> ();
+	
+	public static var library:Map <String, LibraryType>;
+	public static var path:Map <String, String>;
+	public static var type:Map <String, AssetType>;
 	
 	private static var initialized:Bool = false;
 	
@@ -17,6 +17,10 @@ class AssetData {
 	public static function initialize ():Void {
 		
 		if (!initialized) {
+			
+			path = new Map<String, String> ();
+			type = new Map<String, AssetType> ();
+			library = new Map<String, LibraryType> ();
 			
 			::if (assets != null)::::foreach assets::path.set ("::id::", "::resourceName::");
 			type.set ("::id::", Reflect.field (AssetType, "::type::".toUpperCase ()));
