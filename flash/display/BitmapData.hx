@@ -563,6 +563,13 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
+	public function unmultiplyAlpha ():Void {
+		
+		nme_bitmap_data_unmultiply_alpha (__handle);
+		
+	}
+	
+	
 	@:noCompletion public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
 		
 		nme_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
@@ -695,8 +702,9 @@ class BitmapData implements IBitmapDrawable {
 	private static var nme_bitmap_data_set_flags = Lib.load ("nme", "nme_bitmap_data_set_flags", 1);
 	private static var nme_bitmap_data_encode = Lib.load ("nme", "nme_bitmap_data_encode", 3);
 	private static var nme_bitmap_data_dump_bits = Lib.load ("nme", "nme_bitmap_data_dump_bits", 1);
-	private static var nme_bitmap_data_noise = Lib.load ("nme", "nme_bitmap_data_noise", -1);
 	private static var nme_bitmap_data_flood_fill = Lib.load ("nme", "nme_bitmap_data_flood_fill", 4);
+	private static var nme_bitmap_data_noise = Lib.load ("nme", "nme_bitmap_data_noise", -1);
+	private static var nme_bitmap_data_unmultiply_alpha = Lib.load ("nme", "nme_bitmap_data_unmultiply_alpha", 1);
 	
 	
 }

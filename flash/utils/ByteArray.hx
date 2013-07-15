@@ -470,7 +470,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	
 	public function uncompress (algorithm:CompressionAlgorithm = null):Void {
 		
-		if (algorithm == null) algorithm = CompressionAlgorithm.GZIP;
+		if (algorithm == null) algorithm = CompressionAlgorithm.ZLIB;
 		
 		#if neko
 		var src = allocated == length ? this : sub (0, length);
