@@ -63,6 +63,16 @@ class Rectangle {
 	}
 	
 	
+	public function copyFrom (sourceRect:Rectangle):Void {
+		
+		x = sourceRect.x;
+		y = sourceRect.y;
+		width = sourceRect.width;
+		height = sourceRect.height;
+		
+	}
+	
+	
 	public function equals (toCompare:Rectangle):Bool {
 		
 		return x == toCompare.x && y == toCompare.y && width == toCompare.width && height == toCompare.height;
@@ -189,6 +199,13 @@ class Rectangle {
 		y = 0;
 		width = 0;
 		height = 0;
+		
+	}
+	
+	
+	public function toString ():String {
+		
+		return "(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
 		
 	}
 	
