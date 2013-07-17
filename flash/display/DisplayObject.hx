@@ -173,6 +173,13 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	}
 	
 	
+	@:noCompletion public function __contains (child:DisplayObject):Bool {
+		
+		return false;
+		
+	}
+	
+	
 	@:noCompletion public function __dispatchEvent (event:Event):Bool {
 		
 		if (event.target == null) {
