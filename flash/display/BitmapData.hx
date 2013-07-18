@@ -134,6 +134,12 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function dispose ():Void {
 		
+		if (__handle != null) {
+			
+			nme_bitmap_data_dispose (__handle);
+			
+		}
+		
 		__handle = null;
 		
 	}
@@ -694,6 +700,7 @@ class BitmapData implements IBitmapDrawable {
 	private static var nme_bitmap_data_create_hardware_surface = Lib.load ("nme", "nme_bitmap_data_create_hardware_surface", 1);
 	private static var nme_bitmap_data_destroy_hardware_surface = Lib.load ("nme", "nme_bitmap_data_destroy_hardware_surface", 1);
 	#end
+	private static var nme_bitmap_data_dispose = Lib.load ("nme", "nme_bitmap_data_dispose", 1);
 	private static var nme_bitmap_data_generate_filter_rect = Lib.load ("nme", "nme_bitmap_data_generate_filter_rect", 3);
 	private static var nme_render_surface_to_surface = Lib.load ("nme", "nme_render_surface_to_surface", -1);
 	private static var nme_bitmap_data_height = Lib.load ("nme", "nme_bitmap_data_height", 1);
