@@ -4,8 +4,8 @@
 	"license": "MIT",
 	"tags": [],
 	"description": "OpenFL support for native platforms",
-	"version": "1.0.4",
-	"releasenote": "Android gamepad improvement",
+	"version": "1.0.5",
+	"releasenote": "Improvements to BitmapData and other small fixes",
 	"contributors": [ "singmajesty" ],
 	"dependencies": {}
 }
