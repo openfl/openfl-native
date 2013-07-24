@@ -300,7 +300,7 @@ class BitmapData implements IBitmapDrawable {
 	
 	public static function loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):BitmapData {
 		
-		var result = new BitmapData (0, 0);
+		var result = new BitmapData (0, 0, true);
 		result.__loadFromBytes (bytes, rawAlpha);
 		return result;
 		
