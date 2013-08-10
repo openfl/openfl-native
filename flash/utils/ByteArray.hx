@@ -20,7 +20,7 @@ import cpp.zip.Flush;
 
 
 @:autoBuild(openfl.Assets.embedFile())
-class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput implements IMemoryRange {
+class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput implements IMemoryRange implements IDataOutput {
 	
 
 	public var bigEndian:Bool;
@@ -543,7 +543,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	}
 	
 	
-	public function writeBytes(bytes:Bytes, offset:Int = 0, length:Int = 0):Void {
+	public function writeBytes (bytes:Bytes, offset:Int = 0, length:Int = 0):Void {
 		
 		if (length == 0) length = bytes.length - offset;
 		ensureElem (position + length - 1, true);
@@ -562,7 +562,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var bytes = Bytes.ofData (_double_bytes (x, bigEndian));
 		#end
 		
-		writeBytes (bytes);
+		writeBytes (bytes, 0, 0);
 		
 	}
 	
@@ -586,7 +586,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var bytes = Bytes.ofData (_float_bytes (x, bigEndian));
 		#end
 		
-		writeBytes (bytes);
+		writeBytes (bytes, 0, 0);
 		
 	}
 	
@@ -649,7 +649,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		#end
 		
 		writeShort (bytes.length);
-		writeBytes (bytes);
+		writeBytes (bytes, 0, 0);
 		
 	}
 	
@@ -662,7 +662,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var bytes = Bytes.ofString (s);
 		#end
 		
-		writeBytes (bytes);
+		writeBytes (bytes, 0, 0);
 		
 	}
 	
