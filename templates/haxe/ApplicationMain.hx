@@ -129,6 +129,17 @@ class ApplicationMain
 				
 				#end
 				
+				#if (windows || linux)
+				
+				try {
+					
+					var currentPath = haxe.io.Path.directory (Sys.executablePath ());
+					Sys.setCwd (currentPath);
+					
+				} catch (e:Dynamic) {}
+				
+				#end
+				
 				var hasMain = false;
 				
 				for (methodName in Type.getClassFields(::APP_MAIN::))
