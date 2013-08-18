@@ -77,6 +77,7 @@ class Stage extends DisplayObjectContainer {
 	@:noCompletion private var __lastDown:Array<InteractiveObject>;
 	@:noCompletion private var __lastRender:Float;
 	@:noCompletion private var __mouseOverObjects:Array<InteractiveObject>;
+	@:noCompletion private var __nextRender:Float;
 	@:noCompletion private var __touchInfo:Map <Int, TouchInfo>;
 	
 	
@@ -101,6 +102,7 @@ class Stage extends DisplayObjectContainer {
 		__lastRender = 0;
 		__lastDown = [];
 		__lastClickTime = 0.0;
+		__nextRender = 0;
 		this.frameRate = 100;
 		__touchInfo = new Map <Int, TouchInfo> ();
 		__joyAxisData = new Map <Int, Array<Float>> ();
@@ -258,9 +260,15 @@ class Stage extends DisplayObjectContainer {
 		if (frameRate > 0) {
 			
 			var now = Timer.stamp ();
-			if (now >= __lastRender + __framePeriod) {
+			if (now >= __nextRender) {
 				
 				__lastRender = now;
+				
+				while (__nextRender < __lastRender) {
+					
+					__nextRender += __framePeriod;
+					
+				}
 				
 				if (renderRequest != null) {
 					
@@ -503,7 +511,7 @@ class Stage extends DisplayObjectContainer {
 		
 		if (frameRate > 0) {
 			
-			var next = __lastRender + __framePeriod - Timer.stamp () - __earlyWakeup;
+			var next = __nextRender - Timer.stamp () - __earlyWakeup;
 			if (next < otherTimers) {
 				
 				return next;
@@ -947,6 +955,7 @@ class Stage extends DisplayObjectContainer {
 			if (!active) {
 				
 				__lastRender = Timer.stamp ();
+				__nextRender = __lastRender + __framePeriod;
 				
 			}
 			
@@ -1104,6 +1113,7 @@ class Stage extends DisplayObjectContainer {
 		
 		frameRate = value;
 		__framePeriod = (frameRate <= 0 ? frameRate : 1.0 / frameRate);
+		__nextRender = __lastRender + __framePeriod;
 		return value;
 		
 	}
