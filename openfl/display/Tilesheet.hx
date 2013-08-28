@@ -26,16 +26,34 @@ class Tilesheet {
 	@:noCompletion public var __handle:Dynamic;
 	
 	
+	static private var defaultRatio:Point = new Point(0, 0);
+	private var _bitmapHeight:Int;
+	private var _bitmapWidth:Int;
+	private var _tilePoints:Array<Point>;
+	private var _tiles:Array<Rectangle>;
+	private var _tileUVs:Array<Rectangle>;
+	
 	public function new (image:BitmapData) {
 		
 		__bitmap = image;
 		__handle = nme_tilesheet_create (image.__handle);
+		
+		_bitmapWidth = __bitmap.width;
+		_bitmapHeight = __bitmap.height;
+		
+		_tilePoints = new Array<Point>();
+		_tiles = new Array<Rectangle>();
+		_tileUVs = new Array<Rectangle>();
 		
 	}
 	
 	
 	public function addTileRect (rectangle:Rectangle, centerPoint:Point = null):Int {
 		
+		_tiles.push(rectangle);
+		if (centerPoint == null) _tilePoints.push(defaultRatio);
+		else _tilePoints.push(new Point(centerPoint.x / rectangle.width, centerPoint.y / rectangle.height));	
+		_tileUVs.push(new Rectangle(rectangle.left / _bitmapWidth, rectangle.top / _bitmapHeight, rectangle.right / _bitmapWidth, rectangle.bottom / _bitmapHeight));
 		return nme_tilesheet_add_rect (__handle, rectangle, centerPoint);
 		
 	}
@@ -48,6 +66,17 @@ class Tilesheet {
 	}
 	
 	
+	public inline function getTileCenter(index:Int):Point {
+		return _tilePoints[index];
+	}
+	
+	public inline function getTileRect(index:Int):Rectangle {
+		return _tiles[index];
+	}
+	
+	public inline function getTileUVs(index:Int):Rectangle {
+		return _tileUVs[index];
+	}
 	
 	
 	// Native Methods
