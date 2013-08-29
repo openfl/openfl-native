@@ -104,7 +104,7 @@ class File {
 		
 		if (jni_filesystem_get_special_dir == null) {
 			
-			jni_filesystem_get_special_dir = JNI.createStaticMethod ("org.haxe.nme.GameActivity", "getSpecialDir", "(I)Ljava/lang/String;");
+			jni_filesystem_get_special_dir = JNI.createStaticMethod ("org/haxe/nme/GameActivity", "getSpecialDir", "(I)Ljava/lang/String;");
 			
 		}
 		

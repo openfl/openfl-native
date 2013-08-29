@@ -43,12 +43,30 @@ class JNI {
 	}
 	
 	
+	public static function createMemberField (className:String, memberName:String, signature:String):JNIMemberField {
+		
+		init ();
+		
+		return new JNIMemberField (nme_jni_create_field (className, memberName, signature, false));
+		
+	}
+	
+	
 	public static function createMemberMethod (className:String, memberName:String, signature:String, useArray:Bool = false):Dynamic {
 		
 		init ();
 		
 		var method = new JNIMethod (nme_jni_create_method (className, memberName, signature, false));
 		return method.getMemberMethod (useArray);
+		
+	}
+	
+	
+	public static function createStaticField (className:String, memberName:String, signature:String):JNIStaticField {
+		
+		init ();
+		
+		return new JNIStaticField (nme_jni_create_field (className, memberName, signature, true));
 		
 	}
 	
@@ -63,6 +81,15 @@ class JNI {
 	}
 	
 	
+	public static function getEnv ():Dynamic {
+		
+		init ();
+		
+		return nme_jni_get_env ();
+		
+	}
+	
+	
 	
 	
 	// Native Methods
@@ -70,7 +97,93 @@ class JNI {
 	
 	
 	
+	private static var nme_jni_create_field = Lib.load ("nme", "nme_jni_create_field", 4);
 	private static var nme_jni_create_method = Lib.load ("nme", "nme_jni_create_method", 4);
+	private static var nme_jni_get_env = Lib.load ("nme", "nme_jni_get_env", 0);
+	
+	
+}
+
+
+class JNIMemberField {
+	
+	
+	private var field:Dynamic;
+	
+	
+	public function new (field:Dynamic) {
+		
+		this.field = field;
+		
+	}
+	
+	
+	public function get (jobject:Dynamic):Dynamic {
+		
+		return nme_jni_get_member (field, jobject);
+		
+	}
+	
+	
+	public function set (jobject:Dynamic, value:Dynamic):Dynamic {
+		
+		nme_jni_set_member (field, jobject, value);
+		return value;
+		
+	}
+	
+	
+	
+	
+	// Native Methods
+	
+	
+	
+	
+	private static var nme_jni_get_member = Lib.load ("nme", "nme_jni_get_member", 2);
+	private static var nme_jni_set_member = Lib.load ("nme", "nme_jni_set_member", 3);
+	
+	
+}
+
+
+class JNIStaticField {
+	
+	
+	private var field:Dynamic;
+	
+	
+	public function new (field:Dynamic) {
+		
+		this.field = field;
+		
+	}
+	
+	
+	public function get ():Dynamic {
+		
+		return nme_jni_get_static (field);
+		
+	}
+	
+	
+	public function set (value:Dynamic):Dynamic {
+		
+		nme_jni_set_static (field, value);
+		return value;
+		
+	}
+	
+	
+	
+	
+	// Native Methods
+	
+	
+	
+	
+	private static var nme_jni_get_static = Lib.load ("nme", "nme_jni_get_static", 1);
+	private static var nme_jni_set_static = Lib.load ("nme", "nme_jni_set_static", 2);
 	
 	
 }
