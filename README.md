@@ -1,7 +1,12 @@
+openfl-native
+============
+[![Build Status](https://travis-ci.org/openfl/openfl-native.png)](https://travis-ci.org/openfl/openfl-native)
+
+
 Install
 -------
 
-https://github.com/openfl/openfl/wiki/Get-Started
+http://www.openfl.org/developer/documentation/get-started
 
 
 Development Build
@@ -30,6 +35,6 @@ There is also a "-rebuild" flag you can use with other OpenFL commands, for fast
 
     openfl test windows -rebuild
 
-To return to a release build:
+To return to release builds:
 
     haxelib dev openfl-native
