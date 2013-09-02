@@ -1,0 +1,22 @@
+language: c++
+
+before_install:
+  - sudo apt-get install python-software-properties -y
+  - sudo add-apt-repository ppa:eyecreate/haxe -y
+  - sudo apt-get update
+  - sudo apt-get install haxe -y --force-yes
+  - sudo apt-get install g++-multilib gcc-multilib
+  - mkdir ~/haxelib
+  - haxelib setup ~/haxelib
+  - haxelib install openfl
+  - haxelib install openfl-tools
+  - haxelib install hxcpp
+  - haxelib install munit
+  - haxelib install format
+  - git clone https://github.com/openfl/openfl-validation ~/openfl-validation
+  - haxelib dev openfl-native $(pwd)
+
+script:
+  - haxelib run openfl rebuild linux
+  - haxelib run openfl test ~/openfl-validation linux
+  - haxelib run openfl test ~/openfl-validation neko
