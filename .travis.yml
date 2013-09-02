@@ -11,6 +11,8 @@ before_install:
   - haxelib install openfl
   - haxelib install openfl-tools
   - haxelib install hxcpp
+  - haxelib git nme https://github.com/haxenme/NME
+  - haxelib git nmedev https://github.com/haxenme/nmedev
   - haxelib install munit
   - haxelib install format
   - git clone https://github.com/openfl/openfl-validation ~/openfl-validation
