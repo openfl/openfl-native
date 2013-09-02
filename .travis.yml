@@ -21,4 +21,4 @@ before_install:
 script:
   - haxelib run openfl rebuild linux
   - haxelib run openfl test ~/openfl-validation linux
-  - haxelib run openfl test ~/openfl-validation neko
+  #- haxelib run openfl test ~/openfl-validation neko
