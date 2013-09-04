@@ -110,7 +110,7 @@ class Lib {
 		
 	}
 	
-	public static function resizeFrame(width:Int, height:Int):Void {
+	public static function resizeFrame(width:Float, height:Float):Void {
 		trace("flash.Lib.hx.resizeStage(" + width + "," + height + ")");
 		nme_resize_frame(__mainFrame, width, height);
 	}

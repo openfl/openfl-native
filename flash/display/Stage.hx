@@ -108,8 +108,7 @@ class Stage extends DisplayObjectContainer {
 		__joyAxisData = new Map <Int, Array<Float>> ();
 		
 	}
-	
-	
+		
 	public static dynamic function getOrientation ():Int {
 		
 		return nme_stage_get_orientation ();
