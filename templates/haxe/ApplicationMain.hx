@@ -97,6 +97,8 @@ class ApplicationMain
 		}
 		#end
 		
+		::if (APP_INIT != null)::::APP_INIT::::end::
+		
 		flash.Lib.create(function()
 			{ 
 				//if ((::WIN_WIDTH:: == 0 && ::WIN_HEIGHT:: == 0) || ::WIN_FULLSCREEN::)
