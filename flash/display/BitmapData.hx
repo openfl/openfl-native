@@ -42,7 +42,7 @@ class BitmapData implements IBitmapDrawable {
 		
 		__transparent = transparent;
 		
-		if (width < 1 || width < 1) {
+		if (width < 1 || height < 1) {
 			
 			__handle = null;
 			
@@ -293,6 +293,8 @@ class BitmapData implements IBitmapDrawable {
 		
 		var result = new BitmapData (0, 0);
 		result.__handle = nme_bitmap_data_load (filename, format);
+trace ("filename: " + filename);
+trace ("Handle? " + result.__handle);
 		return result;
 		
 	}

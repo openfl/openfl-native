@@ -131,7 +131,7 @@ class ApplicationMain
 				
 				#end
 				
-				#if (windows || linux)
+				#if windows
 				
 				try {
 					
