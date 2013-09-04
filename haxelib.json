@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": [],
 	"description": "OpenFL support for native platforms",
-	"version": "1.0.8",
+	"version": "1.1.0",
 	"releasenote": "JNI, frame rate improvements",
 	"contributors": [ "singmajesty" ],
 	"dependencies": {}
