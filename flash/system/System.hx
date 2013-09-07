@@ -22,7 +22,7 @@ class System {
 		
 		#if neko
 		return neko.vm.Gc.run(true);
-		#elseif cpp
+		#elseif (cpp || android || ios || desktop)
 		return cpp.vm.Gc.run(true);
 		#elseif js
 		return untyped __js_run_gc();
@@ -47,7 +47,7 @@ class System {
 		
 		#if neko
 		return neko.vm.Gc.stats().heap;
-		#elseif cpp
+		#elseif (cpp || android || ios || desktop)
 		return untyped __global__.__hxcpp_gc_used_bytes();
 		#elseif js
 		return untyped __js_get_heap_memory();
