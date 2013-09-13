@@ -4,7 +4,7 @@ package flash.filters;
 class ColorMatrixFilter extends BitmapFilter {
 	
 	
-	private var matrix:Array<Float>;
+	public var matrix:Array<Float>;
 	
 	
 	public function new (matrix:Array<Float>) {
