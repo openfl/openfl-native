@@ -43,14 +43,14 @@ package flash;
 	}
 	
 	
-	public function pop ():Null<T> {
+	public inline function pop ():Null<T> {
 		
 		return this.pop ();
 		
 	}
 	
 	
-	public function push (x:T):Int {
+	public inline function push (x:T):Int {
 		
 		return this.push (x);
 		
@@ -64,14 +64,14 @@ package flash;
 	}
 	
 	
-	public function shift ():Null<T> {
+	public inline function shift ():Null<T> {
 		
 		return this.shift ();
 		
 	}
 	
 	
-	public function unshift (x:T):Void {
+	public inline function unshift (x:T):Void {
 		
 		this.unshift (x);
 		
@@ -174,28 +174,28 @@ package flash;
 	
 	
 	
-	private function get_length ():Int {
+	private inline function get_length ():Int {
 		
 		return this.length;
 		
 	}
 	
 	
-	private function set_length (value:Int):Int {
+	private inline function set_length (value:Int):Int {
 		
 		return value;
 		
 	}
 	
 	
-	private function get_fixed ():Bool {
+	private inline function get_fixed ():Bool {
 		
 		return false;
 		
 	}
 	
 	
-	private function set_fixed (value:Bool):Bool {
+	private inline function set_fixed (value:Bool):Bool {
 		
 		return value;
 		
