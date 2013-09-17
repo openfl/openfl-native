@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
 	
+	<echo value="Warning: Including &quot;openfl-native&quot; on a target platform that is not native" unless="native" />
+	
 	<section unless="display">
 		
 		<ndll name="std" haxelib="hxcpp" />
@@ -8,6 +10,7 @@
 		<ndll name="zlib" haxelib="hxcpp" />
 		
 		<ndll name="nme" />
+		<dependency name="ndll/Windows/SDL2.dll" if="windows" />
 		
 		<ndll name="libfreetype" register="false" if="emscripten" />
 		
