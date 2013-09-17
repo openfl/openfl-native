@@ -10,7 +10,6 @@
 		<ndll name="zlib" haxelib="hxcpp" />
 		
 		<ndll name="nme" />
-		<dependency name="ndll/Windows/SDL2.dll" if="windows" />
 		
 		<ndll name="libfreetype" register="false" if="emscripten" />
 		
