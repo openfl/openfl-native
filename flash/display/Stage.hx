@@ -133,7 +133,7 @@ class Stage extends DisplayObjectContainer {
 	
 	public function resize (width:Int, height:Int):Void {
 		
-		nme_stage_resize (__handle, width, height);
+		nme_stage_resize_window (__handle, width, height);
 		
 	}
 	
@@ -1227,7 +1227,7 @@ class Stage extends DisplayObjectContainer {
 	private static var nme_stage_set_display_state = Lib.load ("nme", "nme_stage_set_display_state", 2);
 	private static var nme_stage_set_next_wake = Lib.load ("nme", "nme_stage_set_next_wake", 2);
 	private static var nme_stage_request_render = Lib.load ("nme", "nme_stage_request_render", 0);
-	private static var nme_stage_resize = Lib.load ("nme", "nme_stage_resize", 3);
+	private static var nme_stage_resize_window = Lib.load ("nme", "nme_stage_resize_window", 3);
 	private static var nme_stage_show_cursor = Lib.load ("nme", "nme_stage_show_cursor", 2);
 	private static var nme_stage_set_fixed_orientation = Lib.load ("nme", "nme_stage_set_fixed_orientation", 1);
 	private static var nme_stage_get_orientation = Lib.load ("nme", "nme_stage_get_orientation", 0);
