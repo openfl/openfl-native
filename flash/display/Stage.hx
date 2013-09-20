@@ -108,7 +108,8 @@ class Stage extends DisplayObjectContainer {
 		__joyAxisData = new Map <Int, Array<Float>> ();
 		
 	}
-		
+	
+	
 	public static dynamic function getOrientation ():Int {
 		
 		return nme_stage_get_orientation ();
@@ -126,6 +127,13 @@ class Stage extends DisplayObjectContainer {
 	public function invalidate ():Void {
 		
 		__invalid = true;
+		
+	}
+	
+	
+	public function resize (width:Int, height:Int):Void {
+		
+		nme_stage_resize (__handle, width, height);
 		
 	}
 	
@@ -1219,6 +1227,7 @@ class Stage extends DisplayObjectContainer {
 	private static var nme_stage_set_display_state = Lib.load ("nme", "nme_stage_set_display_state", 2);
 	private static var nme_stage_set_next_wake = Lib.load ("nme", "nme_stage_set_next_wake", 2);
 	private static var nme_stage_request_render = Lib.load ("nme", "nme_stage_request_render", 0);
+	private static var nme_stage_resize = Lib.load ("nme", "nme_stage_resize", 3);
 	private static var nme_stage_show_cursor = Lib.load ("nme", "nme_stage_show_cursor", 2);
 	private static var nme_stage_set_fixed_orientation = Lib.load ("nme", "nme_stage_set_fixed_orientation", 1);
 	private static var nme_stage_get_orientation = Lib.load ("nme", "nme_stage_get_orientation", 0);
