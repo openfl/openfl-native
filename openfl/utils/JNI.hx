@@ -62,6 +62,19 @@ class JNI {
 	}
 	
 	
+	private static var alreadyCreated = new Map<String, Bool>();
+	private static var base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+	public static function createInterface(haxeClass:Dynamic, className:String, classDef:String):Dynamic {
+	    var bytes:Bytes = null;
+	    if (!alreadyCreated.get(className)) {
+	        bytes = Bytes.ofString(BaseCode.decode(classDef, base64));
+	        bytes = Uncompress.run(bytes, 9);
+	        alreadyCreated.set(className, true);
+	    }
+	    return nme_jni_create_interface(haxeClass, className, bytes == null ? null : bytes.getData());
+	}
+
 	public static function createStaticField (className:String, memberName:String, signature:String):JNIStaticField {
 		
 		init ();
@@ -100,7 +113,7 @@ class JNI {
 	private static var nme_jni_create_field = Lib.load ("nme", "nme_jni_create_field", 4);
 	private static var nme_jni_create_method = Lib.load ("nme", "nme_jni_create_method", 4);
 	private static var nme_jni_get_env = Lib.load ("nme", "nme_jni_get_env", 0);
-	
+	private static var nme_jni_create_interface = Lib.load("nme", "nme_jni_create_interface", 3);
 	
 }
 

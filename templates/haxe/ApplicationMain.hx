@@ -131,7 +131,7 @@ class ApplicationMain
 				
 				#end
 				
-				#if (windows || linux)
+				#if windows
 				
 				try {
 					
@@ -241,22 +241,6 @@ class ApplicationMain
 		}
 		
 	}
-
-   public static function getAsset(inName:String) : Dynamic
-   {
-      var types = Assets.type;
-      if (types.exists(inName) && types.get(inName) != null)
-         switch(types.get(inName))
-         {
-	         case FONT: return Assets.getFont(inName);
-	         case IMAGE: return Assets.getBitmapData(inName,false);
-	         case MUSIC, SOUND: return Assets.getSound(inName);
-	         default: return Assets.getBytes(inName);
-         }
-
-      throw "Asset does not exist: " + inName;
-      return null;
-   }
 	
 	
 	#if neko

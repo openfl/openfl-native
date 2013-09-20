@@ -2,12 +2,14 @@ package openfl.text;
 
 
 import flash.display.BitmapData;
+import flash.Lib;
 
 
-class NMEFont {
+class AbstractFont {
 	
 	
-	private static var factories = new Map<String, NMEFontFactory> ();
+	private static var factories = new Map<String, FontFactory> ();
+	private static var registered:Bool;
 	
 	private var ascent:Int;
 	private var descent:Int;
@@ -15,7 +17,7 @@ class NMEFont {
 	private var isRGB:Bool;
 	
 	
-	public function new (height:Int, ascent:Int, descent:Int, isRGB:Bool) {
+	private function new (height:Int, ascent:Int, descent:Int, isRGB:Bool) {
 		
 		this.height = height;
 		this.ascent = ascent;
@@ -25,7 +27,9 @@ class NMEFont {
 	}
 	
 	
-	private static function createFont (definition:NMEFontDef):NMEFont {
+	private static function createFont (definition:FontDefinition):AbstractFont {
+		
+		// TODO: Why doesn't this work on Neko?
 		
 		if (factories.exists (definition.name)) {
 			
@@ -38,20 +42,26 @@ class NMEFont {
 	}
 	
 	
-	public function getGlyphInfo (char:Int):NMEGlyphInfo {
+	public function getGlyphInfo (char:Int):GlyphInfo {
 		
 		trace ("Warning: You should override getGlyphInfo");
+		
 		return null;
 		
 	}
 	
 	
-	static public function registerFont (name:String, factory:NMEFontFactory):Void {
+	public static function registerFont (name:String, factory:FontFactory):Void {
 		
 		factories.set (name, factory);
 		
-		var register = Lib.load ("nme", "nme_font_set_factory", 1);
-		register (createFont);
+		if (!registered) {
+			
+			var register = Lib.load ("nme", "nme_font_set_factory", 1);
+			register (createFont);
+			registered = true;
+			
+		}
 		
 	}
 	
@@ -59,6 +69,7 @@ class NMEFont {
 	public function renderGlyph (char:Int):BitmapData {
 		
 		trace ("Warning: You should override renderGlyph");
+		
 		return new BitmapData (1, 1);
 		
 	}
@@ -82,7 +93,7 @@ class NMEFont {
 }
 
 
-typedef NMEFontDef = {
+typedef FontDefinition = {
 	
 	name:String,
 	height:Int,
@@ -92,10 +103,10 @@ typedef NMEFontDef = {
 };
 
 
-typedef NMEFontFactory = NMEFontDef -> NMEFont;
+typedef FontFactory = FontDefinition -> AbstractFont;
 
 
-typedef NMEGlyphInfo = {
+typedef GlyphInfo = {
 	
 	width:Int,
 	height:Int,

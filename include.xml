@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension>
 	
+	<echo value="Warning: Including &quot;openfl-native&quot; on a target platform that is not native" unless="native" />
+	
 	<section unless="display">
 		
-		<ndll name="std" haxelib="hxcpp" />
-		<ndll name="regexp" haxelib="hxcpp" />
-		<ndll name="zlib" haxelib="hxcpp" />
+		<ndll name="std" haxelib="hxcpp" unless="neko" />
+		<ndll name="regexp" haxelib="hxcpp" unless="neko" />
+		<ndll name="zlib" haxelib="hxcpp" unless="neko" />
 		
 		<ndll name="nme" />
 		

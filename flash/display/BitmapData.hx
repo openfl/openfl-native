@@ -42,7 +42,7 @@ class BitmapData implements IBitmapDrawable {
 		
 		__transparent = transparent;
 		
-		if (width < 1 || width < 1) {
+		if (width < 1 || height < 1) {
 			
 			__handle = null;
 			
