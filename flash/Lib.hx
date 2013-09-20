@@ -110,10 +110,6 @@ class Lib {
 		
 	}
 	
-	public static function resizeFrame(width:Float, height:Float):Void {
-		trace("flash.Lib.hx.resizeStage(" + width + "," + height + ")");
-		nme_resize_frame(__mainFrame, width, height);
-	}
 	
 	public static function createManagedStage (width:Int, height:Int, flags:Int = 0):ManagedStage {
 		
@@ -480,8 +476,7 @@ class Lib {
 	#end
 	private static var nme_set_package = Lib.load ("nme", "nme_set_package", 4);
 	private static var nme_get_frame_stage = Lib.load ("nme", "nme_get_frame_stage", 1);
-	private static var nme_get_url = Lib.load ("nme", "nme_get_url", 1);	
-    private static var nme_resize_frame = Lib.load("nme","nme_resize_frame", 3);
+	private static var nme_get_url = Lib.load ("nme", "nme_get_url", 1);
 	private static var nme_pause_animation = Lib.load ("nme", "nme_pause_animation", 0);
 	private static var nme_resume_animation = Lib.load ("nme", "nme_resume_animation", 0);
 	

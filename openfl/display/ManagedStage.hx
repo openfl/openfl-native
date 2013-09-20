@@ -67,7 +67,7 @@ class ManagedStage extends Stage {
 	}
 	
 	
-	public function resize (width:Int, height:Int):Void {
+	public override function resize (width:Int, height:Int):Void {
 		
 		pumpEvent ( { type: etResize, x: width, y: height } );
 		
