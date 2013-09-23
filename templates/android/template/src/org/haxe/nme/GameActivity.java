@@ -105,9 +105,11 @@ public class GameActivity extends Activity implements SensorEventListener
 			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
 		}
-
+		
+		::if (autoCreateExtensions != null)::
 		::foreach autoCreateExtensions::
 		extensions.add(::__current__::.initialize());::end::
+		::end::
 
 		for (IActivityExtension extension : extensions)
 		{
