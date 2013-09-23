@@ -32,6 +32,8 @@ import java.lang.reflect.Constructor;
 import java.lang.Math;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends Activity implements SensorEventListener
 {
@@ -54,6 +56,8 @@ public class GameActivity extends Activity implements SensorEventListener
 	static DisplayMetrics metrics;
 	static HashMap<String, Class> mLoadedClasses = new HashMap<String, Class>();
 	static SensorManager sensorManager;
+
+	static List<IActivityExtension> extensions = new ArrayList<IActivityExtension>();
 	
 	public Handler mHandler;
 	MainView mView;
@@ -100,6 +104,14 @@ public class GameActivity extends Activity implements SensorEventListener
 		{
 			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
+		}
+
+		::foreach autoCreateExtensions::
+		extensions.add(::__current__::.initialize());::end::
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onCreate (state);
 		}
 	}
 	
@@ -302,6 +314,11 @@ public class GameActivity extends Activity implements SensorEventListener
 	
 	@Override protected void onDestroy()
 	{
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onDestroy ();
+		}
+
 		// TODO: Wait for result?
 		mView.sendActivity(NME.DESTROY);
 		activity = null;
@@ -313,6 +330,11 @@ public class GameActivity extends Activity implements SensorEventListener
 	{
 		super.onPause();
 		doPause();
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onPause ();
+		}
 	}
 	
 	
@@ -320,7 +342,43 @@ public class GameActivity extends Activity implements SensorEventListener
 	{
 		super.onResume();
 		doResume();
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onResume ();
+		}
 	}
+
+	@Override protected void onStart()
+	{
+		super.onStart();
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onStart ();
+		}
+	}
+
+	@Override protected void onStop()
+	{
+		super.onStop();
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onStop ();
+		}
+	}
+
+	@Override protected void onRestart()
+	{
+		super.onRestart();
+
+		for (IActivityExtension extension : extensions)
+		{
+			extension.onRestart ();
+		}
+	}
+
 	
 	@Override public void onSensorChanged(SensorEvent event)
 	{
@@ -514,6 +572,14 @@ public class GameActivity extends Activity implements SensorEventListener
 			}
 			
 			v.vibrate(pattern, -1);
+		}
+	}
+
+	public static void registerExtension(IActivityExtension extension)
+	{
+		if (extensions.indexOf(extension) == -1)
+		{
+			extensions.add(extension);
 		}
 	}
 }
