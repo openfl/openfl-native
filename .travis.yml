@@ -13,17 +13,18 @@ before_install:
   - sudo apt-get install mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev -y
   - mkdir ~/haxelib
   - haxelib setup ~/haxelib
-  - haxelib install openfl
-  - haxelib install openfl-tools
+  - haxelib git openfl https://github.com/openfl/openfl
+  - haxelib git openfl-tools https://github.com/openfl/openfl-tools
   - haxelib install hxcpp
   - haxelib git nme https://github.com/haxenme/NME
   - haxelib git nmedev https://github.com/haxenme/nmedev
   - haxelib install munit
   - haxelib install format
+  - haxelib install svg
   - git clone https://github.com/openfl/openfl-validation ~/openfl-validation
   - haxelib dev openfl-native $(pwd)
 
 script:
-  - haxelib run openfl rebuild linux
+  - haxelib run openfl rebuild linux,tools
   - haxelib run openfl test ~/openfl-validation linux
   #- haxelib run openfl test ~/openfl-validation neko
