@@ -107,7 +107,7 @@ public class GameActivity extends Activity implements SensorEventListener
 		}
 
 		::foreach autoCreateExtensions::
-		extensions.add(new ::__current__::());::end::
+		extensions.add(::__current__::.initialize());::end::
 
 		for (IActivityExtension extension : extensions)
 		{
