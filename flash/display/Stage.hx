@@ -160,6 +160,108 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
+	@:noCompletion private function __addCharCode (event:Dynamic):Void {
+		
+		var keyCode = event.value;
+		var shift = (event.flags & efShiftDown) != 0;
+		var foundCode = true;
+		
+		if (shift) {
+			
+			switch (keyCode) {
+				
+				case 8, 13, 27, 32: event.code = keyCode;
+				case 186: event.code = 59;
+				case 187: event.code = 61;
+				case 188, 189, 190, 191: event.code = keyCode - 144;
+				case 192: event.code = 47;
+				case 219, 220, 221: event.code = keyCode - 128;
+				case 222: event.code = 39;
+				
+				default: foundCode = false;
+				
+			}
+			
+			if (!foundCode) {
+				
+				if (keyCode >= 48 && keyCode <= 57) {
+					
+					event.code = keyCode;
+					foundCode = true;
+					
+				} else if (keyCode >= 65 && keyCode <= 90) {
+					
+					event.code = keyCode + 32;
+					foundCode = true;
+					
+				}
+				
+			}
+			
+		} else {
+			
+			switch (keyCode) {
+				
+				case 48: event.code = 41;
+				case 49: event.code = 33;
+				case 50: event.code = 64;
+				case 51, 52, 53: event.code = keyCode - 16;
+				case 54: event.code = 94;
+				case 55: event.code = 38;
+				case 56: event.code = 42;
+				case 57: event.code = 40;
+				case 186: event.code = 58;
+				case 187: event.code = 43;
+				case 188: event.code = 60;
+				case 189: event.code = 95;
+				case 190: event.code = 62;
+				case 191: event.code = 63;
+				case 192: event.code = 126;
+				case 219, 220, 221: event.code = keyCode - 96;
+				case 222: event.code = 34;
+				
+				default: foundCode = false;
+				
+			}
+			
+			if (!foundCode) {
+				
+				if (keyCode >= 65 && keyCode <= 90) {
+					
+					event.code = keyCode;
+					foundCode = true;
+					
+				}
+				
+			}
+			
+		}
+		
+		if (!foundCode) {
+			
+			if (keyCode == 46) {
+				
+				event.code = 127;
+				
+			} else if (keyCode == 13) {
+				
+				event.code = 13;
+				
+			/*} else if (keyCode >= 96 && keyCode <= 105) {
+				
+				event.code = keyCode - 48;
+				
+			} else if (keyCode >= 106 && keyCode <= 111) {
+				
+				event.code = keyCode - 64;*/
+				
+			}
+						
+		}
+		
+	}
+	
+	
 	@:noCompletion private function __checkFocusInOuts (event:Dynamic, stack:Array<InteractiveObject>):Void {
 		
 		var newLength = stack.length;
@@ -707,12 +809,18 @@ class Stage extends DisplayObjectContainer {
 		if (stack.length > 0) {
 			
 			var value = event.value;
-			if (value >= 96 && value <= 122) value -= 32;
+			if (event.value >= 96 && event.value <= 122) event.value -= 32;
 			
 			var object = stack[0];
 			var flags:Int = event.flags;
 			
-			var keyboardEvent = new KeyboardEvent (type, true, true, event.code, value, ((flags & efLocationRight) == 0) ? 1 : 0, (flags & efCtrlDown) != 0, (flags & efAltDown) != 0, (flags & efShiftDown) !=0);
+			if (event.code == 0) {
+				
+				__addCharCode (event); // Some backends do not report a charCode
+				
+			}
+			
+			var keyboardEvent = new KeyboardEvent (type, true, true, event.code, event.value, ((flags & efLocationRight) == 0) ? 1 : 0, (flags & efCtrlDown) != 0, (flags & efAltDown) != 0, (flags & efShiftDown) != 0);
 			object.__fireEvent (keyboardEvent);
 			
 			if (keyboardEvent.__getIsCancelled ()) {
