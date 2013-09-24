@@ -9,9 +9,10 @@
 		<ndll name="regexp" haxelib="hxcpp" unless="neko" />
 		<ndll name="zlib" haxelib="hxcpp" unless="neko" />
 		
-		<ndll name="nme" />
-		
+		<ndll name="openal" register="false" if="android" />
 		<ndll name="libfreetype" register="false" if="emscripten" />
+		
+		<ndll name="nme" />
 		
 	</section>
 	
