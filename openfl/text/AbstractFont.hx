@@ -35,20 +35,6 @@ class AbstractFont {
 			
 		}
 		
-		#if neko
-		
-		for (key in factories.keys ()) {
-			
-			if (key.length == definition.name.length + 1 && key.substr (0, definition.name.length) == definition.name) {
-				
-				return factories.get (key) (definition);
-				
-			}
-			
-		}
-		
-		#end
-		
 		return null;
 		
 	}
