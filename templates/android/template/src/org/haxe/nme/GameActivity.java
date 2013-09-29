@@ -228,10 +228,10 @@ public class GameActivity extends Activity implements SensorEventListener
 	
 	public static int getResourceID(String inFilename)
 	{
-		::foreach assets::::if (type == "music")::if (inFilename.equals("::id::")) return ::APP_PACKAGE::.R.raw.::flatName::;
-		::end::::end::
-		::foreach assets::::if (type == "sound")::if (inFilename.equals("::id::")) return ::APP_PACKAGE::.R.raw.::flatName::;
-		::end::::end::
+		//::foreach assets::::if (type == "music")::if (inFilename.equals("::id::")) return ::APP_PACKAGE::.R.raw.::flatName::;
+		//::end::::end::
+		//::foreach assets::::if (type == "sound")::if (inFilename.equals("::id::")) return ::APP_PACKAGE::.R.raw.::flatName::;
+		//::end::::end::
 		return -1;
 	}
 	
