@@ -397,7 +397,11 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		position += length;
 		
 		#if neko
-		return new String (untyped __dollar__ssub (b, p, length));
+		var result = new String (untyped __dollar__ssub (b, p, length));
+		if (length > 0 && result.charCodeAt (length - 1) == 0) {
+			return result.substr (0, length - 1);
+		}
+		return result;
 		#elseif cpp
 		var result = "";
 		untyped __global__.__hxcpp_string_of_bytes (b, result, p, length);
