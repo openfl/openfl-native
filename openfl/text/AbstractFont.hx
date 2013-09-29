@@ -29,13 +29,25 @@ class AbstractFont {
 	
 	private static function createFont (definition:FontDefinition):AbstractFont {
 		
-		// TODO: Why doesn't this work on Neko?
-		
 		if (factories.exists (definition.name)) {
 			
 			return factories.get (definition.name) (definition);
 			
 		}
+		
+		#if neko
+		
+		for (key in factories.keys ()) {
+			
+			if (key.length == definition.name.length + 1 && key.substr (0, definition.name.length) == definition.name) {
+				
+				return factories.get (key) (definition);
+				
+			}
+			
+		}
+		
+		#end
 		
 		return null;
 		
