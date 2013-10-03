@@ -14,6 +14,8 @@
 		
 		<ndll name="nme" />
 		
+		<dependency name="extension-api" path="dependencies/extension-api" if="android" />
+		
 	</section>
 	
 	<templatePath name="templates" />
