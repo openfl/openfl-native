@@ -36,8 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.List;
-import org.haxe.extension.ActivityExtension;
-import org.haxe.extension.IActivityExtension;
+import org.haxe.extension.Extension;
 import org.haxe.HXCPP;
 
 
@@ -63,7 +62,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private static int bufferedDisplayOrientation = -1;
 	private static int bufferedNormalOrientation = -1;
 	private static Context mContext;
-	private static List<IActivityExtension> extensions;
+	private static List<Extension> extensions;
 	private static float[] inclinationMatrix = new float[16];
 	private static HashMap<String, Class> mLoadedClasses = new HashMap<String, Class>();
 	private static float[] magnetData = new float[3];
@@ -87,9 +86,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mHandler = new Handler ();
 		mAssets = getAssets ();
 		
-		ActivityExtension.callbackHandler = mHandler;
-		ActivityExtension.mainActivity = this;
-		ActivityExtension.mainContext = this;
+		Extension.callbackHandler = mHandler;
+		Extension.mainActivity = this;
+		Extension.mainContext = this;
 		
 		_sound = new Sound (getApplication());
 		//getResources().getAssets();
@@ -100,11 +99,15 @@ public class GameActivity extends Activity implements SensorEventListener {
 		metrics = new DisplayMetrics ();
 		getWindowManager ().getDefaultDisplay ().getMetrics (metrics);
 		
+		Log.e ("GameActivity", "HELLO FROM GAME ACTIVITY");
+		
 		// Pre-load these, so the C++ knows where to find them
 		
 		::foreach ndlls::
 		System.loadLibrary ("::name::");::end::
 		HXCPP.run ("ApplicationMain");
+		
+		Log.e ("GameActivity", "RUN HXCPP???");
 		
 		mView = new MainView (getApplication (), this);
 		setContentView (mView);
@@ -118,15 +121,17 @@ public class GameActivity extends Activity implements SensorEventListener {
 			
 		}
 		
+		Log.e ("GameActivity", "ABOUT TO REGISTER EXTENSIONS");
+		
 		if (extensions == null) {
 			
-			extensions = new ArrayList<IActivityExtension>();
+			extensions = new ArrayList<Extension>();
 			::if (ANDROID_EXTENSIONS != null)::::foreach ANDROID_EXTENSIONS::
 			extensions.add (new ::__current__:: ());::end::::end::
 			
 		}
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onCreate (state);
 			
@@ -357,7 +362,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	@Override protected void onDestroy () {
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onDestroy ();
 			
@@ -376,7 +381,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		super.onPause ();
 		doPause ();
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onPause ();
 			
@@ -389,7 +394,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		super.onRestart ();
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onRestart ();
 			
@@ -403,7 +408,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		super.onResume();
 		doResume();
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onResume ();
 			
@@ -439,7 +444,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		super.onStart();
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onStart ();
 			
@@ -452,7 +457,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		super.onStop ();
 		
-		for (IActivityExtension extension : extensions) {
+		for (Extension extension : extensions) {
 			
 			extension.onStop ();
 			
@@ -618,7 +623,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	
-	public static void registerExtension (IActivityExtension extension) {
+	public static void registerExtension (Extension extension) {
 		
 		if (extensions.indexOf (extension) == -1) {
 			

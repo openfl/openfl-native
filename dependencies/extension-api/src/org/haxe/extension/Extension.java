@@ -6,10 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import org.haxe.extension.IActivityExtension;
 
 
-public class ActivityExtension implements IActivityExtension {
+public class Extension {
 	
 	
 	public static Handler callbackHandler;
