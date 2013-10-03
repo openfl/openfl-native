@@ -36,7 +36,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.List;
+import org.haxe.extension.ActivityExtension;
 import org.haxe.extension.IActivityExtension;
+import org.haxe.HXCPP;
 
 
 public class GameActivity extends Activity implements SensorEventListener {
@@ -61,7 +63,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	private static int bufferedDisplayOrientation = -1;
 	private static int bufferedNormalOrientation = -1;
 	private static Context mContext;
-	private static List<IActivityExtension> extensions = new ArrayList<IActivityExtension>();
+	private static List<IActivityExtension> extensions;
 	private static float[] inclinationMatrix = new float[16];
 	private static HashMap<String, Class> mLoadedClasses = new HashMap<String, Class>();
 	private static float[] magnetData = new float[3];
@@ -85,6 +87,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mHandler = new Handler ();
 		mAssets = getAssets ();
 		
+		ActivityExtension.callbackHandler = mHandler;
+		ActivityExtension.mainActivity = this;
+		ActivityExtension.mainContext = this;
+		
 		_sound = new Sound (getApplication());
 		//getResources().getAssets();
 		
@@ -98,7 +104,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		::foreach ndlls::
 		System.loadLibrary ("::name::");::end::
-		org.haxe.HXCPP.run ("ApplicationMain");
+		HXCPP.run ("ApplicationMain");
 		
 		mView = new MainView (getApplication (), this);
 		setContentView (mView);
@@ -112,9 +118,14 @@ public class GameActivity extends Activity implements SensorEventListener {
 			
 		}
 		
-		::if (ANDROID_EXTENSIONS != null)::::foreach ANDROID_EXTENSIONS::
-		extensions.add (new ::__current__:: ());::end::::end::
-
+		if (extensions == null) {
+			
+			extensions = new ArrayList<IActivityExtension>();
+			::if (ANDROID_EXTENSIONS != null)::::foreach ANDROID_EXTENSIONS::
+			extensions.add (new ::__current__:: ());::end::::end::
+			
+		}
+		
 		for (IActivityExtension extension : extensions) {
 			
 			extension.onCreate (state);

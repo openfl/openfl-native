@@ -72,7 +72,8 @@ class JNI {
 	        bytes = Uncompress.run(bytes, 9);
 	        alreadyCreated.set(className, true);
 	    }
-	    return nme_jni_create_interface(haxeClass, className, bytes == null ? null : bytes.getData());
+	    return null;
+	    //return nme_jni_create_interface(haxeClass, className, bytes == null ? null : bytes.getData());
 	}
 
 	public static function createStaticField (className:String, memberName:String, signature:String):JNIStaticField {
@@ -113,7 +114,7 @@ class JNI {
 	private static var nme_jni_create_field = Lib.load ("nme", "nme_jni_create_field", 4);
 	private static var nme_jni_create_method = Lib.load ("nme", "nme_jni_create_method", 4);
 	private static var nme_jni_get_env = Lib.load ("nme", "nme_jni_get_env", 0);
-	private static var nme_jni_create_interface = Lib.load("nme", "nme_jni_create_interface", 3);
+	//private static var nme_jni_create_interface = Lib.load("nme", "nme_jni_create_interface", 3);
 	
 }
 

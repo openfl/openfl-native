@@ -1,12 +1,20 @@
 package org.haxe.extension;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import org.haxe.extension.IActivityExtension;
 
 
 public class ActivityExtension implements IActivityExtension {
+	
+	
+	public static Handler callbackHandler;
+	public static Activity mainActivity;
+	public static Context mainContext;
 	
 	
 	/**
