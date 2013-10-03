@@ -360,6 +360,23 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	
+	@Override protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		
+		for (Extension extension : extensions) {
+			
+			if (!extension.onActivityResult (requestCode, resultCode, data)) {
+				
+				return;
+				
+			}
+			
+		}
+		
+		super.onActivityResult (requestCode, resultCode, data);
+		
+	}
+	
+	
 	@Override protected void onDestroy () {
 		
 		for (Extension extension : extensions) {
