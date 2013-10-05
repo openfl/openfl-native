@@ -23,6 +23,13 @@ class EventDispatcher implements IEventDispatcher {
 	
 	public function addEventListener (type:String, listener:Function, useCapture:Bool = false, priority:Int = 0, useWeakReference:Bool = false):Void {
 		
+		if (useWeakReference) {
+			
+			trace ("WARNING: Weak listener not supported for native (using hard reference)");
+			useWeakReference = false;
+			
+		}
+		
 		if (__eventMap == null) {
 			
 			__eventMap = new EventMap ();
