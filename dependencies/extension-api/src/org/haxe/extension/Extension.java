@@ -2,6 +2,7 @@ package org.haxe.extension;
 
 
 import android.app.Activity;
+import android.content.res.AssetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.os.Handler;
 public class Extension {
 	
 	
+	public static AssetManager assetsManager;
 	public static Handler callbackHandler;
 	public static Activity mainActivity;
 	public static Context mainContext;

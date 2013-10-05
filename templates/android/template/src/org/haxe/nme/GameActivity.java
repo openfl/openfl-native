@@ -86,11 +86,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mHandler = new Handler ();
 		mAssets = getAssets ();
 		
+		Extension.assetManager = mAssets;
 		Extension.callbackHandler = mHandler;
 		Extension.mainActivity = this;
 		Extension.mainContext = this;
 		
-		_sound = new Sound (getApplication());
+		_sound = new Sound (getApplication ());
 		//getResources().getAssets();
 		
 		requestWindowFeature (Window.FEATURE_NO_TITLE);
