@@ -12,7 +12,7 @@ import android.os.Handler;
 public class Extension {
 	
 	
-	public static AssetManager assetsManager;
+	public static AssetManager assetManager;
 	public static Handler callbackHandler;
 	public static Activity mainActivity;
 	public static Context mainContext;
