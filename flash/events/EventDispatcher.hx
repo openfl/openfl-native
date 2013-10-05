@@ -38,7 +38,7 @@ class EventDispatcher implements IEventDispatcher {
 			
 		}
 		
-		list.push (new WeakRef<Listener> (new Listener (listener, useCapture, priority), useWeakReference));
+		list.push (new Listener (new WeakRef<Function> (listener, useWeakReference), useCapture, priority));
 		list.sort (__sortEvents);
 		
 	}
@@ -76,7 +76,7 @@ class EventDispatcher implements IEventDispatcher {
 			while (index < list.length) {
 				
 				listItem = list[index];
-				listener = (listItem != null ? listItem.get () : null);
+				listener = ((listItem != null && listItem.listener.get() != null) ? listItem : null);
 				
 				if (listener == null) {
 					
@@ -151,7 +151,7 @@ class EventDispatcher implements IEventDispatcher {
 			
 			if (list[i] != null) {
 				
-				item = list[i].get ();
+				item = list[i];
 				if (item != null && item.is (listener, capture)) {
 					
 					list[i] = null;
@@ -200,7 +200,7 @@ class EventDispatcher implements IEventDispatcher {
 	}
 	
 	
-	@:noCompletion private static inline function __sortEvents (a:WeakRef<Listener>, b:WeakRef<Listener>):Int {
+	@:noCompletion private static inline function __sortEvents (a:Listener, b:Listener):Int {
 		
 		if (a == null || b == null) { 
 			
@@ -208,8 +208,8 @@ class EventDispatcher implements IEventDispatcher {
 			
 		}
 		
-		var al = a.get ();
-		var bl = b.get ();
+		var al = a;
+		var bl = b;
 		
 		if (al == null || bl == null) {
 			
@@ -237,14 +237,14 @@ class Listener {
 	
 	
 	public var id:Int;
-	public var listener:Function;
+	public var listener:WeakRef <Function>;
 	public var priority:Int;
 	public var useCapture:Bool;
 
 	private static var __id = 1;
 	
 	
-	public function new (listener:Function, useCapture:Bool, priority:Int) {
+	public function new (listener:WeakRef <Function>, useCapture:Bool, priority:Int) {
 		
 		this.listener = listener;
 		this.useCapture = useCapture;
@@ -256,14 +256,14 @@ class Listener {
 	
 	public function dispatchEvent (event:Event):Void {
 		
-		listener (event);
+		listener.get () (event);
 		
 	}
 	
 	
 	public function is (listener:Function, useCapture:Bool) {
 		
-		return (Reflect.compareMethods (this.listener, listener) && this.useCapture == useCapture);
+		return (Reflect.compareMethods (this.listener.get(), listener) && this.useCapture == useCapture);
 		
 	}
 	
@@ -271,5 +271,5 @@ class Listener {
 }
 
 
-typedef ListenerList = Array<WeakRef<Listener>>;
+typedef ListenerList = Array<Listener>;
 typedef EventMap = haxe.ds.StringMap<ListenerList>;
