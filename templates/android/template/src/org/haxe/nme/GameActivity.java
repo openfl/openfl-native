@@ -100,15 +100,11 @@ public class GameActivity extends Activity implements SensorEventListener {
 		metrics = new DisplayMetrics ();
 		getWindowManager ().getDefaultDisplay ().getMetrics (metrics);
 		
-		Log.e ("GameActivity", "HELLO FROM GAME ACTIVITY");
-		
 		// Pre-load these, so the C++ knows where to find them
 		
 		::foreach ndlls::
 		System.loadLibrary ("::name::");::end::
 		HXCPP.run ("ApplicationMain");
-		
-		Log.e ("GameActivity", "RUN HXCPP???");
 		
 		mView = new MainView (getApplication (), this);
 		setContentView (mView);
@@ -121,8 +117,6 @@ public class GameActivity extends Activity implements SensorEventListener {
 			sensorManager.registerListener (this, sensorManager.getDefaultSensor (Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
 			
 		}
-		
-		Log.e ("GameActivity", "ABOUT TO REGISTER EXTENSIONS");
 		
 		if (extensions == null) {
 			
