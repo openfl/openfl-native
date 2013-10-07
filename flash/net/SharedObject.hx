@@ -54,6 +54,13 @@ class SharedObject extends EventDispatcher {
 	}
 	
 	
+	public function close ():Void {
+		
+		// ignored, no server connection to close
+		
+	}
+	
+	
 	#if !(iphone || android)
 	
 	static public function mkdir (directory:String):Void {
