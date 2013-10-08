@@ -84,7 +84,7 @@ class ApplicationMain {
 					
 				} else {
 					
-					var instance = new DocumentClass ();
+					var instance:DocumentClass = Type.createInstance(DocumentClass, []);
 					
 					if (Std.is (instance, flash.display.DisplayObject)) {
 						
@@ -180,7 +180,7 @@ class ApplicationMain {
 
 
 @:build(DocumentClass.build())
-class DocumentClass extends ::APP_MAIN:: {}
+@:keep class DocumentClass extends ::APP_MAIN:: {}
 
 
 ::if (WIN_WIDTH != 0)::::if (WIN_HEIGHT != 0)::#if mobile
