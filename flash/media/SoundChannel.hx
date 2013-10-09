@@ -73,7 +73,7 @@ class SoundChannel extends EventDispatcher {
 	
 	@:noCompletion private function __checkComplete ():Bool {
 		
-		if (__handle != null ) {
+		if (__handle != null) {
 			
 			if (__dataProvider != null && nme_sound_channel_needs_data (__handle)) {
 				
@@ -105,9 +105,13 @@ class SoundChannel extends EventDispatcher {
 				
 			}
 			
+			return false;
+			
+		} else {
+			
+			return true;
+			
 		}
-		
-		return false;
 		
 	}
 	
@@ -121,21 +125,15 @@ class SoundChannel extends EventDispatcher {
 	
 	@:noCompletion public static function __pollComplete ():Void {
 		
-		if (__incompleteList.length > 0) {
+		var i = __incompleteList.length;
+		
+		while (--i >= 0) {
 			
-			var incomplete = new Array<SoundChannel> ();
-			
-			for (channel in __incompleteList) {
+			if (__incompleteList[i].__checkComplete ()) {
 				
-				if (!channel.__checkComplete ()) {
-					
-					incomplete.push (channel);
-					
-				}
+				__incompleteList.splice (i, 1);
 				
 			}
-			
-			__incompleteList = incomplete;
 			
 		}
 		
