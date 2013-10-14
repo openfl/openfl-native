@@ -214,6 +214,13 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	
+	public static AssetManager getAssetManager () {
+		
+		return mAssets;
+		
+	}
+	
+	
 	public static Context getContext () {
 		
 		return mContext;
