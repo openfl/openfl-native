@@ -95,7 +95,9 @@ public class GameActivity extends Activity implements SensorEventListener {
 		//getResources().getAssets();
 		
 		requestWindowFeature (Window.FEATURE_NO_TITLE);
+		::if WIN_FULLSCREEN::
 		getWindow ().addFlags (WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		::end::
 		
 		metrics = new DisplayMetrics ();
 		getWindowManager ().getDefaultDisplay ().getMetrics (metrics);
@@ -462,6 +464,10 @@ public class GameActivity extends Activity implements SensorEventListener {
 	@Override protected void onStart () {
 		
 		super.onStart();
+		
+		::if WIN_FULLSCREEN::
+    	getWindow().getDecorView().setSystemUiVisibility (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    	::end::
 		
 		for (Extension extension : extensions) {
 			
