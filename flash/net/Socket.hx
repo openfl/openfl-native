@@ -1,5 +1,5 @@
 package flash.net;
-#if cpp
+
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
@@ -150,7 +150,9 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 		}else if( doConnect ){
 			_connected = true;
 			dispatchEvent( new Event(Event.CONNECT) );
-		}else if( bLength > 0 ){
+		}
+		
+		if ( bLength > 0 ){
 			var newData = b.getBytes();
 			var rl = _input.length - _input.position;
 			var newInput = new ByteArray( rl + newData.length );
@@ -262,6 +264,19 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 			throw new IOError("Operation attempted on invalid socket.");
 		_output.writeByte(value);
 	}
+	public function writeBytes( value:ByteArray ):Void { 
+		if ( _socket == null ) 
+			throw new IOError("Operation attempted on invalid socket.");
+		try {
+			while (true) {
+				_output.writeByte(value.readByte());
+			}
+		} catch (e:Dynamic) {
+			
+		}
+		
+		//_output.writeByte(value);
+	}
     public function writeDouble( value:Float ):Void { 
 		if ( _socket == null ) 
 			throw new IOError("Operation attempted on invalid socket.");
@@ -315,6 +330,3 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 	}
 	
 }
-
-
-#end
