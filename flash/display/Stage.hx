@@ -212,7 +212,7 @@ class Stage extends DisplayObjectContainer {
 			
 			if (newObject != null) {
 				
-				newObject.__fireEvent (event.__createSimilar (events[1], oldObject));
+				newObject.__fireEvent (event.__createSimilar (events[1], newObject, newObject));
 				
 			}
 			
