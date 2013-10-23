@@ -400,8 +400,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	@Override protected void onPause () {
 		
-		super.onPause ();
 		doPause ();
+		super.onPause ();
 		
 		for (Extension extension : extensions) {
 			

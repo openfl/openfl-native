@@ -6,8 +6,13 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
+import android.os.SystemClock;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 ::if (ANDROID_TARGET_SDK_VERSION > 11)::import android.view.InputDevice;::end::
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -236,6 +241,38 @@ class MainView extends GLSurfaceView {
 			}, end);
 			
 		}
+		
+	}
+	
+	
+	@Override public InputConnection onCreateInputConnection (EditorInfo outAttrs) {
+		
+		BaseInputConnection inputConnection = new BaseInputConnection (this, false) {
+			
+			@Override public boolean deleteSurroundingText (int beforeLength, int afterLength) {
+				
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+					
+					if (beforeLength == 1 && afterLength == 0) {
+						
+						final long time = SystemClock.uptimeMillis ();
+						
+						super.sendKeyEvent (new KeyEvent (time, time, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
+						super.sendKeyEvent (new KeyEvent (SystemClock.uptimeMillis(), time, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, KeyEvent.FLAG_SOFT_KEYBOARD | KeyEvent.FLAG_KEEP_TOUCH_MODE));
+						
+						return true;
+						
+					}
+					
+				}
+				
+				return super.deleteSurroundingText (beforeLength, afterLength);
+				
+			}
+			
+		};
+		
+		return inputConnection;
 		
 	}
 	

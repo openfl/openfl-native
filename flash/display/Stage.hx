@@ -978,6 +978,29 @@ class Stage extends DisplayObjectContainer {
 				
 				__pollTimers ();
 				
+				#if android
+				var focus = get_focus ();
+				if (focus != null && focus.needsSoftKeyboard) {
+					
+					Timer.delay (function () {
+						
+						if (focus == get_focus()) {
+							
+							requestSoftKeyboard ();
+							
+						}
+						
+					}, 100);
+					
+				}
+				#end
+				
+			} else {
+				
+				#if android
+				__dismissSoftKeyboard ();
+				#end
+				
 			}
 			
 		}
