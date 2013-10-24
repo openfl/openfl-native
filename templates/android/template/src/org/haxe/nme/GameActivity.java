@@ -22,6 +22,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import dalvik.system.DexClassLoader;
@@ -74,6 +75,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	public Handler mHandler;
 	
+	private static MainView mMainView;
 	private MainView mView;
 	private Sound _sound;
 	
@@ -105,10 +107,31 @@ public class GameActivity extends Activity implements SensorEventListener {
 		
 		// Pre-load these, so the C++ knows where to find them
 		
-		::foreach ndlls::
-		System.loadLibrary ("::name::");::end::
-		HXCPP.run ("ApplicationMain");
+		//if (mMainView == null) {
+			
+			Log.d ("NME", "mMainView is NULL");
+			
+			::foreach ndlls::
+			System.loadLibrary ("::name::");::end::
+			HXCPP.run ("ApplicationMain");
+			
+			//mMainView = new MainView (getApplication (), this);
+			
+		/*} else {
+			
+			ViewGroup parent = (ViewGroup)mMainView.getParent ();
+			
+			if (parent != null) {
+				
+				parent.removeView (mMainView);
+				
+			}
+			
+			mMainView.onResume ();
+			
+		}
 		
+		mView = mMainView;*/
 		mView = new MainView (getApplication (), this);
 		setContentView (mView);
 		
