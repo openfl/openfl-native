@@ -7,6 +7,7 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.events.TouchEvent;
 import flash.events.Event;
+import flash.events.UncaughtErrorEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.media.SoundChannel;
@@ -314,6 +315,8 @@ class Stage extends DisplayObjectContainer {
 		var result = 0.0;
 		var type = Std.int (Reflect.field (event, "type"));
 		
+		try {
+		
 		switch (type) {
 			
 			case 2: // etChar
@@ -456,6 +459,11 @@ class Stage extends DisplayObjectContainer {
 			// TODO: user, sys_wm, sound_finished
 			
 		}
+		
+		}catch ( error : Dynamic ) {
+			Lib.current.loaderInfo.uncaughtErrorEvents.dispatchEvent( new UncaughtErrorEvent( UncaughtErrorEvent.UNCAUGHT_ERROR, true, true, error ) );
+		}
+
 		
 		result = __updateNextWake ();
 		return result;
