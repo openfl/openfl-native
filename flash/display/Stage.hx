@@ -306,7 +306,7 @@ class Stage extends DisplayObjectContainer {
 	#else
 	@:noCompletion @:keep private function dummyTrace ():Void { trace (""); }
 	@:functionCode("try {")
-	@:functionTailCode(' } catch(Dynamic e) { __hx_dump_stack(); ::haxe::Log_obj::trace(HX_CSTRING("Uncaught exception: ") + e,hx::SourceInfo(HX_CSTRING("Stage.hx"),0,HX_CSTRING("flash.display.Stage"),HX_CSTRING("__doProcessStageEvent"))); }')
+	@:functionTailCode(' } catch(Dynamic e) { __hx_dump_stack(); ::haxe::Log_obj::trace(HX_CSTRING("Uncaught exception: ") + e,hx::SourceInfo(HX_CSTRING("Stage.hx"),0,HX_CSTRING("flash.display.Stage"),HX_CSTRING("__doProcessStageEvent"))); } return 0;')
 	#end
 	#end
 	@:noCompletion private function __doProcessStageEvent (event:Dynamic):Float {
