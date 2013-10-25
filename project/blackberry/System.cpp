@@ -7,6 +7,7 @@
 #include <sys/platform.h>
 #include "bps/event.h"
 #include <string>
+#include <vector>
 #include <stdio.h>
 
 #include <bps/orientation.h>
