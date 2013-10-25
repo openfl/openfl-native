@@ -14,7 +14,7 @@ before_install:
   - mkdir ~/haxelib
   - haxelib setup ~/haxelib
   - haxelib git openfl https://github.com/openfl/openfl
-  - haxelib git openfl-tools https://github.com/openfl/openfl-tools
+  - haxelib git hxtools https://github.com/openfl/hxtools
   - haxelib git hxlibc https://github.com/openfl/hxlibc
   - haxelib git openfl-native-dev https://github.com/openfl/openfl-native-dev
   - haxelib install munit
