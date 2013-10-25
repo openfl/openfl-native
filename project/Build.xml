@@ -14,14 +14,8 @@
    <set name="iphoneos" value="1" if="ios" unless="simulator" />
    <set name="win_desktop" value="1" if="windows" unless="winrt"/>
    
-   <set name="${haxelib:openfl-native-libs}" value="1" unless="NME_DEV" />
-   <set name="${haxelib:nmedev}" value="1" unless="NME_DEV" />
-   
-   <set name="NME_DEV" value="${haxelib:openfl-native-libs}" if="${haxelib:openfl-native-libs}" unless="NME_DEV" />
-   <set name="NME_DEV" value="${haxelib:nmedev}" if="${haxelib:nmedev}" unless="NME_DEV" />
-   <set name="NME_DEV" value="${SDL_STATIC}" if="SDL_STATIC" />
-   
-   <error value="Error: Could not find NME_DEV" unless="NME_DEV" />
+   <set name="NATIVE_DEV" value="${haxelib:openfl-native-dev}" unless="NATIVE_DEV" />
+   <!-- <error value="Error: You must clone 'openfl-native-dev' and 'haxelib dev' the directory before you can rebuild openfl-native" unless="NATIVE_DEV" /> -->
    
    <set name="has_window" value="1" if="NME_SDL" />
    <set name="has_window" value="1" if="NME_SDL2" />
@@ -89,10 +83,10 @@
    <files id="win_desktop">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include"/>
-      <compilerflag value="-I${NME_DEV}/include/SDL12" if="sdl" />
-      <compilerflag value="-I${NME_DEV}/include/SDL2" if="sdl2" />
-      <compilerflag value="-I${NME_DEV}/include/openal" if="openal" />
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" />
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
+      <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-Iopenal"/>
       <file name="windows/GDIFont.cpp"/>
       <file name="windows/System.cpp" />
@@ -129,8 +123,8 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-Iopenal" if="openal" />
-      <compilerflag value="-I${NME_DEV}/include" />
-      <compilerflag value="-I${NME_DEV}/include/openal" if="openal" />
+      <compilerflag value="-I${NATIVE_DEV}/include" />
+      <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-DSDL_OGL" if="sdl"/>
       <file name="linux/NativeFont.cpp"/>
       <file name="linux/System.cpp"/>
@@ -159,7 +153,7 @@
    <files id="iphone">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-Iopenal"/>
       <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
       <file name="iPhone/UIStageView.mm"/>
@@ -177,8 +171,8 @@
    <files id="android">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include"/>
-      <compilerflag value="-I${NME_DEV}/include/openal" if="openal" />
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-Iopenal"/>
       <file name="android/AndroidCommon.cpp" />
       <file name="android/AndroidSound.cpp" unless="openal"/>
@@ -206,7 +200,7 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" />
-      <compilerflag value="-I${NME_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
       <file name="linux/NativeFont.cpp"/>
       <file name="webOS/System.cpp"/>
       
@@ -217,7 +211,7 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${QNX_TARGET}/usr/include" />
-      <compilerflag value="-I${NME_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
       <file name="linux/NativeFont.cpp"/>
       <file name="blackberry/System.cpp"/>
       
@@ -232,16 +226,16 @@
    </files>
    
    
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/Mac${M64}/" if="macos"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/Windows/" if="windows" unless="winrt"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/WinRTx86/" if="winrt"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/webOS/" if="webos" />
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/Linux${M64}/" if="linux"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/RPi/" if="rpi"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/Android/" if="android"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/iPhone/" if="iphone"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/BlackBerry/" if="blackberry"/>
-   <set name="THIRDPARTY_LIBS" value="${NME_DEV}/lib/Emscripten/" if="emscripten"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Mac${M64}/" if="macos"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Windows/" if="windows" unless="winrt"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/WinRTx86/" if="winrt"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/webOS/" if="webos" />
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Linux${M64}/" if="linux"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/RPi/" if="rpi"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Android/" if="android"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/iPhone/" if="iphone"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/BlackBerry/" if="blackberry"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Emscripten/" if="emscripten"/>
    <set name="THIRDPARTY_LIBS" value="${GPH_ROOT}/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/lib/" if="gph"/>
    
    <set name="SLIBEXT" value=".lib" if="windows"/>
@@ -254,10 +248,10 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" if="webos" />
-      <compilerflag value="-I${NME_DEV}/include" unless="gph"/>
+      <compilerflag value="-I${NATIVE_DEV}/include" unless="gph"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" if="webos" />
-      <compilerflag value="-I${NME_DEV}/include/SDL12" if="sdl" unless="dynamic_sdl"/>
-      <compilerflag value="-I${NME_DEV}/include/SDL2" if="sdl2" />
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" unless="dynamic_sdl"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="-I${GPH_ROOT}/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/include" if="gph"/>
       <compilerflag value="-I/opt/vc/include" if="rpi"/>
       <compilerflag value="-I/opt/vc/include/interface/vcos/pthreads/" if="rpi"/>
@@ -387,9 +381,9 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" if="webos" />
-      <compilerflag value="-I${NME_DEV}/include" if="sdl_static"/>
-      <compilerflag value="-I${NME_DEV}/include/SDL12" if="sdl_static"/>
-      <compilerflag value="-I${NME_DEV}/include" if="webos"/>
+      <compilerflag value="-I${NATIVE_DEV}/include" if="sdl_static"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl_static"/>
+      <compilerflag value="-I${NATIVE_DEV}/include" if="webos"/>
       <compilerflag value="${sdl_dynamic_include1}" if="dynamic_sdl"/>
       <compilerflag value="${sdl_dynamic_include2}" if="dynamic_sdl"/>
       <compilerflag value="-DDYNAMIC_SDL" if="dynamic_sdl" />
@@ -404,8 +398,8 @@
    <files id="sdl2">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include"/>
-      <compilerflag value="-I${NME_DEV}/include/SDL2"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL2"/>
       <!-- <compilerflag value="-DNME_MIXER" /> -->
       <file name="sdl2/SDL2Stage.cpp"/>
       <!-- <file name="sdl/SDLSound.cpp" unless="openal"/> -->
@@ -417,7 +411,7 @@
    <files id="glfw">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
       <file name="glfw/GLFWStage.cpp"/>
       
    </files>
@@ -427,7 +421,7 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I/usr/include/directfb" />
-      <compilerflag value="-I${NME_DEV}/include"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-DNME_DIRECTFB"/>
       
       <file name="directfb/DirectFBHardware.cpp"/>
@@ -439,9 +433,9 @@
    <files id="mac">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${NME_DEV}/include" />
-      <compilerflag value="-I${NME_DEV}/include/SDL12" if="sdl" />
-      <compilerflag value="-I${NME_DEV}/include/SDL2" if="sdl2" />
+      <compilerflag value="-I${NATIVE_DEV}/include" />
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" />
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="${sdl_dynamic_include2}" if="dynamic_sdl"/>
       <compilerflag value="-Iopenal"/>
       <file name="mac/NSFont.cpp"/>

@@ -6,3 +6,4 @@
 -lib openfl-native
 -D emscripten
 -D webgl
+-D no-compilation

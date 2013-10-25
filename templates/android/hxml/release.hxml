@@ -5,3 +5,4 @@
 --macro keep("::APP_MAIN::")
 -D android
 -D android-9
+-D no-compilation

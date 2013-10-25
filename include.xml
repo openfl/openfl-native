@@ -5,9 +5,7 @@
 	
 	<section unless="display">
 		
-		<ndll name="std" haxelib="hxcpp" unless="neko" />
-		<ndll name="regexp" haxelib="hxcpp" unless="neko" />
-		<ndll name="zlib" haxelib="hxcpp" unless="neko" />
+		<haxelib name="hxlibc" if="cpp" />
 		
 		<ndll name="openal" register="false" if="android" />
 		<ndll name="libfreetype" register="false" if="emscripten" />

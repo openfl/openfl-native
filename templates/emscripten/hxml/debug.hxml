@@ -7,3 +7,4 @@
 -D emscripten
 -D webgl
 -debug
+-D no-compilation

@@ -7,3 +7,4 @@
 -D HXCPP_LOAD_DEBUG
 -D HXCPP_RTLD_LAZY
 -debug
+-D no-compilation
