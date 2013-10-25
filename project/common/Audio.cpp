@@ -423,7 +423,7 @@ namespace nme
 			}
 			
 			// Read in the first chunk into the struct
-			fread(&riff_header, sizeof(RIFF_Header), 1, f);
+			int result = fread(&riff_header, sizeof(RIFF_Header), 1, f);
 			//check for RIFF and WAVE tag in memeory
 			if ((riff_header.chunkID[0] != 'R'  ||
 				riff_header.chunkID[1] != 'I'  ||
@@ -439,7 +439,7 @@ namespace nme
 			}
 			
 			//Read in the 2nd chunk for the wave info
-			fread(&wave_format, sizeof(WAVE_Format), 1, f);
+			result = fread(&wave_format, sizeof(WAVE_Format), 1, f);
 			
 			//check for fmt tag in memory
 			if (wave_format.subChunkID[0] != 'f' ||
@@ -458,7 +458,7 @@ namespace nme
 			}
 			
 			//Read in the the last byte of data before the sound file
-			fread(&wave_data, sizeof(WAVE_Data), 1, f);
+			result = fread(&wave_data, sizeof(WAVE_Data), 1, f);
 			
 			//check for data tag in memory
 			if (wave_data.subChunkID[0] != 'd' ||
