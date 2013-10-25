@@ -15,9 +15,8 @@ before_install:
   - haxelib setup ~/haxelib
   - haxelib git openfl https://github.com/openfl/openfl
   - haxelib git openfl-tools https://github.com/openfl/openfl-tools
-  - haxelib install hxcpp
-  - haxelib git nme https://github.com/haxenme/NME
-  - haxelib git nmedev https://github.com/haxenme/nmedev
+  - haxelib install hxlibc
+  - haxelib git openfl-native-dev https://github.com/openfl/openfl-native-dev
   - haxelib install munit
   - haxelib install format
   - haxelib install svg
