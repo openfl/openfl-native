@@ -14,6 +14,7 @@
    <set name="iphoneos" value="1" if="ios" unless="simulator" />
    <set name="win_desktop" value="1" if="windows" unless="winrt"/>
    
+   <set name="NME_DEV" value="${haxelib:openfl-native-dev}" unless="NME_DEV" />
    <set name="NME_DEV" value="${haxelib:nmedev}" unless="NME_DEV" />
    <set name="NME_DEV" value="${SDL_STATIC}" if="SDL_STATIC" />
    
