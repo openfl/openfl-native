@@ -17,10 +17,8 @@ Development Build
 
 After cloning, "openfl-native/ndll" will be empty. You may copy the "ndll" folder from a haxelib version of openfl-native (which still may be up-to-date) or you may compile them from the source:
 
-    git clone https://github.com/haxenme/NME nme
-    git clone https://github.com/haxenme/nmedev
-    haxelib dev nme nme
-    haxelib dev nmedev nmedev
+    git clone https://github.com/openfl/openfl-native-dev
+    haxelib dev openfl-native-dev openfl-native-dev
 
 To rebuild binaries for a platform, use "openfl rebuild", such as:
 
