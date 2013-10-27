@@ -17,9 +17,12 @@ namespace nme
       mWasPlaying = false;
       mSampleBuffer = 0;
       float seek = 0;
-      int size = 0;
+      mSize = 0;
       mStream = 0;
       mUseStream = false;
+      
+      mStartTime = startTime;
+      mLoops = inLoops;
       
       if (inBufferID>0)
       {
@@ -50,19 +53,19 @@ namespace nme
          if (startTime > 0)
          {
             ALint bits, channels, freq;
-            alGetBufferi(inBufferID, AL_SIZE, &size);
+            alGetBufferi(inBufferID, AL_SIZE, &mSize);
             alGetBufferi(inBufferID, AL_BITS, &bits);
             alGetBufferi(inBufferID, AL_CHANNELS, &channels);
             alGetBufferi(inBufferID, AL_FREQUENCY, &freq);
-            int length = (ALfloat)((ALuint)size/channels/(bits/8)) / (ALfloat)freq;
-            seek = (startTime * 0.001) / length;
+            mLength = (ALfloat)((ALuint)mSize/channels/(bits/8)) / (ALfloat)freq;
+            seek = (startTime * 0.001) / mLength;
          }
          
          if (seek < 1)
          {
             //alSourceQueueBuffers(mSourceID, 1, &inBufferID);
             alSourcePlay(mSourceID);
-            alSourcef(mSourceID, AL_BYTE_OFFSET, seek * size);
+            alSourcef(mSourceID, AL_BYTE_OFFSET, seek * mSize);
          }
          
          mWasPlaying = true;
@@ -291,8 +294,31 @@ namespace nme
        */
       if(state == AL_STOPPED)
       {
+         if (mLoops > 0)
+         {   
+            float seek = 0;
+            
+            if (mStartTime > 0)
+            {
+               seek = (mStartTime * 0.001) / mLength;
+            }
+            
+            if (seek < 1)
+            {
+               //alSourceQueueBuffers(mSourceID, 1, &inBufferID);
+               alSourcePlay(mSourceID);
+               alSourcef(mSourceID, AL_BYTE_OFFSET, seek * mSize);
+            }
+            
+            mLoops --;
+            
+            return false;
+         }
+         else
+         {
+            return true;
+         }
          //LOG_SOUND("OpenALChannel isComplete() returning true");
-         return true;
       }
       else
       {
@@ -929,13 +955,19 @@ namespace nme
            
            alSourceUnqueueBuffers(source, 1, &buffer);
            check();
-           if (!mIsValid) return false;
            
-           active = stream(buffer);
-           
-           alSourceQueueBuffers(source, 1, &buffer);
-           check();
-           if (!mIsValid) return false;
+           if (mIsValid)
+           {
+              active = stream(buffer);
+              
+              alSourceQueueBuffers(source, 1, &buffer);
+              check();
+           }
+           else
+           {
+              active = false;
+              break;
+           }
        }
        
        if (active && !playing())
@@ -946,7 +978,7 @@ namespace nme
          mLoops --;
          double seek = mStartTime * 0.001;
          ov_time_seek(&oggStream, seek);
-         active = true;
+         return update();
        }
        
        return active;

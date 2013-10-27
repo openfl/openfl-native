@@ -21,6 +21,8 @@
 		
 		<dependency name="extension-api" path="dependencies/extension-api" if="android" />
 		
+		<architecture name="armv7" if="android" />
+		
 	</section>
 	
 	<templatePath name="templates" />

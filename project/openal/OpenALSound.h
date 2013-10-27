@@ -137,6 +137,8 @@ class OpenALChannel;
          ALuint mDynamicStack[2];
          ALuint mDynamicBuffer[2];
          AudioStream *mStream;
+         int mLength;
+         int mSize;
          int mStartTime;
          int mLoops;
          bool mUseStream;
