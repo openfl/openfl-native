@@ -20,6 +20,7 @@ class Float32Array extends ArrayBufferView implements ArrayAccess<Float> {
 		if (Std.is (bufferOrArray, Int)) {
 			
 			super (Std.int (bufferOrArray) * BYTES_PER_ELEMENT);
+			this.length = Std.int(bufferOrArray);
 			
 		} else if (Std.is (bufferOrArray, Array)) {
 			
