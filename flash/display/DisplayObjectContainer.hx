@@ -161,9 +161,9 @@ class DisplayObjectContainer extends InteractiveObject {
 		if (endIndex > __children.length) throw new RangeError("removeChildren : endIndex out of bounds " + endIndex + "/" + __children.length);
 
 		var numRemovals = endIndex - beginIndex;
-		while (removals >= 0) {
+		while (numRemovals >= 0) {
 			removeChildAt(beginIndex);
-			removals --;
+			numRemovals --;
 		}
 	}	
 	
