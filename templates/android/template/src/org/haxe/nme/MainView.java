@@ -251,6 +251,7 @@ class MainView extends GLSurfaceView {
 			
 			@Override public boolean deleteSurroundingText (int beforeLength, int afterLength) {
 				
+				::if (ANDROID_TARGET_SDK_VERSION > 15)::
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 					
 					if (beforeLength == 1 && afterLength == 0) {
@@ -265,6 +266,7 @@ class MainView extends GLSurfaceView {
 					}
 					
 				}
+				::end::
 				
 				return super.deleteSurroundingText (beforeLength, afterLength);
 				
