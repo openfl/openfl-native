@@ -3,6 +3,7 @@ package flash.display;
 
 import flash.events.Event;
 import flash.events.EventDispatcher;
+import flash.events.UncaughtErrorEvents;
 import flash.net.URLLoader;
 import flash.net.URLLoaderDataFormat;
 import flash.net.URLRequest;
@@ -28,6 +29,7 @@ class LoaderInfo extends URLLoader {
 	public var sharedEvents (default, null):EventDispatcher;
 	public var url (default, null):String;
 	public var width (default, null):Int;
+	public var uncaughtErrorEvents(default, null) : UncaughtErrorEvents;
 	
 	@:noCompletion private var __pendingURL:String;
 	
@@ -50,6 +52,7 @@ class LoaderInfo extends URLLoader {
 		
 		var loaderInfo = new LoaderInfo ();
 		loaderInfo.loader = loader;
+		loaderInfo.uncaughtErrorEvents = new UncaughtErrorEvents();
 		
 		if (loader == null) {
 			

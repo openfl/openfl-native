@@ -18,6 +18,7 @@ class Int32Array extends ArrayBufferView implements ArrayAccess<Int> {
 		if (Std.is (bufferOrArray, Int)) {
 			
 			super (Std.int (bufferOrArray) << 2);
+			this.length = Std.int(bufferOrArray);
 			
 		} else if (Std.is (bufferOrArray, Array)) {
 			
