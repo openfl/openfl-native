@@ -17,6 +17,7 @@ class Int16Array extends ArrayBufferView implements ArrayAccess<Int> {
 		if (Std.is (bufferOrArray, Int)) {
 			
 			super (Std.int (bufferOrArray) << 1);
+			this.length = Std.int(bufferOrArray);
 			
 		} else if (Std.is (bufferOrArray, Array)) {
 			
