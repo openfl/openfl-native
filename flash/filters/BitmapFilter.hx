@@ -16,8 +16,10 @@ class BitmapFilter {
 	
 	public function clone ():BitmapFilter {
 		
-		throw ("clone not implemented");
-		return null;
+		return new BitmapFilter (type);
+		
+		//throw ("clone not implemented");
+		//return null;
 		
 	}
 	
