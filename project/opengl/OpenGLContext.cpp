@@ -680,7 +680,7 @@ public:
    void SetQuality(StageQuality inQ)
    {
       #ifndef NME_FORCE_GLES2
-      inQ = sqMedium;
+      //inQ = sqMedium;
       if (inQ!=mQuality)
       {
          mQuality = inQ;
