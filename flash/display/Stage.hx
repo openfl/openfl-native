@@ -1154,6 +1154,10 @@ class Stage extends DisplayObjectContainer {
 	
 	private function set_frameRate (value:Float):Float {
 		
+		#if android
+		if (value > 60) value = 60;
+		#end
+		
 		frameRate = value;
 		__framePeriod = (frameRate <= 0 ? frameRate : 1.0 / frameRate);
 		__nextRender = __lastRender + __framePeriod;
