@@ -820,7 +820,7 @@ namespace nme
    
    //Ogg Audio Stream implementation
    void AudioStream_Ogg::open(const std::string &path, int startTime, int inLoops, const SoundTransform &inTransform) {
-
+        
         int result;
         mPath = std::string(path.c_str());
         mStartTime = startTime;
@@ -828,11 +828,21 @@ namespace nme
         mIsValid = true;
         
         #ifdef ANDROID
+        
         mInfo = AndroidGetAssetFD(path.c_str());
         oggFile = fdopen(mInfo.fd, "rb");
         fseek(oggFile, mInfo.offset, 0);
+        
+        ov_callbacks callbacks;
+        callbacks.read_func = &nme::AudioStream_Ogg::read_func;
+        callbacks.seek_func = &nme::AudioStream_Ogg::seek_func;
+        callbacks.close_func = &nme::AudioStream_Ogg::close_func;
+        callbacks.tell_func = &nme::AudioStream_Ogg::tell_func;
+        
         #else
+        
         oggFile = fopen(path.c_str(), "rb");
+        
         #endif
         
         if(!oggFile) {
@@ -842,7 +852,11 @@ namespace nme
             return;
         }
         
+        #ifdef ANDROID
+        result = ov_open_callbacks(this, &oggStream, NULL, 0, callbacks);
+        #else
         result = ov_open(oggFile, &oggStream, NULL, 0);
+        #endif
          
         if(result < 0) {
 
@@ -989,24 +1003,14 @@ namespace nme
    bool AudioStream_Ogg::stream( ALuint buffer ) {
       
        if (mSuspend) return true;
-       
+       //LOG_SOUND("STREAM\n");
        char pcm[STREAM_BUFFER_SIZE];
        int  size = 0;
        int  section;
        int  result;
        
-       int maxSize = STREAM_BUFFER_SIZE;
-       
-       #ifdef ANDROID
-       int remainingBytes = mInfo.length - ov_raw_tell(&oggStream) + mInfo.offset;
-       if (maxSize > remainingBytes)
-       { 
-          maxSize = remainingBytes;  
-       }
-       #endif
-
-       while(size < maxSize) {
-           result = ov_read(&oggStream, pcm + size, maxSize - size, 0, 2, 1, &section);
+       while (size < STREAM_BUFFER_SIZE) {
+           result = ov_read(&oggStream, pcm + size, STREAM_BUFFER_SIZE - size, 0, 2, 1, &section);
            if(result > 0)
                size += result;
            else
@@ -1168,7 +1172,6 @@ namespace nme
       if (mSuspend) return true;
       //#endif
       //playback();
-      
       return (mIsValid && playing());
    }
 

@@ -101,8 +101,58 @@ class OpenALChannel;
            int mLoops;
            bool mSuspend;
            bool mIsValid;
+           
            #ifdef ANDROID
+           
            FileInfo mInfo;
+           off_t mFilePosition;
+           
+           static size_t read_func(void* ptr, size_t size, size_t nmemb, void* datasource)
+           {
+               AudioStream_Ogg *stream = (AudioStream_Ogg*)datasource;
+               long pos = ftell(stream->oggFile);
+               
+               if (pos + size*nmemb > stream->mInfo.length + stream->mInfo.offset)
+               {
+                  nmemb = 1;
+                  size = stream->mInfo.length + stream->mInfo.offset - pos;
+                  if (size <= 0)
+                  {
+                    return 0;
+                  }
+               }
+               
+               return fread(ptr, size, nmemb, stream->oggFile);
+           }
+
+           static int seek_func(void* datasource, ogg_int64_t offset, int whence)
+           {
+               AudioStream_Ogg *stream = (AudioStream_Ogg*)datasource;
+               long pos = 0;
+               
+               if (whence == SEEK_SET)
+                   pos = stream->mInfo.offset + (unsigned int)offset;
+               else if (whence == SEEK_CUR)
+                   pos = ftell(stream->oggFile) + (unsigned int)offset;
+               else if (whence == SEEK_END)
+                   pos = stream->mInfo.offset + stream->mInfo.length;
+                
+               if (pos > stream->mInfo.offset + stream->mInfo.length) pos = stream->mInfo.offset + stream->mInfo.length;
+               return fseek(stream->oggFile, pos, 0);
+           }
+
+           static int close_func(void* datasource)
+           {
+               AudioStream_Ogg *stream = (AudioStream_Ogg*)datasource;
+               return fclose(stream->oggFile);
+           }
+
+           static long tell_func(void* datasource)
+           {
+               AudioStream_Ogg *stream = (AudioStream_Ogg*)datasource;
+               return (long)ftell(stream->oggFile) - stream->mInfo.offset;
+           }
+           
            #endif
    };
 
