@@ -905,6 +905,7 @@ class GL {
 
 	public static function readPixels(x:Int, y:Int, width:Int, height:Int, format:Int, type:Int, pixels:ByteArray):Void 
 	{
+		nme_gl_read_pixels(x, y, width, height, format, type, pixels == null ? null : pixels.getByteBuffer(), pixels == null ? null : pixels.getStart());
 	}
 
 	public static function renderbufferStorage(target:Int, internalformat:Int, width:Int, height:Int):Void 
@@ -1242,6 +1243,7 @@ class GL {
 	private static var nme_gl_link_program = load("nme_gl_link_program", 1);
 	private static var nme_gl_pixel_storei = load("nme_gl_pixel_storei", 2);
 	private static var nme_gl_polygon_offset = load("nme_gl_polygon_offset", 2);
+	private static var nme_gl_read_pixels = load("nme_gl_read_pixels", -1);
 	private static var nme_gl_renderbuffer_storage = load("nme_gl_renderbuffer_storage", 4);
 	private static var nme_gl_sample_coverage = load("nme_gl_sample_coverage", 2);
 	private static var nme_gl_scissor = load("nme_gl_scissor", 4);
