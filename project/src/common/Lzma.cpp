@@ -1,6 +1,6 @@
 #include <Lzma.h>
-#include "../lzma/LzmaEnc.h"
-#include "../lzma/LzmaDec.h"
+#include "lzma/LzmaEnc.h"
+#include "lzma/LzmaDec.h"
 
 namespace nme
 {
