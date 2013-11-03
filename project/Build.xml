@@ -88,34 +88,34 @@
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-Iopenal"/>
-      <file name="windows/GDIFont.cpp"/>
-      <file name="windows/System.cpp" />
+      <file name="src/windows/GDIFont.cpp"/>
+      <file name="src/windows/System.cpp" />
       <!-- Use SDL on windows too ? -->
-      <!-- <file name="windows/SimpleFrame.cpp" unless="sdl"/> -->
-      <!-- <file name="sdl/SDLSound.cpp" unless="sdl"/> -->
-      <file name="empty/Sound.cpp" if="glfw" unless="openal" />
-      <file name="openal/OpenALSound.cpp" if="openal"/>
+      <!-- <file name="src/windows/SimpleFrame.cpp" unless="sdl"/> -->
+      <!-- <file name="src/sdl/SDLSound.cpp" unless="sdl"/> -->
+      <file name="src/empty/Sound.cpp" if="glfw" unless="openal" />
+      <file name="src/openal/OpenALSound.cpp" if="openal"/>
       <compilerflag value="-DAL_LIBTYPE_STATIC" if="openal"/>
 
    </files>
    
    
    <files id="winrt_shaders">
-      <hlsl name="winrt\\SimplePixelShader.hlsl" profile="ps_4_0" variable="gPixelShader" target="winrt\\shaders\\SimplePixelShader.h"/>
-      <hlsl name="winrt\\SimpleVertexShader.hlsl" profile="vs_4_0" variable="gVertexShader" target="winrt\\shaders\\SimpleVertexShader.h"/>
-      <file name="winrt/ShaderData.cpp" />
+      <hlsl name="src\\winrt\\SimplePixelShader.hlsl" profile="ps_4_0" variable="gPixelShader" target="winrt\\shaders\\SimplePixelShader.h"/>
+      <hlsl name="src\\winrt\\SimpleVertexShader.hlsl" profile="vs_4_0" variable="gVertexShader" target="winrt\\shaders\\SimpleVertexShader.h"/>
+      <file name="src\\winrt/ShaderData.cpp" />
    </files>
    
    
    <files id="winrt">
       <compilerflag value="-Iinclude"/>
-      <file name="winrt/WinRTStage.cpp" />
-      <file name="winrt/DX11Context.cpp" />
-      <file name="winrt/DX11Font.cpp" />
-      <file name="winrt/System.cpp" />
-      <file name="winrt/MediaFoundation.cpp" />
-      <file name="winrt/Direct3DBase.cpp" />
-      <file name="winrt/URL.cpp" />
+      <file name="src/winrt/WinRTStage.cpp" />
+      <file name="src/winrt/DX11Context.cpp" />
+      <file name="src/winrt/DX11Font.cpp" />
+      <file name="src/winrt/System.cpp" />
+      <file name="src/winrt/MediaFoundation.cpp" />
+      <file name="src/winrt/Direct3DBase.cpp" />
+      <file name="src/winrt/URL.cpp" />
    </files>
    
    
@@ -126,12 +126,12 @@
       <compilerflag value="-I${NATIVE_DEV}/include" />
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-DSDL_OGL" if="sdl"/>
-      <file name="linux/NativeFont.cpp"/>
-      <file name="linux/System.cpp"/>
-      <file name="empty/URL.cpp" if="nocurl" />
-      <file name="empty/Sound.cpp" if="noopenal" />
-      <!-- <file name="empty/HardwareContext.cpp" unless="has_window" /> -->
-      <file name="openal/OpenALSound.cpp" if="openal" />
+      <file name="src/linux/NativeFont.cpp"/>
+      <file name="src/linux/System.cpp"/>
+      <file name="src/empty/URL.cpp" if="nocurl" />
+      <file name="src/empty/Sound.cpp" if="noopenal" />
+      <!-- <file name="src/empty/HardwareContext.cpp" unless="has_window" /> -->
+      <file name="src/openal/OpenALSound.cpp" if="openal" />
       
    </files>
    
@@ -143,9 +143,9 @@
       <compilerflag value="-I${GPH_ROOT}/include" if="gph"/>
       <compilerflag value="-I${GPH_ROOT}/include/freetype2" if="gph"/>
       <compilerflag value="-I${GPH_ROOT}/DGE/include" if="gph"/>
-      <file name="linux/NativeFont.cpp"/>
-      <file name="dge/DGEStage.cpp"/>
-      <file name="dge/DGESound.cpp"/>
+      <file name="src/linux/NativeFont.cpp"/>
+      <file name="src/dge/DGEStage.cpp"/>
+      <file name="src/dge/DGESound.cpp"/>
       
    </files>
    
@@ -156,14 +156,14 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-Iopenal"/>
       <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
-      <file name="iPhone/UIStageView.mm"/>
-      <file name="iPhone/UIDeviceHardware.mm"/>
-      <!-- <file name="iPhone/SurfaceIO.mm"/> -->
-      <file name="openal/OpenALSound.cpp" />
-      <file name="iPhone/Sound.mm"/>
-      <file name="iPhone/NativeFont.mm"/>
-      <file name="iPhone/System.mm"/>
-      <file name="cocoa/FileManager.mm"/>
+      <file name="src/iPhone/UIStageView.mm"/>
+      <file name="src/iPhone/UIDeviceHardware.mm"/>
+      <!-- <file name="src/iPhone/SurfaceIO.mm"/> -->
+      <file name="src/openal/OpenALSound.cpp" />
+      <file name="src/iPhone/Sound.mm"/>
+      <file name="src/iPhone/NativeFont.mm"/>
+      <file name="src/iPhone/System.mm"/>
+      <file name="src/cocoa/FileManager.mm"/>
       
    </files>
    
@@ -174,13 +174,13 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-Iopenal"/>
-      <file name="android/AndroidCommon.cpp" />
-      <file name="android/AndroidSound.cpp" unless="openal"/>
-      <file name="android/AndroidFont.cpp"/>
-      <file name="android/AndroidFrame.cpp"/>
-      <file name="android/JNI.cpp"/>
-      <file name="android/System.cpp"/>
-      <file name="openal/OpenALSound.cpp" if="openal"/>
+      <file name="src/android/AndroidCommon.cpp" />
+      <file name="src/android/AndroidSound.cpp" unless="openal"/>
+      <file name="src/android/AndroidFont.cpp"/>
+      <file name="src/android/AndroidFrame.cpp"/>
+      <file name="src/android/JNI.cpp"/>
+      <file name="src/android/System.cpp"/>
+      <file name="src/openal/OpenALSound.cpp" if="openal"/>
       <compilerflag value="-DAL_LIBTYPE_STATIC" if="openal"/>
       
    </files>
@@ -188,8 +188,8 @@
    <files id="emscripten">
       
       <compilerflag value="-Iinclude"/>
-      <file name="linux/NativeFont.cpp"/>
-      <file name="emscripten/System.cpp"/>
+      <file name="src/linux/NativeFont.cpp"/>
+      <file name="src/emscripten/System.cpp"/>
       
    </files>
    
@@ -201,8 +201,8 @@
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" />
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="linux/NativeFont.cpp"/>
-      <file name="webOS/System.cpp"/>
+      <file name="src/linux/NativeFont.cpp"/>
+      <file name="src/webOS/System.cpp"/>
       
    </files>
    
@@ -212,8 +212,8 @@
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${QNX_TARGET}/usr/include" />
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="linux/NativeFont.cpp"/>
-      <file name="blackberry/System.cpp"/>
+      <file name="src/linux/NativeFont.cpp"/>
+      <file name="src/blackberry/System.cpp"/>
       
    </files>
    
@@ -221,7 +221,7 @@
    <files id="main">
       
       <compilerflag value="-Iinclude"/>
-      <file name="Test.cpp"/>
+      <file name="src/Test.cpp"/>
       
    </files>
    
@@ -269,67 +269,67 @@
       <compilerflag value="-DNME_PREMULTIPLIED_ALPHA" if="NME_PREMULTIPLIED_ALPHA"/>
       <compilerflag value="-Wno-conversion" if="linux"/>
       
-      <file name="common/Surface.cpp"/>
-      <file name="common/Utils.cpp"/>
-      <file name="common/Geom.cpp"/>
-      <file name="common/Graphics.cpp"/>
-      <file name="common/GraphicsData.cpp"/>
-      <file name="common/Matrix.cpp"/>
-      <file name="common/CachedExtent.cpp"/>
-      <file name="common/TextField.cpp"/>
-      <file name="common/Font.cpp"/>
-      <file name="common/FreeType.cpp" />
-      <file name="common/Tilesheet.cpp"/>
-      <file name="common/Display.cpp"/>
-      <file name="common/ColorTransform.cpp"/>
-      <file name="common/Hardware.cpp" unless="directfb"/>
-      <file name="common/Tessellate.cpp"/>
-      <file name="common/Filters.cpp"/>
-      <file name="common/ExternalInterface.cpp"/>
-      <file name="common/Cursors.cpp"/>
-      <file name="common/Input.cpp" unless="iphone" />
-      <file name="common/SurfaceIO.cpp" unless="sdl_image" />
-      <file name="common/ManagedStage.cpp" unless="winrt" />
-      <file name="common/CURL.cpp" unless="nocurl"/>
-      <file name="common/Lzma.cpp"/>
-      <file name="common/Thread.cpp"/>
-      <file name="common/Audio.cpp" if="openal"/>
-      <file name="video/TheoraVideo.cpp" if="theora" />
-      <file name="empty/Video.cpp" unless="theora" />
+      <file name="src/common/Surface.cpp"/>
+      <file name="src/common/Utils.cpp"/>
+      <file name="src/common/Geom.cpp"/>
+      <file name="src/common/Graphics.cpp"/>
+      <file name="src/common/GraphicsData.cpp"/>
+      <file name="src/common/Matrix.cpp"/>
+      <file name="src/common/CachedExtent.cpp"/>
+      <file name="src/common/TextField.cpp"/>
+      <file name="src/common/Font.cpp"/>
+      <file name="src/common/FreeType.cpp" />
+      <file name="src/common/Tilesheet.cpp"/>
+      <file name="src/common/Display.cpp"/>
+      <file name="src/common/ColorTransform.cpp"/>
+      <file name="src/common/Hardware.cpp" unless="directfb"/>
+      <file name="src/common/Tessellate.cpp"/>
+      <file name="src/common/Filters.cpp"/>
+      <file name="src/common/ExternalInterface.cpp"/>
+      <file name="src/common/Cursors.cpp"/>
+      <file name="src/common/Input.cpp" unless="iphone" />
+      <file name="src/common/SurfaceIO.cpp" unless="sdl_image" />
+      <file name="src/common/ManagedStage.cpp" unless="winrt" />
+      <file name="src/common/CURL.cpp" unless="nocurl"/>
+      <file name="src/common/Lzma.cpp"/>
+      <file name="src/common/Thread.cpp"/>
+      <file name="src/common/Audio.cpp" if="openal"/>
+      <file name="src/video/TheoraVideo.cpp" if="theora" />
+      <file name="src/empty/Video.cpp" unless="theora" />
       
-      <file name="common/XML/tinystr.cpp"/>
-      <file name="common/XML/tinyxml.cpp"/>
-      <file name="common/XML/tinyxmlerror.cpp"/>
-      <file name="common/XML/tinyxmlparser.cpp"/>
+      <file name="src/common/XML/tinystr.cpp"/>
+      <file name="src/common/XML/tinyxml.cpp"/>
+      <file name="src/common/XML/tinyxmlerror.cpp"/>
+      <file name="src/common/XML/tinyxmlparser.cpp"/>
       
-      <file name="software-renderer/AlphaMask.cpp"/>
-      <file name="software-renderer/BitmapFill.cpp"/>
-      <file name="software-renderer/BitmapFillPerspective.cpp"/>
-      <file name="software-renderer/GradientFill.cpp"/>
-      <file name="software-renderer/LineRender.cpp"/>
-      <file name="software-renderer/PointRenderer.cpp"/>
-      <file name="software-renderer/PolygonRender.cpp"/>
-      <file name="software-renderer/SoftwareRenderer.cpp"/>
-      <file name="software-renderer/SolidFill.cpp"/>
-      <file name="software-renderer/SolidRender.cpp"/>
-      <file name="software-renderer/TileRenderer.cpp"/>
-      <file name="software-renderer/TriangleRender.cpp"/>
+      <file name="src/software-renderer/AlphaMask.cpp"/>
+      <file name="src/software-renderer/BitmapFill.cpp"/>
+      <file name="src/software-renderer/BitmapFillPerspective.cpp"/>
+      <file name="src/software-renderer/GradientFill.cpp"/>
+      <file name="src/software-renderer/LineRender.cpp"/>
+      <file name="src/software-renderer/PointRenderer.cpp"/>
+      <file name="src/software-renderer/PolygonRender.cpp"/>
+      <file name="src/software-renderer/SoftwareRenderer.cpp"/>
+      <file name="src/software-renderer/SolidFill.cpp"/>
+      <file name="src/software-renderer/SolidRender.cpp"/>
+      <file name="src/software-renderer/TileRenderer.cpp"/>
+      <file name="src/software-renderer/TriangleRender.cpp"/>
       
-      <file name="opengl/OpenGLContext.cpp" if="ogl"/>
-      <file name="opengl/OGLTexture.cpp" if="ogl"/>
-      <file name="opengl/OGLShaders.cpp" if="ogl"/>
-      <file name="opengl/OGLExport.cpp" if="ogl"/>
-      <file name="opengl/Egl.cpp" if="nmeegl"/>
+      <file name="src/opengl/OpenGLContext.cpp" if="ogl"/>
+      <file name="src/opengl/OGLTexture.cpp" if="ogl"/>
+      <file name="src/opengl/OGLShaders.cpp" if="ogl"/>
+      <file name="src/opengl/OGLExport.cpp" if="ogl"/>
+      <file name="src/opengl/Egl.cpp" if="nmeegl"/>
    </files>
    
    <files id="common_lzma">
       <compilerflag value="-D_7ZIP_ST" unless="win_desktop"/>
       
-      <file name="lzma/LzFind.c" />
-      <file name="lzma/LzmaDec.c" />
-      <file name="lzma/LzmaEnc.c" />
-      <file name="lzma/LzFindMt.c" if="win_desktop" />
-      <file name="lzma/Threads.c" if="win_desktop" />
+      <file name="src/lzma/LzFind.c" />
+      <file name="src/lzma/LzmaDec.c" />
+      <file name="src/lzma/LzmaEnc.c" />
+      <file name="src/lzma/LzFindMt.c" if="win_desktop" />
+      <file name="src/lzma/Threads.c" if="win_desktop" />
    </files>
    
    <set name="tool" value="exe" unless="iphone"/>
@@ -389,8 +389,8 @@
       <compilerflag value="-DDYNAMIC_SDL" if="dynamic_sdl" />
       <compilerflag value="-DNME_MIXER" />
       <compilerflag value="-DSDL_IMAGE" if="sdl_image" />
-      <file name="sdl/SDLStage.cpp"/>
-      <file name="sdl/SDLSound.cpp" unless="openal"/>
+      <file name="src/sdl/SDLStage.cpp"/>
+      <file name="src/sdl/SDLSound.cpp" unless="openal"/>
       
    </files>
    
@@ -401,9 +401,9 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2"/>
       <!-- <compilerflag value="-DNME_MIXER" /> -->
-      <file name="sdl2/SDL2Stage.cpp"/>
-      <!-- <file name="sdl/SDLSound.cpp" unless="openal"/> -->
-      <file name="empty/Sound.cpp" unless="openal" />
+      <file name="src/sdl2/SDL2Stage.cpp"/>
+      <!-- <file name="src/sdl/SDLSound.cpp" unless="openal"/> -->
+      <file name="src/empty/Sound.cpp" unless="openal" />
       
    </files>
    
@@ -412,7 +412,7 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="glfw/GLFWStage.cpp"/>
+      <file name="src/glfw/GLFWStage.cpp"/>
       
    </files>
    
@@ -424,8 +424,8 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-DNME_DIRECTFB"/>
       
-      <file name="directfb/DirectFBHardware.cpp"/>
-      <file name="directfb/DirectFBStage.cpp"/>
+      <file name="src/directfb/DirectFBHardware.cpp"/>
+      <file name="src/directfb/DirectFBStage.cpp"/>
       
    </files>
    
@@ -438,15 +438,15 @@
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="${sdl_dynamic_include2}" if="dynamic_sdl"/>
       <compilerflag value="-Iopenal"/>
-      <file name="mac/NSFont.cpp"/>
-      <file name="mac/MacBoot.m" />
-      <file name="empty/URL.cpp" if="nocurl" />
-      <file name="empty/Sound.cpp" unless="has_sound" />
-      <file name="empty/Stage.cpp" unless="has_window" />
-      <file name="empty/HardwareContext.cpp" unless="has_window" />
-      <file name="mac/System.mm"/>
-      <file name="cocoa/FileManager.mm"/>
-      <file name="openal/OpenALSound.cpp" if="openal"/>
+      <file name="src/mac/NSFont.cpp"/>
+      <file name="src/mac/MacBoot.m" />
+      <file name="src/empty/URL.cpp" if="nocurl" />
+      <file name="src/empty/Sound.cpp" unless="has_sound" />
+      <file name="src/empty/Stage.cpp" unless="has_window" />
+      <file name="src/empty/HardwareContext.cpp" unless="has_window" />
+      <file name="src/mac/System.mm"/>
+      <file name="src/cocoa/FileManager.mm"/>
+      <file name="src/openal/OpenALSound.cpp" if="openal"/>
          
    </files>
    
