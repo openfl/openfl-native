@@ -87,65 +87,51 @@
       <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" />
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
-      <compilerflag value="-Iopenal"/>
-      <file name="src/windows/GDIFont.cpp"/>
-      <file name="src/windows/System.cpp" />
+      <compilerflag value="-Isrc/sound/openal"/>
+      <file name="src/platform/windows/GDIFont.cpp"/>
+      <file name="src/platform/windows/System.cpp" />
       <!-- Use SDL on windows too ? -->
-      <!-- <file name="src/windows/SimpleFrame.cpp" unless="sdl"/> -->
-      <!-- <file name="src/sdl/SDLSound.cpp" unless="sdl"/> -->
-      <file name="src/empty/Sound.cpp" if="glfw" unless="openal" />
-      <file name="src/openal/OpenALSound.cpp" if="openal"/>
+      <!-- <file name="src/platform/windows/SimpleFrame.cpp" unless="sdl"/> -->
+      <!-- <file name="src/backend/sdl/SDLSound.cpp" unless="sdl"/> -->
+      <file name="src/common/empty/Sound.cpp" if="glfw" unless="openal" />
+      <file name="src/sound/openal/OpenALSound.cpp" if="openal"/>
       <compilerflag value="-DAL_LIBTYPE_STATIC" if="openal"/>
 
    </files>
    
    
    <files id="winrt_shaders">
-      <hlsl name="src\\winrt\\SimplePixelShader.hlsl" profile="ps_4_0" variable="gPixelShader" target="winrt\\shaders\\SimplePixelShader.h"/>
-      <hlsl name="src\\winrt\\SimpleVertexShader.hlsl" profile="vs_4_0" variable="gVertexShader" target="winrt\\shaders\\SimpleVertexShader.h"/>
-      <file name="src\\winrt/ShaderData.cpp" />
+      <hlsl name="src\\platform\\winrt\\SimplePixelShader.hlsl" profile="ps_4_0" variable="gPixelShader" target="src\\platform\\winrt\\shaders\\SimplePixelShader.h"/>
+      <hlsl name="src\\platform\\winrt\\SimpleVertexShader.hlsl" profile="vs_4_0" variable="gVertexShader" target="src\\platform\\winrt\\shaders\\SimpleVertexShader.h"/>
+      <file name="src\\platform\\winrt/ShaderData.cpp" />
    </files>
    
    
    <files id="winrt">
       <compilerflag value="-Iinclude"/>
-      <file name="src/winrt/WinRTStage.cpp" />
-      <file name="src/winrt/DX11Context.cpp" />
-      <file name="src/winrt/DX11Font.cpp" />
-      <file name="src/winrt/System.cpp" />
-      <file name="src/winrt/MediaFoundation.cpp" />
-      <file name="src/winrt/Direct3DBase.cpp" />
-      <file name="src/winrt/URL.cpp" />
+      <file name="src/platform/winrt/WinRTStage.cpp" />
+      <file name="src/platform/winrt/DX11Context.cpp" />
+      <file name="src/platform/winrt/DX11Font.cpp" />
+      <file name="src/platform/winrt/System.cpp" />
+      <file name="src/platform/winrt/MediaFoundation.cpp" />
+      <file name="src/platform/winrt/Direct3DBase.cpp" />
+      <file name="src/platform/winrt/URL.cpp" />
    </files>
    
    
    <files id="linux">
       
       <compilerflag value="-Iinclude"/>
-      <compilerflag value="-Iopenal" if="openal" />
+      <compilerflag value="-Isrc/sound/openal" if="openal" />
       <compilerflag value="-I${NATIVE_DEV}/include" />
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
       <compilerflag value="-DSDL_OGL" if="sdl"/>
-      <file name="src/linux/NativeFont.cpp"/>
-      <file name="src/linux/System.cpp"/>
-      <file name="src/empty/URL.cpp" if="nocurl" />
-      <file name="src/empty/Sound.cpp" if="noopenal" />
-      <!-- <file name="src/empty/HardwareContext.cpp" unless="has_window" /> -->
-      <file name="src/openal/OpenALSound.cpp" if="openal" />
-      
-   </files>
-   
-   
-   <files id="gph">
-      
-      <compilerflag value="-Iinclude"/>
-      <compilerflag value="-I${GPH_ROOT}/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/include"/>
-      <compilerflag value="-I${GPH_ROOT}/include" if="gph"/>
-      <compilerflag value="-I${GPH_ROOT}/include/freetype2" if="gph"/>
-      <compilerflag value="-I${GPH_ROOT}/DGE/include" if="gph"/>
-      <file name="src/linux/NativeFont.cpp"/>
-      <file name="src/dge/DGEStage.cpp"/>
-      <file name="src/dge/DGESound.cpp"/>
+      <file name="src/platform/linux/NativeFont.cpp"/>
+      <file name="src/platform/linux/System.cpp"/>
+      <file name="src/common/empty/URL.cpp" if="nocurl" />
+      <file name="src/common/empty/Sound.cpp" if="noopenal" />
+      <!-- <file name="src/common/empty/HardwareContext.cpp" unless="has_window" /> -->
+      <file name="src/sound/openal/OpenALSound.cpp" if="openal" />
       
    </files>
    
@@ -154,16 +140,16 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <compilerflag value="-Iopenal"/>
+      <compilerflag value="-Isrc/sound/openal"/>
       <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
-      <file name="src/iPhone/UIStageView.mm"/>
-      <file name="src/iPhone/UIDeviceHardware.mm"/>
-      <!-- <file name="src/iPhone/SurfaceIO.mm"/> -->
-      <file name="src/openal/OpenALSound.cpp" />
-      <file name="src/iPhone/Sound.mm"/>
-      <file name="src/iPhone/NativeFont.mm"/>
-      <file name="src/iPhone/System.mm"/>
-      <file name="src/cocoa/FileManager.mm"/>
+      <file name="src/platform/ios/UIStageView.mm"/>
+      <file name="src/platform/ios/UIDeviceHardware.mm"/>
+      <!-- <file name="src/platform/ios/SurfaceIO.mm"/> -->
+      <file name="src/sound/openal/OpenALSound.cpp" />
+      <file name="src/platform/ios/Sound.mm"/>
+      <file name="src/platform/ios/NativeFont.mm"/>
+      <file name="src/platform/ios/System.mm"/>
+      <file name="src/platform/cocoa/FileManager.mm"/>
       
    </files>
    
@@ -173,14 +159,14 @@
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
-      <compilerflag value="-Iopenal"/>
-      <file name="src/android/AndroidCommon.cpp" />
-      <file name="src/android/AndroidSound.cpp" unless="openal"/>
-      <file name="src/android/AndroidFont.cpp"/>
-      <file name="src/android/AndroidFrame.cpp"/>
-      <file name="src/android/JNI.cpp"/>
-      <file name="src/android/System.cpp"/>
-      <file name="src/openal/OpenALSound.cpp" if="openal"/>
+      <compilerflag value="-Isrc/sound/openal"/>
+      <file name="src/platform/android/AndroidCommon.cpp" />
+      <file name="src/platform/android/AndroidSound.cpp" unless="openal"/>
+      <file name="src/platform/android/AndroidFont.cpp"/>
+      <file name="src/platform/android/AndroidFrame.cpp"/>
+      <file name="src/platform/android/JNI.cpp"/>
+      <file name="src/platform/android/System.cpp"/>
+      <file name="src/sound/openal/OpenALSound.cpp" if="openal"/>
       <compilerflag value="-DAL_LIBTYPE_STATIC" if="openal"/>
       
    </files>
@@ -188,8 +174,8 @@
    <files id="emscripten">
       
       <compilerflag value="-Iinclude"/>
-      <file name="src/linux/NativeFont.cpp"/>
-      <file name="src/emscripten/System.cpp"/>
+      <file name="src/platform/linux/NativeFont.cpp"/>
+      <file name="src/platform/emscripten/System.cpp"/>
       
    </files>
    
@@ -201,8 +187,8 @@
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${PalmPDK}/include/SDL" />
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="src/linux/NativeFont.cpp"/>
-      <file name="src/webOS/System.cpp"/>
+      <file name="src/platform/linux/NativeFont.cpp"/>
+      <file name="src/platform/webos/System.cpp"/>
       
    </files>
    
@@ -212,8 +198,8 @@
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${QNX_TARGET}/usr/include" />
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="src/linux/NativeFont.cpp"/>
-      <file name="src/blackberry/System.cpp"/>
+      <file name="src/platform/linux/NativeFont.cpp"/>
+      <file name="src/platform/blackberry/System.cpp"/>
       
    </files>
    
@@ -294,42 +280,42 @@
       <file name="src/common/Lzma.cpp"/>
       <file name="src/common/Thread.cpp"/>
       <file name="src/common/Audio.cpp" if="openal"/>
-      <file name="src/video/TheoraVideo.cpp" if="theora" />
-      <file name="src/empty/Video.cpp" unless="theora" />
+      <file name="src/common/video/TheoraVideo.cpp" if="theora" />
+      <file name="src/common/empty/Video.cpp" unless="theora" />
       
       <file name="src/common/XML/tinystr.cpp"/>
       <file name="src/common/XML/tinyxml.cpp"/>
       <file name="src/common/XML/tinyxmlerror.cpp"/>
       <file name="src/common/XML/tinyxmlparser.cpp"/>
       
-      <file name="src/software-renderer/AlphaMask.cpp"/>
-      <file name="src/software-renderer/BitmapFill.cpp"/>
-      <file name="src/software-renderer/BitmapFillPerspective.cpp"/>
-      <file name="src/software-renderer/GradientFill.cpp"/>
-      <file name="src/software-renderer/LineRender.cpp"/>
-      <file name="src/software-renderer/PointRenderer.cpp"/>
-      <file name="src/software-renderer/PolygonRender.cpp"/>
-      <file name="src/software-renderer/SoftwareRenderer.cpp"/>
-      <file name="src/software-renderer/SolidFill.cpp"/>
-      <file name="src/software-renderer/SolidRender.cpp"/>
-      <file name="src/software-renderer/TileRenderer.cpp"/>
-      <file name="src/software-renderer/TriangleRender.cpp"/>
+      <file name="src/renderer/software/AlphaMask.cpp"/>
+      <file name="src/renderer/software/BitmapFill.cpp"/>
+      <file name="src/renderer/software/BitmapFillPerspective.cpp"/>
+      <file name="src/renderer/software/GradientFill.cpp"/>
+      <file name="src/renderer/software/LineRender.cpp"/>
+      <file name="src/renderer/software/PointRenderer.cpp"/>
+      <file name="src/renderer/software/PolygonRender.cpp"/>
+      <file name="src/renderer/software/SoftwareRenderer.cpp"/>
+      <file name="src/renderer/software/SolidFill.cpp"/>
+      <file name="src/renderer/software/SolidRender.cpp"/>
+      <file name="src/renderer/software/TileRenderer.cpp"/>
+      <file name="src/renderer/software/TriangleRender.cpp"/>
       
-      <file name="src/opengl/OpenGLContext.cpp" if="ogl"/>
-      <file name="src/opengl/OGLTexture.cpp" if="ogl"/>
-      <file name="src/opengl/OGLShaders.cpp" if="ogl"/>
-      <file name="src/opengl/OGLExport.cpp" if="ogl"/>
-      <file name="src/opengl/Egl.cpp" if="nmeegl"/>
+      <file name="src/renderer/opengl/OpenGLContext.cpp" if="ogl"/>
+      <file name="src/renderer/opengl/OGLTexture.cpp" if="ogl"/>
+      <file name="src/renderer/opengl/OGLShaders.cpp" if="ogl"/>
+      <file name="src/renderer/opengl/OGLExport.cpp" if="ogl"/>
+      <file name="src/renderer/opengl/Egl.cpp" if="nmeegl"/>
    </files>
    
    <files id="common_lzma">
       <compilerflag value="-D_7ZIP_ST" unless="win_desktop"/>
       
-      <file name="src/lzma/LzFind.c" />
-      <file name="src/lzma/LzmaDec.c" />
-      <file name="src/lzma/LzmaEnc.c" />
-      <file name="src/lzma/LzFindMt.c" if="win_desktop" />
-      <file name="src/lzma/Threads.c" if="win_desktop" />
+      <file name="src/common/lzma/LzFind.c" />
+      <file name="src/common/lzma/LzmaDec.c" />
+      <file name="src/common/lzma/LzmaEnc.c" />
+      <file name="src/common/lzma/LzFindMt.c" if="win_desktop" />
+      <file name="src/common/lzma/Threads.c" if="win_desktop" />
    </files>
    
    <set name="tool" value="exe" unless="iphone"/>
@@ -389,8 +375,8 @@
       <compilerflag value="-DDYNAMIC_SDL" if="dynamic_sdl" />
       <compilerflag value="-DNME_MIXER" />
       <compilerflag value="-DSDL_IMAGE" if="sdl_image" />
-      <file name="src/sdl/SDLStage.cpp"/>
-      <file name="src/sdl/SDLSound.cpp" unless="openal"/>
+      <file name="src/backend/sdl/SDLStage.cpp"/>
+      <file name="src/backend/sdl/SDLSound.cpp" unless="openal"/>
       
    </files>
    
@@ -401,9 +387,9 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2"/>
       <!-- <compilerflag value="-DNME_MIXER" /> -->
-      <file name="src/sdl2/SDL2Stage.cpp"/>
-      <!-- <file name="src/sdl/SDLSound.cpp" unless="openal"/> -->
-      <file name="src/empty/Sound.cpp" unless="openal" />
+      <file name="src/backend/sdl2/SDL2Stage.cpp"/>
+      <!-- <file name="src/backend/sdl/SDLSound.cpp" unless="openal"/> -->
+      <file name="src/common/empty/Sound.cpp" unless="openal" />
       
    </files>
    
@@ -412,7 +398,7 @@
       
       <compilerflag value="-Iinclude"/>
       <compilerflag value="-I${NATIVE_DEV}/include"/>
-      <file name="src/glfw/GLFWStage.cpp"/>
+      <file name="src/backend/glfw/GLFWStage.cpp"/>
       
    </files>
    
@@ -424,8 +410,8 @@
       <compilerflag value="-I${NATIVE_DEV}/include"/>
       <compilerflag value="-DNME_DIRECTFB"/>
       
-      <file name="src/directfb/DirectFBHardware.cpp"/>
-      <file name="src/directfb/DirectFBStage.cpp"/>
+      <file name="src/backend/directfb/DirectFBHardware.cpp"/>
+      <file name="src/backend/directfb/DirectFBStage.cpp"/>
       
    </files>
    
@@ -437,16 +423,16 @@
       <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" />
       <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
       <compilerflag value="${sdl_dynamic_include2}" if="dynamic_sdl"/>
-      <compilerflag value="-Iopenal"/>
-      <file name="src/mac/NSFont.cpp"/>
-      <file name="src/mac/MacBoot.m" />
-      <file name="src/empty/URL.cpp" if="nocurl" />
-      <file name="src/empty/Sound.cpp" unless="has_sound" />
-      <file name="src/empty/Stage.cpp" unless="has_window" />
-      <file name="src/empty/HardwareContext.cpp" unless="has_window" />
-      <file name="src/mac/System.mm"/>
-      <file name="src/cocoa/FileManager.mm"/>
-      <file name="src/openal/OpenALSound.cpp" if="openal"/>
+      <compilerflag value="-Isrc/sound/openal"/>
+      <file name="src/platform/mac/NSFont.cpp"/>
+      <file name="src/platform/mac/MacBoot.m" />
+      <file name="src/common/empty/URL.cpp" if="nocurl" />
+      <file name="src/common/empty/Sound.cpp" unless="has_sound" />
+      <file name="src/common/empty/Stage.cpp" unless="has_window" />
+      <file name="src/common/empty/HardwareContext.cpp" unless="has_window" />
+      <file name="src/platform/mac/System.mm"/>
+      <file name="src/platform/cocoa/FileManager.mm"/>
+      <file name="src/sound/openal/OpenALSound.cpp" if="openal"/>
          
    </files>
    
