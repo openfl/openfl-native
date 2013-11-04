@@ -1,3 +1,5 @@
+#include "renderer/opengl/OGL.h"
+
 #ifdef NEED_EXTENSIONS
 #define DEFINE_EXTENSION
 #include "renderer/opengl/OGLExtensions.h"
@@ -76,7 +78,7 @@ namespace nme {
 			
 			#ifdef NEED_EXTENSIONS
 			#define GET_EXTENSION
-			#include "OGLExtensions.h"
+			#include "renderer/opengl/OGLExtensions.h"
 			#undef DEFINE_EXTENSION
 			#endif
 			
