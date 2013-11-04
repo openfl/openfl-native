@@ -8,6 +8,7 @@
 
 #include "renderer/opengl/OpenGLContext.h"
 #include "renderer/opengl/OpenGL2Context.h"
+#include "renderer/opengl/OpenGLTexture.h"
 
 
 namespace nme {
@@ -135,6 +136,13 @@ namespace nme {
 		
 		InitExtensions ();
 		return ctx;
+		
+	}
+	
+	
+	Texture *OGLCreateTexture (Surface *inSurface, unsigned int inFlags) {
+		
+		return new OpenGLTexture (inSurface, inFlags);
 		
 	}
 	

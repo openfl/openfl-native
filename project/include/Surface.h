@@ -5,6 +5,7 @@
 #include <Utils.h>
 #include <ByteArray.h>
 #include <Filters.h>
+#include "renderer/Texture.h"
 #include "renderer/HardwareContext.h"
 
 // ---- Surface API --------------
@@ -15,27 +16,9 @@ namespace nme
 
 void HintColourOrder(bool inRedFirst);
 
-extern int gTextureContextVersion;
-
 enum { SURF_FLAGS_NOT_REPEAT_IF_NON_PO2 = 0x0001 };
 
-class Texture
-{
-public:
-   Texture() : mContextVersion(gTextureContextVersion) { }
-   virtual ~Texture() {};
-   virtual void Bind(class Surface *inSurface,int inSlot)=0;
-   virtual void BindFlags(bool inRepeat,bool inSmooth)=0;
-   virtual UserPoint PixelToTex(const UserPoint &inPixels)=0;
-   virtual UserPoint TexToPaddedTex(const UserPoint &inPixels)=0;
 
-   void Dirty(const Rect &inRect);
-   bool IsDirty() { return mDirtyRect.HasPixels(); }
-   bool IsCurrentVersion() { return mContextVersion==gTextureContextVersion; }
-
-   Rect mDirtyRect;
-   int  mContextVersion;
-};
 
 class Surface : public Object
 {

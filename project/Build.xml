@@ -326,7 +326,7 @@
       <file name="src/renderer/opengl/OpenGLInit.cpp"/>
       <file name="src/renderer/opengl/OpenGLContext.cpp"/>
       <file name="src/renderer/opengl/OpenGL2Context.cpp"/>
-      <file name="src/renderer/opengl/OGLTexture.cpp"/>
+      <file name="src/renderer/opengl/OpenGLTexture.cpp"/>
       <file name="src/renderer/opengl/OGLShaders.cpp"/>
       <file name="src/renderer/opengl/OGLExport.cpp"/>
       <file name="src/renderer/opengl/Egl.cpp" if="nmeegl"/>
