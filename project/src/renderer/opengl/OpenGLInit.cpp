@@ -1,4 +1,11 @@
-#include "renderer/opengl/OpenGLInit.h"
+#ifdef NEED_EXTENSIONS
+#define DEFINE_EXTENSION
+#include "renderer/opengl/OGLExtensions.h"
+#undef DEFINE_EXTENSION
+#endif
+
+#include "renderer/opengl/OpenGLContext.h"
+#include "renderer/opengl/OpenGL2Context.h"
 
 
 namespace nme {
