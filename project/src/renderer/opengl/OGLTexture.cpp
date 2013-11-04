@@ -1,4 +1,4 @@
-#include "./OGL.h"
+#include "renderer/opengl/OGL.h"
 
 namespace nme
 {

@@ -1,4 +1,4 @@
-#include "./OGL.h"
+#include "renderer/opengl/OGL.h"
 #ifdef ALLOW_OGL2
 
 #ifdef HX_MAXOS

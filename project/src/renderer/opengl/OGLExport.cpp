@@ -13,7 +13,7 @@
 
 #include <ExternalInterface.h>
 #include <ByteArray.h>
-#include "OGL.h"
+#include "renderer/opengl/OGL.h"
 
 using namespace nme;
 

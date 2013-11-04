@@ -300,11 +300,35 @@
       <file name="src/renderer/software/SolidRender.cpp"/>
       <file name="src/renderer/software/TileRenderer.cpp"/>
       <file name="src/renderer/software/TriangleRender.cpp"/>
+   </files>
+   
+   <files id="opengl">
+      <compilerflag value="-Iinclude"/>
+      <compilerflag value="-I${PalmPDK}/include/SDL" if="webos" />
+      <compilerflag value="-I${NATIVE_DEV}/include" unless="gph"/>
+      <compilerflag value="-I${PalmPDK}/include/SDL" if="webos" />
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL12" if="sdl" unless="dynamic_sdl"/>
+      <compilerflag value="-I${NATIVE_DEV}/include/SDL2" if="sdl2" />
+      <compilerflag value="-I/opt/vc/include" if="rpi"/>
+      <compilerflag value="-I/opt/vc/include/interface/vcos/pthreads/" if="rpi"/>
+      <compilerflag value="-I${QNX_TARGET}/usr/include" if="blackberry"/>
+      <!-- <compilerflag value="-I${QNX_TARGET}/usr/include/GLES" if="blackberry"/> -->
+      <compilerflag value="-I${QNX_TARGET}/usr/include/GLES2" if="blackberry"/>
+      <compilerflag value="-DNME_DIRECTFB" if="directfb"/>
+      <compilerflag value="-DSDL_OGL" if="sdl"/>
+      <compilerflag value="-DSDL_OGL" if="sdl2"/>
+      <compilerflag value="-DGLFW_OGL" if="glfw"/>
+      <compilerflag value="-DNME_CURL_SSL" if="ssl" unless="nocurl"/>
+      <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
+      <compilerflag value="-DNME_PREMULTIPLIED_ALPHA" if="NME_PREMULTIPLIED_ALPHA"/>
+      <compilerflag value="-Wno-conversion" if="linux"/>
       
-      <file name="src/renderer/opengl/OpenGLContext.cpp" if="ogl"/>
-      <file name="src/renderer/opengl/OGLTexture.cpp" if="ogl"/>
-      <file name="src/renderer/opengl/OGLShaders.cpp" if="ogl"/>
-      <file name="src/renderer/opengl/OGLExport.cpp" if="ogl"/>
+      <file name="src/renderer/opengl/OpenGLInit.cpp"/>
+      <file name="src/renderer/opengl/OpenGLContext.cpp"/>
+      <file name="src/renderer/opengl/OpenGL2Context.cpp"/>
+      <file name="src/renderer/opengl/OGLTexture.cpp"/>
+      <file name="src/renderer/opengl/OGLShaders.cpp"/>
+      <file name="src/renderer/opengl/OGLExport.cpp"/>
       <file name="src/renderer/opengl/Egl.cpp" if="nmeegl"/>
    </files>
    
@@ -451,6 +475,7 @@
       <flag value="-NODEFAULTLIB:LIBCMT" if="glfw"/>
       
       <files id="common"/>
+      <files id="opengl" if="ogl"/>
       <files id="common_lzma"/>
       <files id="win_desktop" if="win_desktop"/>
       <files id="winrt_shaders" if="winrt"/>

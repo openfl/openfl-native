@@ -5,6 +5,7 @@
 #include <Utils.h>
 #include <ByteArray.h>
 #include <Filters.h>
+#include "renderer/HardwareContext.h"
 
 // ---- Surface API --------------
 
