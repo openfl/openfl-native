@@ -327,7 +327,8 @@
       <file name="src/renderer/opengl/OpenGLContext.cpp"/>
       <file name="src/renderer/opengl/OpenGL2Context.cpp"/>
       <file name="src/renderer/opengl/OpenGLTexture.cpp"/>
-      <file name="src/renderer/opengl/OGLShaders.cpp"/>
+      <file name="src/renderer/opengl/OpenGLProgram.cpp"/>
+      <file name="src/renderer/opengl/OpenGLShaders.cpp"/>
       <file name="src/renderer/opengl/OGLExport.cpp"/>
       <file name="src/renderer/opengl/Egl.cpp" if="nmeegl"/>
    </files>
