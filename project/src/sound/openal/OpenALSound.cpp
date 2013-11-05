@@ -724,10 +724,10 @@ namespace nme
       //LOG_SOUND("OpenALSound openChannel()"); 
       if (mIsStream)
       {
-         AudioStream_Ogg *oggStream = new AudioStream_Ogg();
-         if (oggStream) oggStream->open(mStreamPath.c_str(), startTime, loops, inTransform);
+         AudioStream_Ogg *audioStream = new AudioStream_Ogg();
+         if (audioStream) audioStream->open(mStreamPath.c_str(), startTime, loops, inTransform);
          
-         return new OpenALChannel(this, oggStream, startTime, loops, inTransform);
+         return new OpenALChannel(this, audioStream, startTime, loops, inTransform);
       }
       else
       {
@@ -826,6 +826,7 @@ namespace nme
         mStartTime = startTime;
         mLoops = inLoops;
         mIsValid = true;
+		mSuspend = false;
         
         #ifdef ANDROID
         
@@ -851,25 +852,28 @@ namespace nme
             mIsValid = false;
             return;
         }
+		
+		oggStream = new OggVorbis_File();
         
         #ifdef ANDROID
-        result = ov_open_callbacks(this, &oggStream, NULL, 0, callbacks);
+        result = ov_open_callbacks(this, oggStream, NULL, 0, callbacks);
         #else
-        result = ov_open(oggFile, &oggStream, NULL, 0);
+        result = ov_open(oggFile, oggStream, NULL, 0);
         #endif
          
         if(result < 0) {
-
+			
             fclose(oggFile);
-
+			oggFile = 0;
+			
             //throw std::string("Could not open Ogg stream. ") + errorString(result);
             LOG_SOUND((std::string("Could not open Ogg stream. ") + errorString(result)).c_str());
             mIsValid = false;
             return;
         }
 
-        vorbisInfo = ov_info(&oggStream, -1);
-        vorbisComment = ov_comment(&oggStream, -1);
+        vorbisInfo = ov_info(oggStream, -1);
+        vorbisComment = ov_comment(oggStream, -1);
 
         if(vorbisInfo->channels == 1) {
             format = AL_FORMAT_MONO16;
@@ -880,7 +884,7 @@ namespace nme
         if (startTime != 0)
         {
           double seek = startTime * 0.001;
-          ov_time_seek(&oggStream, seek);
+          ov_time_seek(oggStream, seek);
         }
         
         alGenBuffers(2, buffers);
@@ -900,24 +904,25 @@ namespace nme
 
    void AudioStream_Ogg::release() {
       
-      if (mIsValid) {
-         
-         alSourceStop(source);
-         empty();
+	  if (source) {
+		  alSourceStop(source);
+		  empty();
          alDeleteSources(1, &source);
          check();
          alDeleteBuffers(2, buffers);
          check();
-         
-         ov_clear(&oggStream);
-         //delete &oggStream;
-         //fclose(oggFile);
-         
-         oggFile = 0;
-         source = 0;
-         mIsValid = false;
-         
-      }
+		 
+		 source = 0;
+	  }
+	  
+	  if (oggStream) {
+		 ov_clear(oggStream);
+		 delete oggStream;
+		 oggStream = 0;
+		 oggFile = 0;
+	  }
+	  
+	  mIsValid = false;
       
    } //release
    
@@ -991,7 +996,7 @@ namespace nme
        {
          mLoops --;
          double seek = mStartTime * 0.001;
-         ov_time_seek(&oggStream, seek);
+         ov_time_seek(oggStream, seek);
          return update();
        }
        
@@ -1010,7 +1015,7 @@ namespace nme
        int  result;
        
        while (size < STREAM_BUFFER_SIZE) {
-           result = ov_read(&oggStream, pcm + size, STREAM_BUFFER_SIZE - size, 0, 2, 1, &section);
+           result = ov_read(oggStream, pcm + size, STREAM_BUFFER_SIZE - size, 0, 2, 1, &section);
            if(result > 0)
                size += result;
            else
@@ -1111,7 +1116,7 @@ namespace nme
       if (!mSuspend)
       {
          double seek = inFloat * 0.001;
-         ov_time_seek(&oggStream, seek);
+         ov_time_seek(oggStream, seek);
       }
       return inFloat;
    }
@@ -1125,7 +1130,7 @@ namespace nme
       }
       else
       {
-         double pos = ov_time_tell(&oggStream);
+         double pos = ov_time_tell(oggStream);
          return pos * 1000.0;
       }
    }

@@ -88,7 +88,7 @@ class OpenALChannel;
        private:
 
            FILE*           oggFile;
-           OggVorbis_File  oggStream;
+           OggVorbis_File* oggStream;
            vorbis_info*    vorbisInfo;
            vorbis_comment* vorbisComment;
 
