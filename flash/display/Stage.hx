@@ -34,6 +34,7 @@ class Stage extends DisplayObjectContainer {
 	
 	public var active (default, null):Bool;
 	public var align (get, set):StageAlign;
+	public var color (get, set):Int;
 	public var displayState (get, set):StageDisplayState;
 	public var dpiScale (get, null):Float;
 	public var focus (get, set):InteractiveObject;
@@ -1099,6 +1100,20 @@ class Stage extends DisplayObjectContainer {
 		
 		nme_stage_set_align (__handle, Type.enumIndex (value));
 		return value;
+		
+	}
+	
+	
+	private function get_color ():Int {
+		
+		return opaqueBackground;
+		
+	}
+	
+	
+	private function set_color (value:Int):Int {
+		
+		return opaqueBackground = value;
 		
 	}
 	
