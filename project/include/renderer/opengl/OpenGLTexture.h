@@ -3,7 +3,7 @@
 
 
 #include "renderer/opengl/OGL.h"
-#include "renderer/Texture.h"
+#include "renderer/common/Texture.h"
 
 
 namespace nme {

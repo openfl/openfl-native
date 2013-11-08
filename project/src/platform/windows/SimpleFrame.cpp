@@ -1,6 +1,8 @@
 #include <Graphics.h>
 #include <Display.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/HardwareSurface.h"
+#include "renderer/common/HardwareContext.h"
 #include <windows.h>
 #include <KeyCodes.h>
 #include <map>

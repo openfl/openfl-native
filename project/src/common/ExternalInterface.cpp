@@ -17,7 +17,9 @@
 #include <ExternalInterface.h>
 #include <Display.h>
 #include <TextField.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
+#include "renderer/common/AutoSurfaceRender.h"
 #include <Tilesheet.h>
 #include <Font.h>
 #include <Sound.h>

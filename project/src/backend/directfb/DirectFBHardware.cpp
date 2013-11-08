@@ -1,5 +1,6 @@
 #include <Graphics.h>
-#include <Surface.h>
+#include "renderer/common/HardwareContext.h"
+#include "renderer/common/Texture.h"
 #include <directfb.h>
 
 

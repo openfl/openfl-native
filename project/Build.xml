@@ -255,7 +255,11 @@
       <compilerflag value="-DNME_PREMULTIPLIED_ALPHA" if="NME_PREMULTIPLIED_ALPHA"/>
       <compilerflag value="-Wno-conversion" if="linux"/>
       
-      <file name="src/common/Surface.cpp"/>
+      <!-- <file name="src/common/Surface.cpp"/> -->
+      <file name="src/renderer/common/Surface.cpp"/>
+      <file name="src/renderer/common/HardwareSurface.cpp"/>
+      <file name="src/renderer/common/SimpleSurface.cpp"/>
+      <file name="src/renderer/common/BitmapCache.cpp"/>
       <file name="src/common/Utils.cpp"/>
       <file name="src/common/Geom.cpp"/>
       <file name="src/common/Graphics.cpp"/>

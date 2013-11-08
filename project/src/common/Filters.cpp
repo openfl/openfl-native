@@ -1,6 +1,8 @@
 #include <Graphics.h>
 #include <Display.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
+#include "renderer/common/AutoSurfaceRender.h"
 #include <Pixel.h>
 
 namespace nme

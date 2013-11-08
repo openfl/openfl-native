@@ -1,6 +1,8 @@
 ﻿#include <Display.h>
 #include <Graphics.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
+#include "renderer/common/HardwareContext.h"
 
 #include <wrl/client.h>
 #include <d3d11_1.h>

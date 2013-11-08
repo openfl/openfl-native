@@ -1,4 +1,4 @@
-#include <Surface.h>
+#include "renderer/common/SimpleSurface.h"
 #include <Display.h>
 #include <Graphics.h>
 #include <Video.h>

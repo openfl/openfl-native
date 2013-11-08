@@ -1,5 +1,6 @@
 #include <Tilesheet.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
 #include <algorithm>
 
 namespace nme

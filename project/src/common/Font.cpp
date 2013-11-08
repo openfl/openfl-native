@@ -1,6 +1,8 @@
 #include <Font.h>
 #include <Utils.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
+#include "renderer/common/AutoSurfaceRender.h"
 #include <map>
 
 #if defined(HX_WINDOWS) || defined(HX_MACOS) || defined(HX_LINUX)

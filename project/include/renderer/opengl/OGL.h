@@ -168,7 +168,7 @@ typedef void *GLCtx;
 #endif
 
 #include <Graphics.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
 
 #ifdef HX_MACOS
 #define ALLOW_OGL2

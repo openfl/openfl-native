@@ -1,7 +1,7 @@
 #include <TextField.h>
 #include <Tilesheet.h>
 #include <Utils.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
 #include <KeyCodes.h>
 #include "XML/tinyxml.h"
 #include <ctype.h>

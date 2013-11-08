@@ -1,5 +1,7 @@
 #include <Display.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/SimpleSurface.h"
+#include "renderer/common/AutoSurfaceRender.h"
 #include <math.h>
 
 #ifndef M_PI

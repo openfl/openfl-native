@@ -80,7 +80,7 @@ namespace nme {
 		} else {
 			
 			ELOG ("Unknown error compiling shader : \n");
-			ELOG("%s\n", source);
+			ELOG ("%s\n", source);
 			
 		}
 		

@@ -1,6 +1,8 @@
 #include <Display.h>
 #include <Graphics.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/HardwareContext.h"
+#include "renderer/common/Texture.h"
 
 
 namespace nme

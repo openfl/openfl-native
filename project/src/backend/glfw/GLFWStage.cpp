@@ -1,6 +1,8 @@
 #include <GLFW/glfw3.h>
 #include <Display.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/HardwareSurface.h"
+#include "renderer/common/HardwareContext.h"
 #include <KeyCodes.h>
 
 namespace nme

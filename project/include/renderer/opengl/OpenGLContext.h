@@ -4,7 +4,7 @@
 
 #include <NMEThread.h>
 #include "renderer/opengl/OGL.h"
-#include "renderer/HardwareContext.h"
+#include "renderer/common/HardwareContext.h"
 
 
 namespace nme {
@@ -42,13 +42,14 @@ namespace nme {
 			void EndBitmapRender ();
 			void EndRender ();
 			void Flip ();
-			int Height () const { return mHeight; }
 			void Render (const RenderState &inState, const HardwareCalls &inCalls);
 			void RenderBitmap (const Rect &inSrc, int inX, int inY);
 			void SetLineWidth (double inWidth);
 			void SetQuality (StageQuality inQ);
 			void SetViewport (const Rect &inRect);
 			void SetWindowSize (int inWidth, int inHeight);
+			
+			int Height () const { return mHeight; }
 			int Width () const { return mWidth; }
 			
 			Surface *mBitmapSurface;

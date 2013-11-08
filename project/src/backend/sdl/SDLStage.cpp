@@ -1,7 +1,9 @@
 #include <Display.h>
 #include <Utils.h>
 #include <SDL.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/HardwareSurface.h"
+#include "renderer/common/HardwareContext.h"
 #include <ExternalInterface.h>
 #include <KeyCodes.h>
 #include <map>

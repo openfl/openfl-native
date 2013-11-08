@@ -1,5 +1,5 @@
 #include <Graphics.h>
-#include <Surface.h>
+#include "Renderer/common/Surface.h"
 #include <Display.h>
 
 namespace nme
