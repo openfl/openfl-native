@@ -108,9 +108,7 @@ struct JNIType
             return 0;
       }
 
-      jclass result  = inEnv->FindClass(name.c_str());
-      if (result)
-         inEnv->NewGlobalRef(result);
+      jclass result = FindClass(name.c_str());
       mClasses[*this] = result;
       return result;
    }
@@ -120,28 +118,28 @@ struct JNIType
       for(int i=0;i<jniELEMENTS;i++)
          elementGetValue[i] = 0;
 
-      elementClass[jniBoolean] = inEnv->FindClass("java/lang/Boolean");
+      elementClass[jniBoolean] = FindClass("java/lang/Boolean");
       elementGetValue[jniBoolean] = inEnv->GetMethodID(elementClass[jniBoolean],"booleanValue","()Z");
       CheckException(inEnv,false);
-      elementClass[jniByte] = inEnv->FindClass("java/lang/Byte");
+      elementClass[jniByte] = FindClass("java/lang/Byte");
       elementGetValue[jniByte] = inEnv->GetMethodID(elementClass[jniByte],"doubleValue","()D");
       CheckException(inEnv,false);
-      elementClass[jniChar] = inEnv->FindClass("java/lang/Character");
+      elementClass[jniChar] = FindClass("java/lang/Character");
       elementGetValue[jniChar] = inEnv->GetMethodID(elementClass[jniChar],"charValue","()C");
       CheckException(inEnv,false);
-      elementClass[jniShort] = inEnv->FindClass("java/lang/Short");
+      elementClass[jniShort] = FindClass("java/lang/Short");
       elementGetValue[jniShort] = inEnv->GetMethodID(elementClass[jniShort],"doubleValue","()D");
       CheckException(inEnv,false);
-      elementClass[jniInt] = inEnv->FindClass("java/lang/Integer");
+      elementClass[jniInt] = FindClass("java/lang/Integer");
       elementGetValue[jniInt] = inEnv->GetMethodID(elementClass[jniInt],"doubleValue","()D");
       CheckException(inEnv,false);
-      elementClass[jniLong] = inEnv->FindClass("java/lang/Long");
+      elementClass[jniLong] = FindClass("java/lang/Long");
       elementGetValue[jniLong] = inEnv->GetMethodID(elementClass[jniLong],"doubleValue","()D");
       CheckException(inEnv,false);
-      elementClass[jniFloat] = inEnv->FindClass("java/lang/Float");
+      elementClass[jniFloat] = FindClass("java/lang/Float");
       elementGetValue[jniFloat] = inEnv->GetMethodID(elementClass[jniFloat],"doubleValue","()D");
       CheckException(inEnv,false);
-      elementClass[jniDouble] = inEnv->FindClass("java/lang/Double");
+      elementClass[jniDouble] = FindClass("java/lang/Double");
       elementGetValue[jniDouble] = inEnv->GetMethodID(elementClass[jniDouble],"doubleValue","()D");
       CheckException(inEnv,false);
       elementClass[jniVoid] = 0;
@@ -184,10 +182,10 @@ void JNIInit(JNIEnv *env)
 {
    if (sInit)
       return;
-   GameActivity = (jclass)env->NewGlobalRef(env->FindClass("org/haxe/nme/GameActivity"));
+   GameActivity = FindClass("org/haxe/nme/GameActivity");
    postUICallback = env->GetStaticMethodID(GameActivity, "postUICallback", "(J)V");
 
-   ObjectClass = env->FindClass("java/lang/Object");
+   ObjectClass = FindClass("java/lang/Object");
 
    HaxeObject   = JNIType(jniObjectHaxe,0).getClass(env);
    HaxeObject_create = env->GetStaticMethodID(HaxeObject, "create", "(J)Lorg/haxe/nme/HaxeObject;");
@@ -358,21 +356,26 @@ value JObjectToHaxe(JNIEnv *inEnv,JNIType inType,jobject inObject)
    {
       jclass cls = inEnv->GetObjectClass(inObject);
       if (cls)
-      {
+      { 
+
          for(int i=0;i<jniELEMENTS;i++)
-            if (JNIType::elementClass[i]==cls)
+         {
+            if (JNIType::elementClass[i]==0) continue;
+            if (inEnv->IsSameObject(cls,JNIType::elementClass[i]))
             {
                inType = JNIType((JNIElement)i,0);
                break;
             }
+         }
       
          if (inType.isUnknownType())
          {
             for(int i=0;i<jniELEMENTS;i++)
             {
-               if (cls==JNIType::elementArrayClass[i])
+               if (JNIType::elementArrayClass[i]==0) continue;
+               if (inEnv->IsSameObject(cls,JNIType::elementArrayClass[i]))
                {
-                 inType = JNIType((JNIElement)i,1);
+                  inType = JNIType((JNIElement)i,1);
                   break;
                }
             }
