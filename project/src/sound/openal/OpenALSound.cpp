@@ -864,10 +864,11 @@ namespace nme
         if(result < 0) {
 			
             fclose(oggFile);
-			oggFile = 0;
+			   oggFile = 0;
 			
             //throw std::string("Could not open Ogg stream. ") + errorString(result);
-            LOG_SOUND((std::string("Could not open Ogg stream. ") + errorString(result)).c_str());
+            LOG_SOUND("Could not open Ogg stream.");
+            //LOG_SOUND(errorString(result).c_str());
             mIsValid = false;
             return;
         }
