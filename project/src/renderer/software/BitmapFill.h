@@ -1,5 +1,6 @@
 #include <Graphics.h>
 #include "renderer/common/Surface.h"
+#include "renderer/common/BitmapCache.h"
 #include "Render.h"
 
 namespace nme

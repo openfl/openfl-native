@@ -2,6 +2,7 @@
 #include <Tilesheet.h>
 #include <Utils.h>
 #include "renderer/common/Surface.h"
+#include "renderer/common/BitmapCache.h"
 #include <KeyCodes.h>
 #include "XML/tinyxml.h"
 #include <ctype.h>

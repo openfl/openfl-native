@@ -3,6 +3,7 @@
 
 
 #include <Pixel.h>
+#include "renderer/common/BitmapCache.h"
 
 
 namespace nme {

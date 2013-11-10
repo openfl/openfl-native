@@ -3,6 +3,7 @@
 
 #include "AlphaMask.h"
 #include <Pixel.h>
+#include "renderer/common/BitmapCache.h"
 
 
 
