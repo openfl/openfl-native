@@ -21,6 +21,7 @@ namespace nme {
 			void Clear (uint32 inColour, const Rect *inRect = 0) { mHardware->Clear (inColour, inRect); }
 			void EndRender () { mHardware->EndRender (); }
 			PixelFormat Format () const { return pfHardware; }
+			AlphaMode GetAlphaMode () const { return mAlphaMode; }
 			const uint8 *GetBase () const { return 0; }
 			int GetStride () const { return 0; }
 			int Height () const { return mHardware->Height (); }
@@ -37,6 +38,7 @@ namespace nme {
 		
 		private:
 			
+			AlphaMode mAlphaMode;
 			HardwareContext *mHardware;
 		
 	};

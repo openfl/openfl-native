@@ -207,7 +207,7 @@ typedef float Trans4x4[4][4];
 class GPUProg
 {
 public:
-   static GPUProg *create(GPUProgID inID);
+   static GPUProg *create(GPUProgID inID, AlphaMode inAlphaMode);
 
    virtual ~GPUProg() {}
 

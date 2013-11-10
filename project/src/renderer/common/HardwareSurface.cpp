@@ -6,6 +6,7 @@ namespace nme {
 	
 	HardwareSurface::HardwareSurface (HardwareContext *inContext) {
 		
+		mAlphaMode = amStraight;
 		mHardware = inContext;
 		mHardware->IncRef ();
 		
@@ -23,6 +24,7 @@ namespace nme {
 		
 		// This is not really a clone...
 		Surface *copy = new HardwareSurface (mHardware);
+		copy->setAlphaMode (mAlphaMode);
 		copy->IncRef ();
 		return copy;
 		

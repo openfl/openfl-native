@@ -12,7 +12,7 @@ namespace nme {
 		
 		public:
 			
-			OpenGLProgram (const char *inVertProg, const char *inFragProg);
+			OpenGLProgram (const char *inVertProg, const char *inFragProg, AlphaMode inAlphaMode);
 			virtual ~OpenGLProgram ();
 			
 			virtual bool bind ();
@@ -29,6 +29,7 @@ namespace nme {
 			void setTint (unsigned int inColour);
 			void setTransform (const Trans4x4 &inTrans);
 			
+			AlphaMode mAlphaMode;
 			GLint mASlot;
 			GLint mColourArraySlot;
 			GLint mColourOffsetSlot;

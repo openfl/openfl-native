@@ -52,6 +52,7 @@ namespace nme {
 			int Height () const { return mHeight; }
 			int Width () const { return mWidth; }
 			
+			AlphaMode mAlphaMode;
 			Surface *mBitmapSurface;
 			Texture *mBitmapTexture;
 			bool mColourArrayEnabled;

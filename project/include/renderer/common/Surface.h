@@ -28,6 +28,7 @@ namespace nme {
 			virtual void Clear (uint32 inColour, const Rect *inRect = 0) = 0;
 			virtual void EndRender () = 0;
 			virtual PixelFormat Format () const = 0;
+			virtual AlphaMode GetAlphaMode () const = 0;
 			virtual const uint8 *GetBase () const = 0;
 			virtual int GetStride () const = 0;
 			virtual int Height () const = 0;
@@ -46,7 +47,9 @@ namespace nme {
 			virtual uint32 getPixel (int inX, int inY) { return 0; }
 			virtual void getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder = false, bool inLittleEndian = false) {}
 			virtual int GPUFormat () const { return Format (); }
+			virtual void multiplyAlpha () {}
 			virtual void noise (unsigned int randomSeed, unsigned int low, unsigned int high, int channelOptions, bool grayScale) {}
+			virtual void setAlphaMode (AlphaMode am) {}
 			virtual void SetAllowTrans (bool inAllowTrans) { mAllowTrans = inAllowTrans; }
 			virtual void SetFlags (unsigned int inFlags) { mFlags = inFlags; }
 			virtual void setGPUFormat (PixelFormat pf) {}

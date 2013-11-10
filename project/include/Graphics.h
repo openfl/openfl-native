@@ -528,6 +528,8 @@ struct HardwareArrays
      RADIAL      = 0x00000004,
      BM_MULTIPLY = 0x00000008,
      BM_SCREEN   = 0x00000010,
+     
+     AM_PREMULTIPLIED = 0x00000100,
 
      FOCAL_MASK  = 0x0000ff00,
      FOCAL_SIGN  = 0x00010000,

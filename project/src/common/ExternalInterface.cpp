@@ -3566,6 +3566,37 @@ value nme_bitmap_data_unmultiply_alpha(value inSurface)
 DEFINE_PRIM(nme_bitmap_data_unmultiply_alpha,1);
 
 
+value nme_bitmap_data_multiply_alpha(value inSurface)
+{
+   Surface *surf;
+   if (AbstractToObject(inSurface,surf))
+   {
+      surf->multiplyAlpha();
+   }
+   return alloc_null();
+}
+DEFINE_PRIM(nme_bitmap_data_multiply_alpha,1);
+
+
+value nme_bitmap_data_set_alpha_mode(value inHandle, value inAlphaMode)
+{
+   Surface *surface;
+   if (AbstractToObject(inHandle,surface))
+   {
+      if ( val_int( inAlphaMode ) == 0 ) 
+         surface->setAlphaMode( amUnknown );
+      else if ( val_int( inAlphaMode ) == 1 ) 
+         surface->setAlphaMode( amPremultiplied );
+      else if ( val_int( inAlphaMode ) == 2 ) 
+         surface->setAlphaMode( amStraight );
+      else if ( val_int( inAlphaMode ) == 4 ) 
+         surface->setAlphaMode( amIgnore );
+   }
+   return alloc_null();
+}
+DEFINE_PRIM(nme_bitmap_data_set_alpha_mode,2);
+
+
 value nme_render_surface_to_surface(value* arg, int nargs)
 {
    enum { aTarget, aSurface, aMatrix, aColourTransform, aBlendMode, aClipRect, aSmooth, aSIZE};

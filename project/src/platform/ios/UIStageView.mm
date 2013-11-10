@@ -11,7 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 #include <Display.h>
-#include <Surface.h>
+#include "renderer/common/Surface.h"
+#include "renderer/common/HardwareSurface.h"
+#include "renderer/common/HardwareContext.h"
 #include <KeyCodes.h>
 #include <Utils.h>
 
@@ -140,6 +142,7 @@ public:
    int Width() const  { return mWidth; }
    int Height() const  { return mHeight; }
    PixelFormat Format()  const { return pfXRGB; }
+   AlphaMode GetAlphaMode() const { return amStraight; }
    const uint8 *GetBase() const { return (const uint8 *)mBuffer; }
    int GetStride() const { return mWidth*4; }
    void Clear(uint32 inColour,const nme::Rect *inRect)

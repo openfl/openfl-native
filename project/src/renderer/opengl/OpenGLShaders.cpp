@@ -85,11 +85,18 @@ namespace nme {
 		"uniform vec4 uTint;\n"
 		"void main(void)\n"
 		"{\n"
-		#ifdef NME_PREMULTIPLIED_ALPHA
-		"	gl_FragColor.rgb = uTint.rgb*texture2D(uImage0,vTexCoord).a;\n"
-		#else
 		"	gl_FragColor.rgb = uTint.rgb;\n"
-		#endif
+		"	gl_FragColor.a = texture2D(uImage0,vTexCoord).a*uTint.a;\n"
+		"}\n";
+	
+	
+	const char *gBitmapAlphaPremultFrag =
+		"varying vec2 vTexCoord;\n"
+		"uniform sampler2D uImage0;\n"
+		"uniform vec4 uTint;\n"
+		"void main(void)\n"
+		"{\n"
+		"	gl_FragColor.rgb = uTint.rgb*texture2D(uImage0,vTexCoord).a;\n"
 		"	gl_FragColor.a = texture2D(uImage0,vTexCoord).a*uTint.a;\n"
 		"}\n";
 	
@@ -150,12 +157,18 @@ namespace nme {
 		"varying vec4 vColourArray;\n"
 		"void main(void)\n"
 		"{\n"
-		#ifdef NME_PREMULTIPLIED_ALPHA
+		"	gl_FragColor = texture2D(uImage0,vTexCoord) * vColourArray;\n"
+		"}\n";
+	
+	
+	const char *gTextureColourPremultFrag =
+		"uniform sampler2D uImage0;\n"
+		"varying vec2 vTexCoord;\n"
+		"varying vec4 vColourArray;\n"
+		"void main(void)\n"
+		"{\n"
 		"	gl_FragColor.rgb = texture2D(uImage0,vTexCoord).rgb * vColourArray.rgb * vColourArray.a;\n"
 		"	gl_FragColor.a = texture2D(uImage0,vTexCoord).a * vColourArray.a;\n"
-		#else
-		"	gl_FragColor = texture2D(uImage0,vTexCoord) * vColourArray;\n"
-		#endif
 		"}\n";
 	
 	
@@ -170,40 +183,46 @@ namespace nme {
 		"}\n";
 	
 	
-	GPUProg *GPUProg::create (GPUProgID inID) {
+	GPUProg *GPUProg::create (GPUProgID inID, AlphaMode inAlphaMode) {
 		
 		#ifdef ALLOW_OGL2
 		switch (inID) {
 			
 			case gpuSolid:
-				return new OpenGLProgram (gSolidVert, gSolidFrag);
+				return new OpenGLProgram (gSolidVert, gSolidFrag, inAlphaMode);
 				
 			case gpuColourTransform:
-				return new OpenGLProgram (gColourVert, gColourTransFrag);
+				return new OpenGLProgram (gColourVert, gColourTransFrag, inAlphaMode);
 				
 			case gpuColour:
-				return new OpenGLProgram (gColourVert, gColourFrag);
+				return new OpenGLProgram (gColourVert, gColourFrag, inAlphaMode);
 				
 			case gpuRadialGradient:
-				return new OpenGLProgram (gTextureVert, gRadialTextureFrag);
+				return new OpenGLProgram (gTextureVert, gRadialTextureFrag, inAlphaMode);
 				
 			case gpuRadialFocusGradient:
-				return new OpenGLProgram (gTextureVert, gRadialFocusTextureFrag);
+				return new OpenGLProgram (gTextureVert, gRadialFocusTextureFrag, inAlphaMode);
 				
 			case gpuTexture:
-				return new OpenGLProgram (gTextureVert, gTextureFrag);
+				return new OpenGLProgram (gTextureVert, gTextureFrag, inAlphaMode);
 				
 			case gpuTextureColourArray:
-				return new OpenGLProgram (gTextureColourVert, gTextureColourFrag);
+				if (inAlphaMode == amPremultiplied)
+					return new OpenGLProgram (gTextureColourVert, gTextureColourPremultFrag, inAlphaMode);
+				else
+					return new OpenGLProgram (gTextureColourVert, gTextureColourFrag, inAlphaMode);
 				
 			case gpuTextureTransform:
-				return new OpenGLProgram (gTextureVert, gTextureTransFrag);
+				return new OpenGLProgram (gTextureVert, gTextureTransFrag, inAlphaMode);
 				
 			case gpuBitmap:
-				return new OpenGLProgram (gTextureVert, gBitmapFrag);
+				return new OpenGLProgram (gTextureVert, gBitmapFrag, inAlphaMode);
 				
 			case gpuBitmapAlpha:
-				return new OpenGLProgram (gTextureVert, gBitmapAlphaFrag);
+				if (inAlphaMode == amPremultiplied)
+					return new OpenGLProgram (gTextureVert, gBitmapAlphaPremultFrag, inAlphaMode);
+				else
+					return new OpenGLProgram (gTextureVert, gBitmapAlphaFrag, inAlphaMode);
 				
 			default:
 				break;

@@ -12,6 +12,7 @@ namespace nme {
 		mTexture = 0;
 		mPixelFormat = inPixelFormat;
 		mGPUPixelFormat = inPixelFormat;
+		mAlphaMode = amStraight;
 		
 		if (inGPUFormat == -1) {
 			
@@ -648,6 +649,49 @@ namespace nme {
 	}
 	
 	
+	void SimpleSurface::multiplyAlpha () {
+		
+		if (!mBase)
+			return;
+		if (mAlphaMode == amPremultiplied)
+			return;
+		Rect r = Rect (0, 0, mWidth, mHeight);
+		mVersion++;
+		if (mTexture)
+			mTexture->Dirty (r);
+		
+		if (mPixelFormat == pfAlpha)
+			return;
+		int i = 0;
+		int a;
+		double multiply;
+		
+		for (int y = 0; y < r.h; y++) {
+			
+			uint8 *dest = mBase + ((r.y + y) * mStride) + (r.x * 4);
+			for (int x = 0; x < r.w; x++) {
+				
+				a = *(dest + 3);
+				if (a < 255.0) {
+					
+					multiply = a / 255.0;
+					*dest = sgClamp0255[int((*dest) * multiply)];
+					*(dest + 1) = sgClamp0255[int(*(dest + 1) * multiply)];
+					*(dest + 2) = sgClamp0255[int(*(dest + 2) * multiply)];
+					
+				}
+				
+				dest += 4;
+				
+			}
+			
+		}
+		
+		mAlphaMode = amPremultiplied;
+		
+	}
+	
+	
 	void SimpleSurface::noise (unsigned int randomSeed, unsigned int low, unsigned int high, int channelOptions, bool grayScale) {
 		
 		if (!mBase)
@@ -968,6 +1012,8 @@ namespace nme {
 		
 		if (!mBase)
 			return;
+		if (mAlphaMode != amPremultiplied)
+			return;
 		Rect r = Rect (0, 0, mWidth, mHeight);
 		mVersion++;
 		if (mTexture)
@@ -999,6 +1045,8 @@ namespace nme {
 			}
 			
 		}
+		
+		mAlphaMode = amStraight;
 		
 	}
 	

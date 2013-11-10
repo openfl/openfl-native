@@ -95,6 +95,8 @@ public:
             flags |= HardwareArrays::BM_MULTIPLY;
          if (inJob.mTriangles->mBlendMode==bmScreen)
             flags |= HardwareArrays::BM_SCREEN;
+         if (mSurface && (mSurface->GetAlphaMode () == amPremultiplied))
+            flags |= HardwareArrays::AM_PREMULTIPLIED;
          mArrays = &ioData.GetArrays(mSurface,has_colour,flags);
          AddTriangles(inJob.mTriangles);
 
@@ -123,12 +125,12 @@ public:
       }
       else if (tessellate_lines && !mSolidMode)
       {
-         mArrays = &ioData.GetArrays(mSurface,false,mGradFlags);
+         mArrays = &ioData.GetArrays(mSurface,false,(mSurface && (mSurface->GetAlphaMode() == amPremultiplied)) ? mGradFlags | HardwareArrays::AM_PREMULTIPLIED : mGradFlags);
          AddLineTriangles(&inPath.commands[inJob.mCommand0], inJob.mCommandCount, &inPath.data[inJob.mData0]);
       }
       else
       {
-         mArrays = &ioData.GetArrays(mSurface,false,mGradFlags);
+         mArrays = &ioData.GetArrays(mSurface,false,(mSurface && (mSurface->GetAlphaMode() == amPremultiplied)) ? mGradFlags | HardwareArrays::AM_PREMULTIPLIED : mGradFlags);
          AddObject(&inPath.commands[inJob.mCommand0], inJob.mCommandCount, &inPath.data[inJob.mData0]);
       }
    }

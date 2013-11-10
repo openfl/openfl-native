@@ -27,6 +27,7 @@ namespace nme {
 		mPointSmooth = true;
 		mColourArrayEnabled = false;
 		mThreadId = GetThreadId ();
+		mAlphaMode = amStraight;
 		
 		const char *str = (const char *)glGetString (GL_VENDOR);
 		
@@ -93,11 +94,10 @@ namespace nme {
 			
 			glEnable (GL_BLEND);
 			
-			#ifdef NME_PREMULTIPLIED_ALPHA
-			glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-			#else
-			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			#endif
+			if (mAlphaMode == amPremultiplied)
+				glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+			else
+				glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			
 			#ifdef WEBOS
 			glColorMask (GL_TRUE, GL_TRUE, GL_TRUE, GL_FALSE);
@@ -291,11 +291,10 @@ namespace nme {
 		float c0 = (float)((mTint >> 16) & 0xFF) * one_on_255;
 		float c1 = (float)((mTint >> 8) & 0xFF) * one_on_255;
 		float c2 = (float)(mTint & 0xFF) * one_on_255;
-		#ifdef NME_PREMULTIPLIED_ALPHA
-		glColor4f (c0 * a, c1 * a, c2 * a, a);
-		#else
-		glColor4f (c0, c1, c2, a);
-		#endif
+		if (mAlphaMode == amPremultiplied)
+			glColor4f (c0 * a, c1 * a, c2 * a, a);
+		else
+			glColor4f (c0, c1, c2, a);
 		glEnable (GL_TEXTURE_2D);
 		glEnableClientState (GL_TEXTURE_COORD_ARRAY);
 		#ifdef NME_DITHER
@@ -370,13 +369,17 @@ namespace nme {
 				
 				glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_COLOR);
 				
+			} else if (arrays.mFlags & HardwareArrays::AM_PREMULTIPLIED) {
+				
+				//printf("Premultiplied\n");
+				mAlphaMode = amPremultiplied;
+				glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+				
 			} else {
 				
-				#ifdef NME_PREMULTIPLIED_ALPHA
-				glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-				#else
+				//printf("Straight\n");
+				mAlphaMode = amStraight;
 				glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-				#endif
 				
 			}
 			
@@ -632,12 +635,12 @@ namespace nme {
 	void OpenGLContext::SetModulatingTransform (const ColorTransform *inTransform) {
 		
 		#ifndef NME_FORCE_GLES2
-		if (inTransform)
-			#ifdef NME_PREMULTIPLIED_ALPHA
-			glColor4f (inTransform->redMultiplier * inTransform->alphaMultiplier, inTransform->greenMultiplier * inTransform->alphaMultiplier, inTransform->blueMultiplier * inTransform->alphaMultiplier, inTransform->alphaMultiplier);
-			#else
-			glColor4f (inTransform->redMultiplier, inTransform->greenMultiplier, inTransform->blueMultiplier, inTransform->alphaMultiplier);
-			#endif
+		if (inTransform) {
+			if (mAlphaMode == amPremultiplied)
+				glColor4f (inTransform->redMultiplier * inTransform->alphaMultiplier, inTransform->greenMultiplier * inTransform->alphaMultiplier, inTransform->blueMultiplier * inTransform->alphaMultiplier, inTransform->alphaMultiplier);
+			else
+				glColor4f (inTransform->redMultiplier, inTransform->greenMultiplier, inTransform->blueMultiplier, inTransform->alphaMultiplier);
+		}
 		#endif
 		
 	}
@@ -715,11 +718,10 @@ namespace nme {
 		float c0 = (float)((col >> 16) & 0xFF) * one_on_255;
 		float c1 = (float)((col >> 8) & 0xFF) * one_on_255;
 		float c2 = (float)(col & 0xFF) * one_on_255;
-		#ifdef NME_PREMULTIPLIED_ALPHA
-		glColor4f (c0 * a, c1 * a,c2 * a, a);
-		#else
-		glColor4f (c0, c1, c2, a);
-		#endif
+		if (mAlphaMode == amPremultiplied)
+			glColor4f (c0 * a, c1 * a,c2 * a, a);
+		else
+			glColor4f (c0, c1, c2, a);
 		#endif
 		
 	}

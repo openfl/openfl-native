@@ -19,7 +19,8 @@ namespace nme {
 			virtual void colorTransform (const Rect &inRect, ColorTransform &inTransform);
 			virtual void StretchTo (const RenderTarget &outTarget, const Rect &inSrcRect, const DRect &inDestRect) const;
 			
-			virtual void setGPUFormat( PixelFormat pf ) { mGPUPixelFormat = pf; }
+			virtual void setAlphaMode (AlphaMode am) { mAlphaMode = am; }
+			virtual void setGPUFormat (PixelFormat pf) { mGPUPixelFormat = pf; }
 			
 			void applyFilter (Surface *inSrc, const Rect &inRect, ImagePoint inOffset, Filter *inFilter);
 			RenderTarget BeginRender (const Rect &inRect, bool inForHitTest);
@@ -33,6 +34,7 @@ namespace nme {
 			void getColorBoundsRect(int inMask, int inCol, bool inFind, Rect &outRect);
 			uint32 getPixel (int inX, int inY);
 			void getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder = false, bool inLittleEndian = false);
+			void multiplyAlpha ();
 			void noise (unsigned int randomSeed, unsigned int low, unsigned int high, int channelOptions, bool grayScale);
 			void scroll (int inDX, int inDY);
 			void setPixel (int inX, int inY, uint32 inRGBA, bool inAlphaToo = false);
@@ -41,6 +43,7 @@ namespace nme {
 			void Zero ();
 			
 			PixelFormat Format () const { return mPixelFormat; }
+			AlphaMode GetAlphaMode () const { return mAlphaMode; }
 			const uint8 *GetBase () const { return mBase; }
 			int GetStride () const { return mStride; }
 			int	GPUFormat () const { return mGPUPixelFormat; }
@@ -51,6 +54,7 @@ namespace nme {
 			
 			~SimpleSurface ();
 			
+			AlphaMode mAlphaMode;
 			uint8 *mBase;
 			int mGPUPixelFormat;
 			int	mHeight;

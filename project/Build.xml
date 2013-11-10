@@ -252,7 +252,6 @@
       <compilerflag value="-DGLFW_OGL" if="glfw"/>
       <compilerflag value="-DNME_CURL_SSL" if="ssl" unless="nocurl"/>
       <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
-      <compilerflag value="-DNME_PREMULTIPLIED_ALPHA" if="NME_PREMULTIPLIED_ALPHA"/>
       <compilerflag value="-Wno-conversion" if="linux"/>
       
       <!-- <file name="src/common/Surface.cpp"/> -->
@@ -324,7 +323,6 @@
       <compilerflag value="-DGLFW_OGL" if="glfw"/>
       <compilerflag value="-DNME_CURL_SSL" if="ssl" unless="nocurl"/>
       <compilerflag value="-DNME_FORCE_GLES1" if="NME_FORCE_GLES1"/>
-      <compilerflag value="-DNME_PREMULTIPLIED_ALPHA" if="NME_PREMULTIPLIED_ALPHA"/>
       <compilerflag value="-Wno-conversion" if="linux"/>
       
       <file name="src/renderer/opengl/OpenGLInit.cpp"/>

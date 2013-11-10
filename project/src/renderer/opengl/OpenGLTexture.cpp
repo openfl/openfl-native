@@ -149,7 +149,7 @@ namespace nme {
 			
 		}
 		
-		#ifdef NME_PREMULTIPLIED_ALPHA
+		/*#ifdef NME_PREMULTIPLIED_ALPHA
 		if (store_format != GL_ALPHA) {
 			
 			for (int i = 0; i < mTextureWidth * mTextureHeight * 4; i += 4) {
@@ -162,7 +162,7 @@ namespace nme {
 			}
 			
 		}
-		#endif
+		#endif*/
 		
 		glGenTextures (1, &mTextureID);
 		// __android_log_print(ANDROID_LOG_ERROR, "NME", "CreateTexture %d (%dx%d)",
@@ -211,7 +211,7 @@ namespace nme {
 	
 	void OpenGLTexture::Bind (class Surface *inSurface, int inSlot) {
 		
-		if (inSlot >= 0 && glActiveTexture) {
+		if (inSlot >= 0 && &glActiveTexture) {
 			
 			glActiveTexture (GL_TEXTURE0 + inSlot);
 			

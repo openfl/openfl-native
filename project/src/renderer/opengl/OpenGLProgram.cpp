@@ -11,10 +11,11 @@ namespace nme {
 	const float one_on_255 = 1.0 / 255.0;
 	
 	
-	OpenGLProgram::OpenGLProgram (const char *inVertProg, const char *inFragProg) {
+	OpenGLProgram::OpenGLProgram (const char *inVertProg, const char *inFragProg, AlphaMode inAlphaMode) {
 		
 		mVertProg = inVertProg;
 		mFragProg = inFragProg;
+		mAlphaMode = inAlphaMode;
 		mVertId = 0;
 		mFragId = 0;
 		mTexCoordSlot = -1;
@@ -205,21 +206,19 @@ namespace nme {
 			
 			if (mColourOffsetSlot >= 0) {
 				
-				#ifdef NME_PREMULTIPLIED_ALPHA
-				glUniform4f (mColourOffsetSlot, inTransform->redOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->greenOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->blueOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->alphaOffset * one_on_255);
-				#else
-				glUniform4f (mColourOffsetSlot, inTransform->redOffset * one_on_255, inTransform->greenOffset * one_on_255, inTransform->blueOffset * one_on_255, inTransform->alphaOffset * one_on_255);
-				#endif
+				if (mAlphaMode == amPremultiplied)
+					glUniform4f (mColourOffsetSlot, inTransform->redOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->greenOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->blueOffset * one_on_255 * inTransform->alphaMultiplier, inTransform->alphaOffset * one_on_255);
+				else
+					glUniform4f (mColourOffsetSlot, inTransform->redOffset * one_on_255, inTransform->greenOffset * one_on_255, inTransform->blueOffset * one_on_255, inTransform->alphaOffset * one_on_255);
 				
 			}
 			
 			if (mColourScaleSlot >= 0) {
 				
-				#ifdef NME_PREMULTIPLIED_ALPHA
-				glUniform4f (mColourScaleSlot, inTransform->redMultiplier * inTransform->alphaMultiplier, inTransform->greenMultiplier * inTransform->alphaMultiplier, inTransform->blueMultiplier * inTransform->alphaMultiplier, inTransform->alphaMultiplier);
-				#else
-				glUniform4f (mColourScaleSlot, inTransform->redMultiplier, inTransform->greenMultiplier, inTransform->blueMultiplier, inTransform->alphaMultiplier);
-				#endif
+				if (mAlphaMode == amPremultiplied)
+					glUniform4f (mColourScaleSlot, inTransform->redMultiplier * inTransform->alphaMultiplier, inTransform->greenMultiplier * inTransform->alphaMultiplier, inTransform->blueMultiplier * inTransform->alphaMultiplier, inTransform->alphaMultiplier);
+				else
+					glUniform4f (mColourScaleSlot, inTransform->redMultiplier, inTransform->greenMultiplier, inTransform->blueMultiplier, inTransform->alphaMultiplier);
 				
 			}
 			
@@ -287,11 +286,10 @@ namespace nme {
 			float c0 = ((inColour >> 16) & 0xff) * one_on_255;
 			float c1 = ((inColour >> 8) & 0xff) * one_on_255;
 			float c2 = (inColour & 0xff) * one_on_255;
-			#ifdef NME_PREMULTIPLIED_ALPHA
-			glUniform4f (mTintSlot, c0 * a, c1 * a, c2 * a, a);
-			#else
-			glUniform4f (mTintSlot, c0, c1, c2, a);
-			#endif
+			if (mAlphaMode == amPremultiplied)
+				glUniform4f (mTintSlot, c0 * a, c1 * a, c2 * a, a);
+			else
+				glUniform4f (mTintSlot, c0, c1, c2, a);
 			
 		}
 		

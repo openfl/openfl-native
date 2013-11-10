@@ -67,7 +67,7 @@ namespace nme {
 		
 		GPUProgID id = mBitmapSurface->BytesPP () == 1 ? gpuBitmapAlpha : gpuBitmap;
 		if (!mProg[id])
-			mProg[id] = GPUProg::create (id);
+			mProg[id] = GPUProg::create (id, mAlphaMode);
 		mCurrentProg = mProg[id];
 		if (!mCurrentProg)
 			return;
@@ -142,7 +142,7 @@ namespace nme {
 			return false;
 		
 		if (!mProg[id])
-			mProg[id] = GPUProg::create (id);
+			mProg[id] = GPUProg::create (id, mAlphaMode);
 		
 		if (!mProg[id])
 			return false;

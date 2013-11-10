@@ -28,7 +28,7 @@ class BitmapData implements IBitmapDrawable {
 	public inline static var FORMAT_8888 = 0;
 	public inline static var FORMAT_4444 = 1; //16 bit with alpha channel
 	public inline static var FORMAT_565 = 2;  //16 bit 565 without alpha
-	
+		
 	public var height (get, null):Int;
 	public var rect (get, null):Rectangle;
 	public var transparent (get, null):Bool;
@@ -321,6 +321,13 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
+	public function multiplyAlpha ():Void {
+		
+		nme_bitmap_data_multiply_alpha (__handle);
+		
+	}
+	
+	
 	public function noise (randomSeed:Int, low:Int = 0, high:Int = 255, channelOptions:Int = 7, grayScale:Bool = false):Void {
 		
 		nme_bitmap_data_noise (__handle, randomSeed, low, high, channelOptions, grayScale);
@@ -346,6 +353,13 @@ class BitmapData implements IBitmapDrawable {
 	public function scroll (x:Int, y:Int):Void {
 		
 		nme_bitmap_data_scroll (__handle, x, y);
+		
+	}
+	
+	
+	public function setAlphaMode (alphaMode:Int):Void {
+		
+		nme_bitmap_data_set_alpha_mode (__handle, alphaMode);
 		
 	}
 	
@@ -712,6 +726,8 @@ class BitmapData implements IBitmapDrawable {
 	private static var nme_bitmap_data_flood_fill = Lib.load ("nme", "nme_bitmap_data_flood_fill", 4);
 	private static var nme_bitmap_data_noise = Lib.load ("nme", "nme_bitmap_data_noise", -1);
 	private static var nme_bitmap_data_unmultiply_alpha = Lib.load ("nme", "nme_bitmap_data_unmultiply_alpha", 1);
+	private static var nme_bitmap_data_multiply_alpha = Lib.load ("nme", "nme_bitmap_data_multiply_alpha", 1);
+	private static var nme_bitmap_data_set_alpha_mode = Lib.load ("nme", "nme_bitmap_data_set_alpha_mode", 2);
 	
 	
 }
