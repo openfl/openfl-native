@@ -27,7 +27,7 @@ namespace nme {
 		mPointSmooth = true;
 		mColourArrayEnabled = false;
 		mThreadId = GetThreadId ();
-		mAlphaMode = amStraight;
+		mAlphaMode = amUnknown;
 		
 		const char *str = (const char *)glGetString (GL_VENDOR);
 		

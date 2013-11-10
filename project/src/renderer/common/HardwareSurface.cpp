@@ -6,7 +6,7 @@ namespace nme {
 	
 	HardwareSurface::HardwareSurface (HardwareContext *inContext) {
 		
-		mAlphaMode = amStraight;
+		mAlphaMode = amUnknown;
 		mHardware = inContext;
 		mHardware->IncRef ();
 		

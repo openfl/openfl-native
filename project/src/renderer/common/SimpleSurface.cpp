@@ -12,7 +12,7 @@ namespace nme {
 		mTexture = 0;
 		mPixelFormat = inPixelFormat;
 		mGPUPixelFormat = inPixelFormat;
-		mAlphaMode = amStraight;
+		mAlphaMode = amUnknown;
 		
 		if (inGPUFormat == -1) {
 			
@@ -653,7 +653,7 @@ namespace nme {
 		
 		if (!mBase)
 			return;
-		if (mAlphaMode == amPremultiplied)
+		if (mAlphaMode == amIgnore || mAlphaMode == amPremultiplied)
 			return;
 		Rect r = Rect (0, 0, mWidth, mHeight);
 		mVersion++;
@@ -1012,7 +1012,7 @@ namespace nme {
 		
 		if (!mBase)
 			return;
-		if (mAlphaMode != amPremultiplied)
+		if (mAlphaMode == amIgnore || mAlphaMode == amStraight)
 			return;
 		Rect r = Rect (0, 0, mWidth, mHeight);
 		mVersion++;

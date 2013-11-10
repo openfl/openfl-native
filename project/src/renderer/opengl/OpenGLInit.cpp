@@ -122,7 +122,7 @@ namespace nme {
 		#endif
 		#endif
 		
-		if (false && shaders && HasShaderSupport ()) {
+		if (shaders && HasShaderSupport ()) {
 			
 			//printf("Using OGL2\n");
 			ctx = new OpenGL2Context ((WinDC)inWindow, (GLCtx)inGLCtx);
