@@ -120,8 +120,9 @@ namespace nme {
 	
 	bool BitmapCache::StillGood (const Transform &inTransform, const Rect &inVisiblePixels, BitmapCache *inMask) {
 		
-		if (!mMatrix.IsIntTranslation (*inTransform.mMatrix, mTX, mTY) || mScale9 != *inTransform.mScale9)
-			return false;
+		// TODO: Need to break the cache for certain operations, for quality?
+		//if (!mMatrix.IsIntTranslation (*inTransform.mMatrix, mTX, mTY) || mScale9 != *inTransform.mScale9)
+			//return false;
 		
 		if (inMask) {
 			
