@@ -662,7 +662,6 @@ namespace nme {
 		
 		if (mPixelFormat == pfAlpha)
 			return;
-		int i = 0;
 		int a;
 		double multiply;
 		
@@ -1021,7 +1020,6 @@ namespace nme {
 		
 		if (mPixelFormat == pfAlpha)
 			return;
-		int i = 0;
 		int a;
 		double unmultiply;
 		

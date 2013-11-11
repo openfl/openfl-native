@@ -1595,7 +1595,11 @@ void TextField::InsertString(WString &inString)
 
 static bool IsWord(int inCh)
 {
+  #ifdef EPPC
+  return (!isspace(inCh));
+  #else
   return (!iswspace(inCh));
+  #endif
   //return inCh<255 && (iswalpha(inCh) || isdigit(inCh) || inCh=='_');
 }
 
@@ -1692,7 +1696,11 @@ void TextField::Layout(const Matrix &inMatrix)
          {
             if (!IsWord(ch) || (line.mChars>2 && !IsWord(g.mString[cid-2]))  )
             {
+			   #ifdef EPPC
+               if ( (ch<255 && isspace(ch)) || line.mChars==1)
+			   #else
                if ( (ch<255 && iswspace(ch)) || line.mChars==1)
+			   #endif
                {
                   last_word_cid = cid;
                   last_word_line_chars = line.mChars;

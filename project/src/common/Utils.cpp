@@ -4,6 +4,9 @@
 #include <windows.h>
 #include <Shlobj.h>
 #include <time.h>
+#elif defined(EPPC)
+#include <time.h>
+#include <stdint.h>
 #else
 #include <sys/time.h>
 #include <stdint.h>
@@ -214,6 +217,10 @@ double  GetTimeStamp()
         if( gettimeofday(&tv,NULL) )
           return 0;
         double t =  ( tv.tv_sec + ((double)tv.tv_usec) / 1000000.0 );
+   #elif defined(EPPC)
+		time_t tod;
+		time(&tod);
+		double t = (double)tod;
    #else
 	    struct timespec ts;
        clock_gettime(CLOCK_MONOTONIC, &ts);

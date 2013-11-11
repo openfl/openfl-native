@@ -21,8 +21,10 @@
 #endif
 
 #ifndef HX_WINDOWS
+#ifndef EPPC
 #include <dirent.h>
 #include <sys/stat.h>
+#endif
 #endif
 
 #if defined(HX_WINDOWS) && !defined(HX_WINRT)
@@ -877,7 +879,7 @@ void ItererateFontDir(const std::string &inDir, value inFunc, int inMaxDepth)
       if( !FindNextFile(handle,&d) )
          break;
    }
-   #else
+   #elif !defined(EPPC)
    DIR *d = opendir(inDir.c_str());
    if (d)
    {

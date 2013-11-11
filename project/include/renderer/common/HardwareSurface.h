@@ -29,8 +29,8 @@ namespace nme {
 			int Width () const { return mHardware->Width (); }
 			
 			Surface *clone ();
-			void getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder = false);
-			void setPixels (const Rect &inRect, const uint32 *intPixels, bool inIgnoreOrder = false);
+			//void getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder = false);
+			//void setPixels (const Rect &inRect, const uint32 *intPixels, bool inIgnoreOrder = false);
 		
 		protected:
 			

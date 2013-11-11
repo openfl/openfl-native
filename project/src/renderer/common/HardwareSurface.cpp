@@ -31,14 +31,14 @@ namespace nme {
 	}
 	
 	
-	void HardwareSurface::getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder) {
+	/*void HardwareSurface::getPixels (const Rect &inRect, uint32 *outPixels, bool inIgnoreOrder) {
 		
 		memset (outPixels, 0, Width () * Height () * 4);
 		
 	}
 	
 	
-	void HardwareSurface::setPixels (const Rect &inRect, const uint32 *outPixels, bool inIgnoreOrder) {}
+	void HardwareSurface::setPixels (const Rect &inRect, const uint32 *outPixels, bool inIgnoreOrder) {}*/
 	
 	
 }
