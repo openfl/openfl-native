@@ -2,7 +2,11 @@
 #define NME_QUICK_VEC
 
 #include <algorithm>
+#ifdef EPPC
 #include <memory>
+#else
+#include <memory.h>
+#endif
 #include <stdlib.h>
 
 namespace nme
