@@ -48,6 +48,7 @@
    <set name="ogl" value="1" if="gph"/>
    <set name="ogl" value="1" if="iphone"/>
    <set name="ogl" value="1" if="android"/>
+   <set name="ogl" value="1" if="tizen"/>
    <set name="nmeegl" value="1" if="rpi"/>
    
    <set name="nocurl" value="1" if="winrt"/>
@@ -64,6 +65,7 @@
    <set name="openal" value="1" if="NME_OPENAL" />
    <set name="openal" value="1" if="android" />
    <set name="openal" value="1" if="iphone" />
+   <set name="openal" value="1" if="tizen" />
    <set name="has_sound" value="1" if="sdl" />
    <set name="has_sound" value="1" if="openal" />
    <set name="openal" value="1" if="sdl2" unless="has_sound" />
@@ -74,6 +76,7 @@
    <set name="mobile" value="1" if="android"/>
    <set name="mobile" value="1" if="webos"/>
    <set name="mobile" value="1" if="blackberry"/>
+   <set name="mobile" value="1" if="tizen"/>
    <set name="mobile" value="1" if="gph"/>
    
    <set name="ssl" value="1" unless="nossl"/>
@@ -204,6 +207,24 @@
    </files>
    
    
+   <files id="tizen">
+      
+      <compilerflag value="-Iinclude"/>
+      <!-- <compilerflag value="-I${QNX_TARGET}/usr/include" /> -->
+	  <compilerflag value="-I${TIZEN_PLATFORM}/usr/include/osp"/>
+      <compilerflag value="-I${NATIVE_DEV}/include"/>
+	  <compilerflag value="-I${NATIVE_DEV}/include/openal" if="openal" />
+      <compilerflag value="-Isrc/sound/openal"/>
+	  <compilerflag value="-D_APP_LOG" />
+      <file name="src/platform/linux/NativeFont.cpp"/>
+      <file name="src/platform/tizen/TizenUIApp.cpp"/>
+      <file name="src/platform/tizen/TizenUIFrame.cpp"/>
+      <file name="src/platform/tizen/TizenStage.cpp"/>
+      <file name="src/sound/openal/OpenALSound.cpp" if="openal"/>
+      
+   </files>
+   
+   
    <files id="main">
       
       <compilerflag value="-Iinclude"/>
@@ -222,6 +243,7 @@
    <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/iPhone/" if="iphone"/>
    <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/BlackBerry/" if="blackberry"/>
    <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Emscripten/" if="emscripten"/>
+   <set name="THIRDPARTY_LIBS" value="${NATIVE_DEV}/lib/Tizen/" if="tizen"/>
    <set name="THIRDPARTY_LIBS" value="${GPH_ROOT}/gcc-4.2.4-glibc-2.7-eabi/arm-gph-linux-gnueabi/sys-root/usr/lib/" if="gph"/>
    
    <set name="SLIBEXT" value=".lib" if="windows"/>
@@ -317,6 +339,8 @@
       <compilerflag value="-I${QNX_TARGET}/usr/include" if="blackberry"/>
       <!-- <compilerflag value="-I${QNX_TARGET}/usr/include/GLES" if="blackberry"/> -->
       <compilerflag value="-I${QNX_TARGET}/usr/include/GLES2" if="blackberry"/>
+	  <compilerflag value="-I${TIZEN_SDK}/platforms/tizen2.2/rootstraps/tizen-device-2.2.native/usr/include" if="tizen" />
+	  <compilerflag value="-I${TIZEN_SDK}/platforms/tizen2.2/rootstraps/tizen-device-2.2.native/usr/include/osp" if="tizen" />
       <compilerflag value="-DNME_DIRECTFB" if="directfb"/>
       <compilerflag value="-DSDL_OGL" if="sdl"/>
       <compilerflag value="-DSDL_OGL" if="sdl2"/>
@@ -495,6 +519,7 @@
       <files id="webos" if="webos"/>
       <files id="blackberry" if="blackberry"/>
       <files id="emscripten" if="emscripten"/>
+      <files id="tizen" if="tizen"/>
       
       <lib name="${THIRDPARTY_LIBS}libfreetype${name_extra}${SLIBEXT}" if="iphone"/>
       <lib name="${THIRDPARTY_LIBS}libfreetype${name_extra}${SLIBEXT}" unless="no_thirdparty_extras"/>
@@ -503,6 +528,7 @@
       <lib name="${THIRDPARTY_LIBS}libz${name_extra}${SLIBEXT}" if="windows"/>
       <lib name="${THIRDPARTY_LIBS}libz${name_extra}${SLIBEXT}" if="macos" unless="dynamic_sdl"/>
       <lib name="${THIRDPARTY_LIBS}libz${name_extra}${SLIBEXT}" if="linux" unless="dynamic_sdl"/>
+      <lib name="${THIRDPARTY_LIBS}libz${name_extra}${SLIBEXT}" if="tizen" />
       
       <lib name="${THIRDPARTY_LIBS}libSDL_mixer${name_extra}${SLIBEXT}" if="sdl" unless="dynamic_sdl" />
       <lib name="${THIRDPARTY_LIBS}libSDL_image${name_extra}${SLIBEXT}" if="sdl_image" unless="emscripten" />
@@ -521,8 +547,38 @@
       <lib name="${THIRDPARTY_LIBS}libcurl${ssl_extra}${name_extra}${SLIBEXT}" if="sdl2"/>
       <lib name="${THIRDPARTY_LIBS}libcurl${ssl_extra}${name_extra}${SLIBEXT}" if="glfw"/>
       <lib name="${THIRDPARTY_LIBS}libcurl${ssl_extra}${name_extra}${SLIBEXT}" if="android"/>
+      <lib name="${THIRDPARTY_LIBS}libcurl${ssl_extra}${name_extra}${SLIBEXT}" if="tizen"/>
       <lib name="${THIRDPARTY_LIBS}libglfw3${name_extra}${SLIBEXT}" if="glfw"/>
       
+      <lib name="-L${THIRDPARTY_LIBS}" if="tizen"/>
+	  <lib name="-losp-uifw" if="tizen" />
+	  <lib name="-losp-appfw" if="tizen" />
+	  <lib name="-losp-image" if="tizen" />
+	  <lib name="-losp-ime" if="tizen" />
+	  <lib name="-losp-net" if="tizen" />
+	  <lib name="-losp-content" if="tizen" />
+	  <lib name="-losp-locations" if="tizen" />
+	  <lib name="-losp-telephony" if="tizen" />
+	  <lib name="-losp-uix" if="tizen" />
+	  <lib name="-losp-media" if="tizen" />
+	  <lib name="-losp-messaging" if="tizen" />
+	  <lib name="-losp-web" if="tizen" />
+	  <lib name="-losp-social" if="tizen" />
+	  <lib name="-losp-wifi" if="tizen" />
+	  <lib name="-losp-bluetooth" if="tizen" />
+	  <lib name="-losp-nfc" if="tizen" />
+	  <lib name="-losp-face" if="tizen" />
+	  <lib name="-losp-secure-element" if="tizen" />
+	  <lib name="-losp-speech-tts" if="tizen" />
+	  <lib name="-losp-speech-stt" if="tizen" />
+	  <lib name="-losp-shell" if="tizen" />
+	  <lib name="-losp-shell-core" if="tizen" />
+	  <lib name="-losp-vision" if="tizen" />
+	  <lib name="-lxml2" if="tizen" />
+	  <lib name="-lalut" if="tizen" />
+	  <lib name="-lopenal" if="tizen" />
+	  <lib name="-lrt" if="tizen" />
+	  
       <lib name="-L${THIRDPARTY_LIBS}" if="linux"/>
       <lib name="-lrt" if="linux" unless="noopenal" />
       <!-- <lib name="-lopenal" if="linux" unless="noopenal" /> -->
