@@ -31,6 +31,8 @@ class ApplicationMain {
 		
 		flash.Lib.create (function () {
 				
+				trace ("SDLFSDLFJLSDFJL");
+				
 				flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
 				flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 				flash.Lib.current.loaderInfo = flash.display.LoaderInfo.create (null);

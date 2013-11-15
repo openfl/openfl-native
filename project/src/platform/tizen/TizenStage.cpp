@@ -238,6 +238,11 @@ namespace nme {
 	
 	void StartAnimation () {
 		
+		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
+		args.Construct ();
+		
+		result r = Tizen::App::UiApp::Execute(TizenUIApp::CreateInstance, &args);
+		
 		/*while (!glfwWindowShouldClose(sgGLFWFrame->GetWindow()))
 		{
 		  glfwPollEvents();
@@ -448,18 +453,13 @@ namespace nme {
 	
 	void CreateMainFrame (FrameCreationCallback inOnFrame, int inWidth, int inHeight, unsigned int inFlags, const char *inTitle, Surface *inIcon) {
 		
-		AppLog("SDLKFJLDSJFLKSDJFLSDKFJ");
+		//AppLog("SDLKFJLDSJFLKSDJFLSDKFJ");
 		
-		while (true) {
+		/*while (true) {
 			
 			AppLog("SFKJ SLDKFJ");
 			
-		}
-		
-		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
-		args.Construct ();
-		
-		result r = Tizen::App::UiApp::Execute(TizenUIApp::CreateInstance, &args);
+		}*/
 		
 		/*bool opengl = (inFlags & wfHardware) != 0;
 		// sgShaderFlags = (inFlags & (wfAllowShaders|wfRequireShaders) );
@@ -471,8 +471,9 @@ namespace nme {
 		  return;
 		}
 		*/
+		
 		sgTizenFrame = createWindowFrame (inTitle, inWidth, inHeight, inFlags);
-		//inOnFrame (sgTizenFrame);
+		inOnFrame (sgTizenFrame);
 		
 		StartAnimation ();
 		
@@ -539,6 +540,8 @@ namespace nme {
 	
 	
 	bool LaunchBrowser (const char *inUtf8URL) {
+		
+		AppLog("Hello from launch browser");
 		
 		return false;	
 		
