@@ -2,6 +2,7 @@
 #define PLATFORM_TIZEN_TIZEN_UI_APP_H
 
 
+#include "platform/tizen/TizenFrame.h"
 #include <FApp.h>
 #include <FBase.h>
 #include <FSystem.h>

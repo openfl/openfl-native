@@ -1,247 +1,82 @@
-#include <Display.h>
-#include "platform/tizen/TizenUIApp.h"
-#include "renderer/common/Surface.h"
-#include "renderer/common/HardwareSurface.h"
-#include "renderer/common/HardwareContext.h"
-#include <KeyCodes.h>
-#include <FApp.h>
-#include <FBase.h>
-#include <stdio.h>
-
-//using namespace Tizen::Base;
-//using namespace Tizen::Base::Collection;
-
-
-
-/*extern "C" {
-	
-	
-	//extern int main (int argc, char* argv[]);
-	Tizen::Base::Collection::ArrayList args;
-	
-	
-	int _EXPORT_ OspMain (int argc, char* pArgv[]) {
-		
-		FILE *pFile = fopen ("/tmp/help.txt","w");
-		fprintf(pFile, "LDKFJLDKJF");
-		fclose(pFile);
-		
-		AppLog("Application started!!!!!!.");
-		
-		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
-		args.Construct ();
-		
-		for (int i = 0; i < argc; i++) {
-			
-			args.Add (new (std::nothrow) Tizen::Base::String (pArgv[i]));
-			
-		}
-		//
-		//AppLog("Application started.");
-		//ArrayList args(SingleObjectDeleter);
-		//args.Construct();
-		//for (int i = 0; i < argc; i++)
-		//{
-			//args.Add(new (std::nothrow) String(pArgv[i]));
-		//}
-		//
-		//result r = Tizen::App::UiApp::Execute(TizenGLSampleApp::CreateInstance, &args);
-		//TryLog(r == E_SUCCESS, "[%s] Application execution failed.", GetErrorMessage(r));
-		//AppLog("Application finished.");
-		//
-		//return static_cast< int >(r);
-		
-		result r = Tizen::App::UiApp::Execute(nme::TizenUIApp::CreateInstance, &args);
-		
-		while(true){
-			
-			AppLog("OY YO");
-			
-		}
-		
-		TryLog(r == E_SUCCESS, "[%s] Application execution failed.", GetErrorMessage(r));
-		AppLog("Application finished.");
-		
-		return static_cast< int >(r);
-		
-		//return main (argc, pArgv);
-		
-	}
-	
-	
-}*/
+#include "platform/tizen/TizenStage.h"
+#include "platform/tizen/TizenFrame.h"
 
 
 namespace nme {
 	
 	
-	class TizenFrame;
-	TizenFrame *sgTizenFrame;
-	//#define MAX_JOYSTICKS 16
+	TizenStage::TizenStage (int inWidth, int inHeight) : mOpenGLContext(0), mPrimarySurface(0) {
+		
+		//mWindow = inWindow;
+		
+		// size window for the first time
+		//Resize (inWidth, inHeight);
+		
+	}
 	
 	
-	class TizenStage : public Stage {
+	TizenStage::~TizenStage () {
 		
-		public:
-			
-			
-			TizenStage(/*Tizenwindow *inWindow,*/ int inWidth, int inHeight) : mOpenGLContext(0), mPrimarySurface(0) {
-				
-				//mWindow = inWindow;
-				
-				// size window for the first time
-				//Resize (inWidth, inHeight);
-				
-			}
-			
-			
-			~TizenStage () {
-				
-				mOpenGLContext->DecRef();
-				mPrimarySurface->DecRef();
-				
-			}
-			
-			
-			void SetCursor (Cursor inCursor) {
-				
-				switch (inCursor) {
-					
-					case curNone:
-						break;
-					case curPointer:
-						break;
-					case curHand:
-						break;
-				}
-				
-			}
-			
-			
-			void GetMouse () {}
-			
-			
-			Surface *GetPrimarySurface () {
-				
-				return mPrimarySurface;
-				
-			}
-			
-			
-			bool isOpenGL () const { return true; }
-			
-			
-			void Flip () {
-				
-				//glfwSwapBuffers (mWindow);
-				
-			}
-			
-			
-			void Resize (const int inWidth, const int inHeight) {
-				
-				/*// Calling this recreates the gl context and we loose all our textures and
-				// display lists. So Work around it.
-				if (mOpenGLContext) {
-					
-					gTextureContextVersion++;
-					mOpenGLContext->DecRef ();
-					
-				}
-				
-				mOpenGLContext = HardwareContext::CreateOpenGL (0, 0, true);
-				mOpenGLContext->SetWindowSize (inWidth, inHeight);
-				mOpenGLContext->IncRef ();
-				
-				if (mPrimarySurface) {
-					
-					mPrimarySurface->DecRef ();
-					
-				}
-				
-				mPrimarySurface = new HardwareSurface (mOpenGLContext);
-				mPrimarySurface->IncRef ();*/
-				
-			}
-			
-			
-			//Tizenwindow *mWindow;
-			
+		mOpenGLContext->DecRef ();
+		mPrimarySurface->DecRef ();
 		
-		private:
-			
-			HardwareContext *mOpenGLContext;
-			Surface *mPrimarySurface;
-		
-	};
+	}
 	
 	
-	class TizenFrame : public Frame {
+	void TizenStage::Flip () {
 		
-		public:
-			
-			TizenFrame (/*Tizenwindow *inSurface,*/ int inW, int inH) {
-				
-				mStage = new TizenStage (/*inSurface,*/ inW, inH);
-				mStage->IncRef();
-				// SetTimer(mHandle,timerFrame, 10,0);
-				
-			}
-			
-			
-			~TizenFrame () {
-				
-				mStage->DecRef ();
-				
-			}
-			
-			
-			void Resize (const int inWidth, const int inHeight) {
-				
-				mStage->Resize(inWidth, inHeight);
-				
-			}
-			
-			
-			void SetTitle () {}
-			void SetIcon () {}
-			
-			
-			Stage *GetStage () {
-				
-				return mStage;
-				
-			}
-			
-			
-			inline void HandleEvent (Event &event) {
-				
-				mStage->HandleEvent (event);
-				
-			}
-			
-			
-			/*Tizenwindow *GetWindow () {
-				
-				return mStage->mWindow;
-				
-			}*/
-			
+		//glfwSwapBuffers (mWindow);
 		
-		private:
-			
-			TizenStage *mStage;
-			
+	}
+	
+	
+	void TizenStage::GetMouse () {}
+	
+	
+	void TizenStage::Resize (const int inWidth, const int inHeight) {
 		
-	};
+		/*// Calling this recreates the gl context and we loose all our textures and
+		// display lists. So Work around it.
+		if (mOpenGLContext) {
+			
+			gTextureContextVersion++;
+			mOpenGLContext->DecRef ();
+			
+		}
+		
+		mOpenGLContext = HardwareContext::CreateOpenGL (0, 0, true);
+		mOpenGLContext->SetWindowSize (inWidth, inHeight);
+		mOpenGLContext->IncRef ();
+		
+		if (mPrimarySurface) {
+			
+			mPrimarySurface->DecRef ();
+			
+		}
+		
+		mPrimarySurface = new HardwareSurface (mOpenGLContext);
+		mPrimarySurface->IncRef ();*/
+		
+	}
+	
+	
+	void TizenStage::SetCursor (Cursor inCursor) {
+		
+		switch (inCursor) {
+			
+			case curNone:
+				break;
+			case curPointer:
+				break;
+			case curHand:
+				break;
+			
+		}
+		
+	}
 	
 	
 	void StartAnimation () {
-		
-		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
-		args.Construct ();
-		
-		result r = Tizen::App::UiApp::Execute(TizenUIApp::CreateInstance, &args);
 		
 		/*while (!glfwWindowShouldClose(sgGLFWFrame->GetWindow()))
 		{
@@ -451,35 +286,6 @@ namespace nme {
 	}
 	
 	
-	void CreateMainFrame (FrameCreationCallback inOnFrame, int inWidth, int inHeight, unsigned int inFlags, const char *inTitle, Surface *inIcon) {
-		
-		//AppLog("SDLKFJLDSJFLKSDJFLSDKFJ");
-		
-		/*while (true) {
-			
-			AppLog("SFKJ SLDKFJ");
-			
-		}*/
-		
-		/*bool opengl = (inFlags & wfHardware) != 0;
-		// sgShaderFlags = (inFlags & (wfAllowShaders|wfRequireShaders) );
-		
-		if (!glfwInit())
-		{
-		  fprintf(stderr, "Could not initialize GLFW\n");
-		  inOnFrame(0);
-		  return;
-		}
-		*/
-		
-		sgTizenFrame = createWindowFrame (inTitle, inWidth, inHeight, inFlags);
-		inOnFrame (sgTizenFrame);
-		
-		StartAnimation ();
-		
-	}
-	
-	
 	void SetIcon (const char *path) {}
 	
 	
@@ -540,8 +346,6 @@ namespace nme {
 	
 	
 	bool LaunchBrowser (const char *inUtf8URL) {
-		
-		AppLog("Hello from launch browser");
 		
 		return false;	
 		

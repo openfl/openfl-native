@@ -1,3 +1,4 @@
+#include <Display.h>
 #include "platform/tizen/TizenUIApp.h"
 #include "platform/tizen/TizenUIFrame.h"
 
@@ -10,6 +11,29 @@
 
 
 namespace nme {
+	
+	
+	FrameCreationCallback sgCallback;
+	unsigned int sgFlags;
+	int sgHeight;
+	const char *sgTitle;
+	TizenFrame *sgTizenFrame;
+	int sgWidth;
+	
+	
+	void CreateMainFrame (FrameCreationCallback inOnFrame, int inWidth, int inHeight, unsigned int inFlags, const char *inTitle, Surface *inIcon) {
+		
+		sgCallback = inOnFrame;
+		sgWidth = inWidth;
+		sgHeight = inHeight;
+		sgFlags = inFlags;
+		sgTitle = inTitle;
+		
+		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
+		args.Construct ();
+		result r = Tizen::App::UiApp::Execute(TizenUIApp::CreateInstance, &args);
+		
+	}
 	
 	
 	TizenUIApp::TizenUIApp (void) {}
@@ -25,6 +49,8 @@ namespace nme {
 	
 	bool TizenUIApp::OnAppInitialized (void) {
 		
+		//AppLog ("Initialized");
+		
 		// TODO:
 		// Add code to do after initialization here. 
 		
@@ -32,7 +58,7 @@ namespace nme {
 		TizenUIFrame* pTizenGLSampleFrame = new TizenUIFrame();
 		pTizenGLSampleFrame->Construct();
 		pTizenGLSampleFrame->SetBackgroundColor(Tizen::Graphics::Color(0xFF0000, false));
-		pTizenGLSampleFrame->SetName(L"TizenGLSample");
+		pTizenGLSampleFrame->SetName(Tizen::Base::String(sgTitle));
 		AddFrame(*pTizenGLSampleFrame);
 		
 		pTizenGLSampleFrame->AddKeyEventListener(*this);
@@ -48,6 +74,10 @@ namespace nme {
 		
 		__renderer = new GlRendererTemplate();
 		__player->SetIGlRenderer(__renderer);*/
+		
+		sgTizenFrame = new TizenFrame (sgWidth, sgHeight);
+		//sgTizenFrame = createWindowFrame (inTitle, inWidth, inHeight, inFlags);
+		sgCallback (sgTizenFrame);
 		
 		return true;
 		
