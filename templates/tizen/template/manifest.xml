@@ -16,7 +16,7 @@
 				<DisplayName Locale="eng-GB">::APP_TITLE::</DisplayName>
 			</DisplayNames>
 			<Icons>
-				<Icon Section="MainMenu">icon.png</Icon>
+				<Icon Section="MainMenu">mainmenu.png</Icon>
 			</Icons>
 		</UiApp>
 	</Apps>
