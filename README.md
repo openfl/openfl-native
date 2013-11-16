@@ -27,6 +27,12 @@ To rebuild binaries for a platform, use "openfl rebuild", such as:
     openfl rebuild linux -64
     openfl rebuild android -debug
 
+If you are running Linux, you will (probably) need to install additional packages to build from the source. For an Ubuntu system, it may look like this:
+
+    sudo apt-get install libgl1-mesa-dev libglu1-mesa-dev g++ g++-multilib gcc-multilib
+    
+For other platforms, the dependencies will be similar to compiling standard OpenFL applications for the platform, for example, Visual Studio for Windows builds, Xcode for Mac or iOS, etc.
+
 The default "rebuild" will compile all binaries. You can add "-debug" and "-release" and other flags to specify that you only want to rebuild one kind of binary. You can separate multiple build targets using commas.
 
 There is also a "-rebuild" flag you can use with other OpenFL commands, for fast testing:
