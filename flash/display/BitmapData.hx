@@ -337,18 +337,20 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function paletteMap (sourceBitmapData:BitmapData, sourceRect:flash.geom.Rectangle, destPoint:flash.geom.Point, ?redArray:Array<Int>, ?greenArray:Array<Int>, ?blueArray:Array<Int>, ?alphaArray:Array<Int>):Void {
 		var memory = new ByteArray ();
-		memory.setLength ((width * height) * 4);
-		memory = getPixels (rect);
+		var sw = sourceRect.width;
+		var sh = sourceRect.height;
+		memory.setLength ((sw * sh) * 4);
+		memory = getPixels(sourceRect);
 		memory.position = 0;
 		Memory.select (memory);
 		
 		var width_yy:Int, position:Int, pixelMask:Int;
 		var pixelValue:Int, r:Int, g:Int, b:Int, color:Int;
 		
-		for (yy in 0...height) {
-			width_yy = width * yy;
+		for (yy in 0...sh) {
+			width_yy = sw * yy;
 			
-			for (xx in 0...width) {
+			for (xx in 0...sw) {
 				position = (width_yy + xx) * 4;
 				pixelValue = cast Memory.getI32(position);
 				
@@ -366,7 +368,7 @@ class BitmapData implements IBitmapDrawable {
 		}
 		
 		memory.position = 0;
-		var destRect = new Rectangle(destPoint.x, destPoint.y, sourceRect.width, sourceRect.height);
+		var destRect = new Rectangle(destPoint.x, destPoint.y, sw, sh);
 		setPixels(destRect, memory);
 		Memory.select (null);
 	}
