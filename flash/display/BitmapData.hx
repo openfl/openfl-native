@@ -337,9 +337,9 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function paletteMap (sourceBitmapData:BitmapData, sourceRect:flash.geom.Rectangle, destPoint:flash.geom.Point, ?redArray:Array<Int>, ?greenArray:Array<Int>, ?blueArray:Array<Int>, ?alphaArray:Array<Int>):Void {
 		var memory = new ByteArray ();
-		var sw = sourceRect.width;
-		var sh = sourceRect.height;
-		memory.setLength ((sw * sh) * 4);
+		var sw:Int = Std.int(sourceRect.width);
+		var sh:Int = Std.int(sourceRect.height);
+		memory.setLength((sw * sh) * 4);
 		memory = getPixels(sourceRect);
 		memory.position = 0;
 		Memory.select (memory);
