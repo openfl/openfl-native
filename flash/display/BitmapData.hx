@@ -334,6 +334,43 @@ class BitmapData implements IBitmapDrawable {
 		
 	}
 	
+	
+	public function paletteMap (sourceBitmapData:BitmapData, sourceRect:flash.geom.Rectangle, destPoint:flash.geom.Point, ?redArray:Array<Int>, ?greenArray:Array<Int>, ?blueArray:Array<Int>, ?alphaArray:Array<Int>):Void {
+		var memory = new ByteArray ();
+		memory.setLength ((width * height) * 4);
+		memory = getPixels (rect);
+		memory.position = 0;
+		Memory.select (memory);
+		
+		var width_yy:Int, position:Int, pixelMask:Int;
+		var pixelValue:Int, r:Int, g:Int, b:Int, color:Int;
+		
+		for (yy in 0...height) {
+			width_yy = width * yy;
+			
+			for (xx in 0...width) {
+				position = (width_yy + xx) * 4;
+				pixelValue = cast Memory.getI32(position);
+				
+				r = (pixelValue >> 8) & 0xFF;
+				g = (pixelValue >> 16) & 0xFF;
+				b = (pixelValue >> 24) & 0xFF;
+				
+				color = __flipPixel((0xff << 24) |
+					redArray[r] | 
+					greenArray[g] | 
+					blueArray[b]);
+				
+				Memory.setI32(position, color);
+			}
+		}
+		
+		memory.position = 0;
+		var destRect = new Rectangle(destPoint.x, destPoint.y, sourceRect.width, sourceRect.height);
+		setPixels(destRect, memory);
+		Memory.select (null);
+	}
+	
 
 	public function perlinNoise (baseX:Float, baseY:Float, numOctaves:Int, randomSeed:Int, stitch:Bool, fractalNoise:Bool, channelOptions:Int = 7, grayScale:Bool = false, ?offsets:Array<Point>):Void {
 		
