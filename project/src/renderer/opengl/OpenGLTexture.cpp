@@ -96,9 +96,9 @@ namespace nme {
 		int pixels = GL_UNSIGNED_BYTE;
 		int gpuFormat = inSurface->GPUFormat ();
 		
-		if (inSurface) {
-			inSurface->multiplyAlpha();
-		}
+		//if (inSurface) {
+			//inSurface->multiplyAlpha();
+		//}
 		
 		if (!inSurface->GetBase ()) {
 			
