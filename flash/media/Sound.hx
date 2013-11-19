@@ -94,8 +94,9 @@ class Sound extends EventDispatcher {
 		} else {
 			
 			url = stream.url;
-			__loading = false;
+			__loading = true;
 			__checkLoading ();
+			__loading = false;
 			
 		}
 		
