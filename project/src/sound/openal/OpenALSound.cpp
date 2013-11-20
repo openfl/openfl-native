@@ -744,14 +744,22 @@ namespace nme
          return 0;
       
       //Return a reference
+      OpenALSound *sound;
+      
       #ifdef ANDROID
       if (!inForceMusic)
       {
          ByteArray bytes = AndroidGetAssetBytes(inFilename.c_str());
-         return new OpenALSound((float*)bytes.Bytes(), bytes.Size());
+         sound = new OpenALSound((float*)bytes.Bytes(), bytes.Size());
       }
+      #else
+      sound = new OpenALSound(inFilename, inForceMusic);
       #endif
-      return new OpenALSound(inFilename, inForceMusic);
+      
+      if (sound->ok ())
+         return sound;
+      else
+         return 0;
    }
    
    
@@ -762,7 +770,12 @@ namespace nme
          return 0;
 
       //Return a reference
-      return new OpenALSound(inData, len);
+      OpenALSound *sound = new OpenALSound(inData, len);
+      
+      if (sound->ok ())
+         return sound;
+      else
+         return 0;
    }
    #endif
    

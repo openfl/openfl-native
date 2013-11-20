@@ -432,7 +432,12 @@ namespace nme
             if (!OpenALInit())
                 return 0;
             
-            return new OpenALSound(inFilename, inForceMusic);
+            OpenALSound *sound = new OpenALSound(inFilename, inForceMusic);
+            
+            if (sound->ok ())
+               return sound;
+            else
+               return 0;
         }
         else
         {
@@ -466,7 +471,12 @@ namespace nme
         {
             if (!OpenALInit())
                 return 0;
-            return new OpenALSound(inData, len);
+            OpenALSound *sound = new OpenALSound(inData, len);
+            
+            if (sound->ok ())
+               return sound;
+            else
+               return 0;
         }
     }
     
