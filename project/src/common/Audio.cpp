@@ -438,17 +438,30 @@ namespace nme
 				return false;
 			}
 			
-			//Read in the 2nd chunk for the wave info
-			result = fread(&wave_format, sizeof(WAVE_Format), 1, f);
-			
-			//check for fmt tag in memory
-			if (wave_format.subChunkID[0] != 'f' ||
-				wave_format.subChunkID[1] != 'm' ||
-				wave_format.subChunkID[2] != 't' ||
-				wave_format.subChunkID[3] != ' ') 
+			bool foundFormat = false;
+			while (!foundFormat)
 			{
-				LOG_SOUND("Invalid Wave Format!\n");
-				return false;
+				//Read in the 2nd chunk for the wave info
+				result = fread(&wave_format, sizeof(WAVE_Format), 1, f);
+				
+				if (result != 1)
+				{
+					LOG_SOUND("Invalid Wave Format!\n");
+					return false;
+				}
+				
+				//check for fmt tag in memory
+				if (wave_format.subChunkID[0] != 'f' ||
+					wave_format.subChunkID[1] != 'm' ||
+					wave_format.subChunkID[2] != 't' ||
+					wave_format.subChunkID[3] != ' ') 
+				{
+					fseek(f, wave_data.subChunkSize, SEEK_CUR);
+				}
+				else
+				{
+					foundFormat = true;
+				}
 			}
 			
 			//check for extra parameters;
@@ -457,17 +470,29 @@ namespace nme
 				fseek(f, sizeof(short), SEEK_CUR);
 			}
 			
-			//Read in the the last byte of data before the sound file
-			result = fread(&wave_data, sizeof(WAVE_Data), 1, f);
-			
-			//check for data tag in memory
-			if (wave_data.subChunkID[0] != 'd' ||
+			bool foundData = false;
+			while (!foundData)
+			{
+				//Read in the the last byte of data before the sound file
+				result = fread(&wave_data, sizeof(WAVE_Data), 1, f);
+				
+				if (result != 1)
+				{
+					LOG_SOUND("Invalid Wav Data Header!\n");
+					return false;
+				}
+				
+				if (wave_data.subChunkID[0] != 'd' ||
 				wave_data.subChunkID[1] != 'a' ||
 				wave_data.subChunkID[2] != 't' ||
 				wave_data.subChunkID[3] != 'a')
-			{
-				LOG_SOUND("Invalid Wav Data Header!\n");
-				return false;
+				{
+					fseek(f, wave_data.subChunkSize, SEEK_CUR);
+				}
+				else
+				{
+					foundData = true;
+				}
 			}
 			
 			//Allocate memory for data
