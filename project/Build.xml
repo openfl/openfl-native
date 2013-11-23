@@ -356,7 +356,7 @@
 		<file name="src/renderer/opengl/OpenGLTexture.cpp"/>
 		<file name="src/renderer/opengl/OpenGLProgram.cpp"/>
 		<file name="src/renderer/opengl/OpenGLShaders.cpp"/>
-		<file name="src/renderer/opengl/OGLExport.cpp"/>
+		<file name="src/renderer/opengl/OGLExport.cpp" unless="NME_FORCE_GLES1"/>
 		<file name="src/renderer/opengl/Egl.cpp" if="nmeegl"/>
 	</files>
 	

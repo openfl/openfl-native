@@ -58,13 +58,13 @@ class MainView extends GLSurfaceView {
 			
 			EGLConfig[] v2_configs = new EGLConfig[1];
 			int[] num_config = new int[1];
-			int[] attrs = { EGL10.EGL_RENDERABLE_TYPE, 4 /*EGL_OPENGL_ES2_BIT*/, EGL10.EGL_NONE };
+			int[] attrs = { EGL10.EGL_RENDERABLE_TYPE, ::if DEFINE_NME_FORCE_GLES1::1::else::4::end:: /*EGL_OPENGL_ES2_BIT*/, EGL10.EGL_NONE };
 			egl.eglChooseConfig (display, attrs, v2_configs, 1, num_config);
 			
 			if (num_config[0]==1) {
 				
-				eglVersion = 2;
-				setEGLContextClientVersion (2);
+				eglVersion = ::if DEFINE_NME_FORCE_GLES1::1::else::2::end::;
+				setEGLContextClientVersion (::if DEFINE_NME_FORCE_GLES1::1::else::2::end::);
 				
 			}
 			
