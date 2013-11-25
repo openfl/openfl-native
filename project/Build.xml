@@ -50,6 +50,7 @@
 	<set name="ogl" value="1" if="android"/>
 	<set name="ogl" value="1" if="tizen"/>
 	<set name="nmeegl" value="1" if="rpi"/>
+	<set name="nmeegl" value="1" if="tizen"/>
 	
 	<set name="nocurl" value="1" if="winrt"/>
 	<set name="nocurl" value="1" if="emscripten"/>
@@ -217,8 +218,9 @@
 		<compilerflag value="-Isrc/sound/openal"/>
 		<compilerflag value="-D_APP_LOG" />
 		<file name="src/platform/linux/NativeFont.cpp"/>
-		<file name="src/platform/tizen/TizenUIApp.cpp"/>
-		<file name="src/platform/tizen/TizenUIFrame.cpp"/>
+		<file name="src/platform/tizen/TizenApplication.cpp"/>
+		<!-- <file name="src/platform/tizen/TizenUIApp.cpp"/>
+		<file name="src/platform/tizen/TizenUIFrame.cpp"/> -->
 		<file name="src/platform/tizen/TizenStage.cpp"/>
 		<file name="src/platform/tizen/TizenFrame.cpp"/>
 		<file name="src/sound/openal/OpenALSound.cpp" if="openal"/>

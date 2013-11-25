@@ -1,23 +1,36 @@
+#ifdef TIZEN
+
+#include <FGraphicsOpengl2.h>
+using namespace Tizen::Graphics::Opengl;
+
+#else
+
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 #include <X11/Xlib.h>
+
+#endif
+
 #include <stdio.h>
-#include "Egl.h"
+#include "renderer/opengl/Egl.h"
 
 // Seems this does not work on raspberry pi....
 //#define X11_EGL
 
+#ifdef RASPBERRYPI
 #ifndef X11_EGL
 #include "bcm_host.h"
-
 static EGL_DISPMANX_WINDOW_T gNativewindow;
+#endif
 #endif
 
 EGLDisplay g_eglDisplay = 0;
 EGLConfig  g_eglConfig = 0;
 EGLContext g_eglContext = 0;
 EGLSurface g_eglSurface = 0;
+#ifdef X11_EGL
 Display   *g_x11Display = NULL;
+#endif
 void      *g_Window = 0;
 int        g_eglVersion = 1;
 
@@ -41,27 +54,26 @@ void nmeEGLSwapBuffers()
    eglSwapBuffers(g_eglDisplay, g_eglSurface);
 }
 
-bool nmeEGLResize(void *inX11Window, int &ioWidth, int &ioHeight)
+bool nmeEGLResize(void *inWindow, int &ioWidth, int &ioHeight)
 {
    nmeEGLDestroy();
 
    //printf("eglCreateWindowSurface %p %p %p\n", g_eglDisplay, g_eglConfig, inX11Window);
  
-   #ifdef X11_EGL
+   // create an EGL window surface
+   uint32_t width = ioWidth;
+   uint32_t height = ioHeight;
+   
+   #if defined(X11_EGL) || defined(TIZEN)
    g_eglSurface = eglCreateWindowSurface(g_eglDisplay,
-          g_eglConfig, (EGLNativeWindowType)inX11Window, 0);
+          g_eglConfig, (EGLNativeWindowType)inWindow, 0);
    #else
-
-
+   
    DISPMANX_ELEMENT_HANDLE_T dispman_element;
    DISPMANX_DISPLAY_HANDLE_T dispman_display;
    DISPMANX_UPDATE_HANDLE_T dispman_update;
    VC_RECT_T dst_rect;
    VC_RECT_T src_rect;
-
-   // create an EGL window surface
-   uint32_t width = ioWidth;
-   uint32_t height = ioHeight;
   
    #if 0
    int success = graphics_get_display_size(0 /* LCD */, &width, &height);
@@ -94,7 +106,7 @@ bool nmeEGLResize(void *inX11Window, int &ioWidth, int &ioHeight)
    gNativewindow.width = width;
    gNativewindow.height = height;
    vc_dispmanx_update_submit_sync( dispman_update );
-      
+   
    // printf("Create surface %dx%d...\n", width, height );
    g_eglSurface = eglCreateWindowSurface( g_eglDisplay, g_eglConfig, &gNativewindow, 0 );
 
@@ -132,7 +144,7 @@ bool nmeEGLResize(void *inX11Window, int &ioWidth, int &ioHeight)
 }
 
 
-bool nmeEGLCreate(void *inX11Window, int &ioWidth, int &ioHeight,
+bool nmeEGLCreate(void *inWindow, int &ioWidth, int &ioHeight,
                 int inOGLESVersion,
                 int inDepthBits,
                 int inStencilBits,
@@ -157,8 +169,10 @@ bool nmeEGLCreate(void *inX11Window, int &ioWidth, int &ioHeight,
    }
 
    #else
-
+   
+   #ifdef RASPBERRYPI
    bcm_host_init();
+   #endif
 
    g_eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 
@@ -194,5 +208,5 @@ bool nmeEGLCreate(void *inX11Window, int &ioWidth, int &ioHeight,
 
    g_eglVersion = inOGLESVersion;
 
-   return nmeEGLResize(inX11Window, ioWidth, ioHeight);
+   return nmeEGLResize(inWindow, ioWidth, ioHeight);
 }
