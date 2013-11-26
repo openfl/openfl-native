@@ -3,27 +3,7 @@
 	
 	<echo value="Warning: Including &quot;openfl-native&quot; on a target platform that is not native" unless="native" />
 	
-	<section unless="display">
-		
-		<haxelib name="hxlibc" if="cpp" />
-		
-		<ndll name="openal" register="false" if="android" />
-		<ndll name="libfreetype" register="false" if="emscripten" />
-		
-		<ndll name="curl_ssl" register="false" if="ios" />
-		<ndll name="png" register="false" if="ios" />
-		<ndll name="jpeg" register="false" if="ios" />
-		<ndll name="freetype" register="false" if="ios" />
-		<ndll name="ogg" register="false" if="ios" />
-		<ndll name="vorbis" register="false" if="ios" />
-		
-		<ndll name="nme" />
-		
-		<dependency name="extension-api" path="dependencies/extension-api" if="android" />
-		
-		<architecture name="armv7" if="android" />
-		
-	</section>
+	<haxelib name="lime" />
 	
 	<templatePath name="templates" />
 	
