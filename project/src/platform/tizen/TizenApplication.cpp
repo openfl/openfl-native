@@ -23,9 +23,68 @@ namespace nme {
 		sgFlags = inFlags;
 		sgTitle = inTitle;
 		
+		sgWidth = 720;
+		sgHeight = 720;
+		
 		Tizen::Base::Collection::ArrayList args (Tizen::Base::Collection::SingleObjectDeleter);
 		args.Construct ();
 		result r = Tizen::App::Application::Execute (TizenApplication::CreateInstance, &args);
+		
+	}
+	
+	
+	void StartAnimation () {
+		
+		Event poll (etPoll);
+		sgTizenFrame->HandleEvent (poll);
+		
+		/*while (!glfwWindowShouldClose(sgGLFWFrame->GetWindow()))
+		{
+		  glfwPollEvents();
+
+		  int i, count;
+		  for (int joy = 0; joy < MAX_JOYSTICKS; joy++)
+		  {
+			 if (glfwJoystickPresent(joy) == GL_TRUE)
+			 {
+				// printf("joystick %s\n", glfwGetJoystickName(joy));
+
+				const float *axes = glfwGetJoystickAxes(joy, &count);
+				for (i = 0; i < count; i++)
+				{
+					Event joystick(etJoyAxisMove);
+					joystick.id = joy;
+					joystick.code = i;
+					joystick.value = axes[i];
+					sgGLFWFrame->HandleEvent(joystick);
+				}
+
+				const unsigned char *pressed = glfwGetJoystickButtons(joy, &count);
+				for (i = 0; i < count; i++)
+				{
+					Event joystick(pressed[i] == GLFW_PRESS ? etJoyButtonDown : etJoyButtonUp);
+					joystick.id = joy;
+					joystick.code = i;
+					sgGLFWFrame->HandleEvent(joystick);
+				}
+			 }
+		  }
+
+		  Event poll(etPoll);
+		  sgGLFWFrame->HandleEvent(poll);
+		}*/
+	}
+	
+	
+	void PauseAnimation () {}
+	void ResumeAnimation () {}
+	
+	
+	void StopAnimation () {
+		
+		//GLFWwindow *window = sgGLFWFrame->GetWindow();
+		//glfwDestroyWindow(window);
+		//glfwTerminate();
 		
 	}
 	
@@ -78,7 +137,8 @@ namespace nme {
 		
 		mForm->AddKeyEventListener (*this);
 		
-		bool ok = nmeEGLCreate (mForm, sgWidth, sgHeight, true, (sgFlags & wfDepthBuffer) ? 16 : 0, (sgFlags & wfStencilBuffer) ? 8 : 0, 0);
+		bool ok = nmeEGLCreate (mForm, sgWidth, sgHeight, 2, (sgFlags & wfDepthBuffer) ? 16 : 0, (sgFlags & wfStencilBuffer) ? 8 : 0, 0);
+		//AppLog ("EGL OK? %d\n", ok);
 		
 		mTimer = new (std::nothrow) Tizen::Base::Runtime::Timer;
 		mTimer->Construct (*this);
@@ -163,6 +223,10 @@ namespace nme {
 		}
 		
 		mTimer->Start (10);
+		
+		//AppLog("POLL\n");
+		Event poll (etPoll);
+		sgTizenFrame->HandleEvent (poll);
 		
 		/*Update();
 		

@@ -34,6 +34,10 @@ Display   *g_x11Display = NULL;
 void      *g_Window = 0;
 int        g_eglVersion = 1;
 
+#ifdef TIZEN
+#include <FBase.h>
+#endif
+
 
 void nmeEGLDestroy()
 {
@@ -179,28 +183,36 @@ bool nmeEGLCreate(void *inWindow, int &ioWidth, int &ioHeight,
    #endif
 
    // Initialise egl
-   if (!eglInitialize(g_eglDisplay, NULL, NULL))
+   if (!eglInitialize(g_eglDisplay, NULL, NULL) || eglGetError() != EGL_SUCCESS)
    {
       printf("Unable to initialise EGL display.\n");
       return false;
    }
  
    // Find a matching config
+   
+   int renderType = (inOGLESVersion > 1 ? EGL_OPENGL_ES2_BIT : EGL_OPENGL_ES_BIT);
 
    EGLint attribs[] ={
+      #ifdef RASPBERRYPI
       EGL_RED_SIZE,             5,
       EGL_GREEN_SIZE,           6,
       EGL_BLUE_SIZE,            5,
+      #else
+      EGL_RED_SIZE,             8,
+      EGL_GREEN_SIZE,           8,
+      EGL_BLUE_SIZE,            8,
+      EGL_ALPHA_SIZE,            8,
+      #endif
       EGL_DEPTH_SIZE,           inDepthBits,
       EGL_SURFACE_TYPE,         EGL_WINDOW_BIT,
-      EGL_RENDERABLE_TYPE,      EGL_OPENGL_ES_BIT,
+      EGL_RENDERABLE_TYPE,      renderType,
       EGL_BIND_TO_TEXTURE_RGBA, EGL_TRUE,
       EGL_NONE
       };
-
-
+   
    EGLint numConfigsOut = 0;
-   if (eglChooseConfig(g_eglDisplay, attribs, &g_eglConfig, 1, &numConfigsOut) != EGL_TRUE || numConfigsOut == 0)
+   if (eglChooseConfig(g_eglDisplay, attribs, &g_eglConfig, 1, &numConfigsOut) != EGL_TRUE || numConfigsOut == 0 || eglGetError() != EGL_SUCCESS)
    {
       printf("Unable to find appropriate EGL config.\n");
       return false;

@@ -1,16 +1,45 @@
 #include "platform/tizen/TizenStage.h"
 #include "platform/tizen/TizenFrame.h"
+#include "renderer/common/HardwareSurface.h"
+#include "renderer/opengl/Egl.h"
+#include <FBase.h>
 
 
 namespace nme {
 	
 	
-	TizenStage::TizenStage (int inWidth, int inHeight) : mOpenGLContext(0), mPrimarySurface(0) {
+	TizenStage::TizenStage (int inWidth, int inHeight) {
 		
-		//mWindow = inWindow;
+		//AppLog ("Hello from TizenStage");
 		
-		// size window for the first time
-		//Resize (inWidth, inHeight);
+		//mWidth = inWidth;
+		//mHeight = inHeight;
+		
+		//mIsOpenGL = inIsOpenGL;
+		//mSDLWindow = inWindow;
+		//mSDLRenderer = inRenderer;
+		//mWindowFlags = inWindowFlags;
+		
+		//mShowCursor = true;
+		//mCurrentCursor = curPointer;
+		
+		//mIsFullscreen = (mWindowFlags & SDL_WINDOW_FULLSCREEN || mWindowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP);
+		//if (mIsFullscreen)
+		//	displayState = sdsFullscreenInteractive;
+		
+		mOpenGLContext = HardwareContext::CreateOpenGL (0, 0, true);
+		mOpenGLContext->IncRef ();
+		mOpenGLContext->SetWindowSize (inWidth, inHeight);
+		
+		mPrimarySurface = new HardwareSurface (mOpenGLContext);
+		mPrimarySurface->IncRef ();
+		
+		//mMultiTouch = true;
+		//mSingleTouchID = NO_TOUCH;
+		//mDX = 0;
+		//mDY = 0;
+		//mDownX = 0;
+		//mDownY = 0;
 		
 	}
 	
@@ -25,7 +54,9 @@ namespace nme {
 	
 	void TizenStage::Flip () {
 		
-		//glfwSwapBuffers (mWindow);
+		//AppLog ("Flip!");
+		
+		nmeEGLSwapBuffers ();
 		
 	}
 	
@@ -34,6 +65,8 @@ namespace nme {
 	
 	
 	void TizenStage::Resize (const int inWidth, const int inHeight) {
+		
+		AppLog ("Resize: %d x %d\n", inWidth, inHeight);
 		
 		/*// Calling this recreates the gl context and we loose all our textures and
 		// display lists. So Work around it.
@@ -72,59 +105,6 @@ namespace nme {
 				break;
 			
 		}
-		
-	}
-	
-	
-	void StartAnimation () {
-		
-		/*while (!glfwWindowShouldClose(sgGLFWFrame->GetWindow()))
-		{
-		  glfwPollEvents();
-
-		  int i, count;
-		  for (int joy = 0; joy < MAX_JOYSTICKS; joy++)
-		  {
-			 if (glfwJoystickPresent(joy) == GL_TRUE)
-			 {
-				// printf("joystick %s\n", glfwGetJoystickName(joy));
-
-				const float *axes = glfwGetJoystickAxes(joy, &count);
-				for (i = 0; i < count; i++)
-				{
-					Event joystick(etJoyAxisMove);
-					joystick.id = joy;
-					joystick.code = i;
-					joystick.value = axes[i];
-					sgGLFWFrame->HandleEvent(joystick);
-				}
-
-				const unsigned char *pressed = glfwGetJoystickButtons(joy, &count);
-				for (i = 0; i < count; i++)
-				{
-					Event joystick(pressed[i] == GLFW_PRESS ? etJoyButtonDown : etJoyButtonUp);
-					joystick.id = joy;
-					joystick.code = i;
-					sgGLFWFrame->HandleEvent(joystick);
-				}
-			 }
-		  }
-
-		  Event poll(etPoll);
-		  sgGLFWFrame->HandleEvent(poll);
-		}*/
-	}
-	
-	
-	void PauseAnimation () {}
-	void ResumeAnimation () {}
-	
-	
-	void StopAnimation () {
-		
-		//GLFWwindow *window = sgGLFWFrame->GetWindow();
-		//glfwDestroyWindow(window);
-		//glfwTerminate();
 		
 	}
 	

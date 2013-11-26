@@ -580,6 +580,7 @@
 	  <lib name="-lxml2" if="tizen" />
 	  <lib name="-lalut" if="tizen" />
 	  <lib name="-lopenal" if="tizen" />
+	  <lib name="-losp-compat" if="tizen" />
 	  <lib name="-lrt" if="tizen" />
 	  
 		<lib name="-L${THIRDPARTY_LIBS}" if="linux"/>

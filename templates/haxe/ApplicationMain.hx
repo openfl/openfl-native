@@ -33,7 +33,7 @@ class ApplicationMain {
 				
 				#if tizen
 				trace ("Hello from ApplicationMain");
-				return;
+				//return;
 				#end
 				
 				flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;

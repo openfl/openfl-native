@@ -22,6 +22,17 @@
 
 #define ELOG(args...) __android_log_print(ANDROID_LOG_ERROR, "NME",args)
 
+#elseif defined(TIZEN)
+#include <FBase.h>
+
+#ifdef VERBOSE
+#define VLOG(args...) AppLog(args)
+#else
+#define VLOG(args...)
+#endif
+
+#define ELOG(args...) AppLogDebug(args)
+
 #else
 
 #include <stdio.h>

@@ -10,6 +10,10 @@
 #include "renderer/opengl/OpenGL2Context.h"
 #include "renderer/opengl/OpenGLTexture.h"
 
+#ifdef TIZEN
+#include <FBase.h>
+#endif
+
 
 namespace nme {
 	
@@ -27,7 +31,7 @@ namespace nme {
 		
 		//printf("GL_VERSION: %s\n", version);
 		
-		#ifdef NME_GLES
+		#if defined(NME_GLES) && !defined(TIZEN)
 		glMajor = version[10];
 		glMinor = version[12];
 		#else
@@ -112,7 +116,7 @@ namespace nme {
 		
 		HardwareContext *ctx;
 		
-		#if defined (ANDROID) || defined (BLACKBERRY) || defined (IPHONE) || defined (WEBOS)
+		#if defined (ANDROID) || defined (BLACKBERRY) || defined (IPHONE) || defined (WEBOS) || defined (TIZEN)
 		#ifdef NME_FORCE_GLES2
 		//printf ("Force GLES2\n");
 		shaders = true;
@@ -124,11 +128,17 @@ namespace nme {
 		
 		if (shaders && HasShaderSupport ()) {
 			
+			#ifdef TIZEN
+			AppLog ("Using OGL2\n");
+			#endif
 			//printf("Using OGL2\n");
 			ctx = new OpenGL2Context ((WinDC)inWindow, (GLCtx)inGLCtx);
 			
 		} else {
 			
+			#ifdef TIZEN
+			AppLog ("Using OGL2\n");
+			#endif
 			//printf("Using OGL1\n");
 			ctx = new OpenGLContext ((WinDC)inWindow, (GLCtx)inGLCtx);
 			

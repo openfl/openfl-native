@@ -22,9 +22,14 @@
 #elif defined(TIZEN)
 
 //#include <osp/gl.h>
-#include <osp/gl2.h>
+//#include <FGraphicsOpengl.h>
+#include <FGraphicsOpengl2.h>
+
+using namespace Tizen::Graphics::Opengl;
+
+//#include <osp/gl2.h>
 #define ALLOW_OGL2
-#define NME_FORCE_GLES2
+//#define NME_FORCE_GLES2
 #define NME_GLES
 
 #elif defined(IPHONE)
