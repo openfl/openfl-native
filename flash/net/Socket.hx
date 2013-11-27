@@ -134,6 +134,8 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 			}catch( e : haxe.io.Error ){
 				if( e != haxe.io.Error.Blocked )
 					doClose = true;
+			}catch( e : Eof ){
+				// doClose = true; // Eof don't need to close.
 			}catch( e : Dynamic ){
 				doClose = true;
 			}
