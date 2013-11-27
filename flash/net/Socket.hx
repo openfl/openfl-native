@@ -134,8 +134,6 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 			}catch( e : haxe.io.Error ){
 				if( e != haxe.io.Error.Blocked )
 					doClose = true;
-			}catch( e : haxe.io.Eof ){
-				// doClose = true; // Eof don't need to close.
 			}catch( e : Dynamic ){
 				doClose = true;
 			}
@@ -266,18 +264,14 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 			throw new IOError("Operation attempted on invalid socket.");
 		_output.writeByte(value);
 	}
-	public function writeBytes( value:ByteArray ):Void { 
+	public function writeBytes( bytes:ByteArray, offset : Int = 0, length : Int = 0 ):Void { 
 		if ( _socket == null ) 
 			throw new IOError("Operation attempted on invalid socket.");
 		try {
-			while (true) {
-				_output.writeByte(value.readByte());
-			}
+			_output.writeBytes(bytes, _output.position + offset, length);
 		} catch (e:Dynamic) {
 			
 		}
-		
-		//_output.writeByte(value);
 	}
     public function writeDouble( value:Float ):Void { 
 		if ( _socket == null ) 
