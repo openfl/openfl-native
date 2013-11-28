@@ -33,7 +33,7 @@ class Multitouch {
 	
 	private static function get_inputMode ():MultitouchInputMode {
 		
-		if (nme_stage_get_multitouch_active (Lib.current.stage.__handle)) {
+		if (lime_stage_get_multitouch_active (Lib.current.stage.__handle)) {
 			
 			return MultitouchInputMode.TOUCH_POINT;
 			
@@ -54,13 +54,13 @@ class Multitouch {
 			
 		}
 		
-		nme_stage_set_multitouch_active (Lib.current.stage.__handle, value == MultitouchInputMode.TOUCH_POINT);
+		lime_stage_set_multitouch_active (Lib.current.stage.__handle, value == MultitouchInputMode.TOUCH_POINT);
 		return value;
 		
 	}
 	
 	
-	private static function get_supportsTouchEvents ():Bool { return nme_stage_get_multitouch_supported (Lib.current.stage.__handle); }
+	private static function get_supportsTouchEvents ():Bool { return lime_stage_get_multitouch_supported (Lib.current.stage.__handle); }
 	
 	
 	
@@ -70,9 +70,9 @@ class Multitouch {
 	
 	
 	
-	private static var nme_stage_get_multitouch_supported = Lib.load ("nme", "nme_stage_get_multitouch_supported", 1);
-	private static var nme_stage_get_multitouch_active = Lib.load ("nme", "nme_stage_get_multitouch_active", 1);
-	private static var nme_stage_set_multitouch_active = Lib.load ("nme", "nme_stage_set_multitouch_active", 2);
+	private static var lime_stage_get_multitouch_supported = Lib.load ("lime", "lime_stage_get_multitouch_supported", 1);
+	private static var lime_stage_get_multitouch_active = Lib.load ("lime", "lime_stage_get_multitouch_active", 1);
+	private static var lime_stage_set_multitouch_active = Lib.load ("lime", "lime_stage_set_multitouch_active", 2);
 	
 	
 }

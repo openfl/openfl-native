@@ -58,7 +58,7 @@ class BitmapData implements IBitmapDrawable {
 				
 			}
 			
-			__handle = nme_bitmap_data_create (width, height, flags, fillColor & 0xFFFFFF, alpha, gpuMode);
+			__handle = lime_bitmap_data_create (width, height, flags, fillColor & 0xFFFFFF, alpha, gpuMode);
 			
 		}
 		
@@ -67,14 +67,14 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function applyFilter (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, filter:BitmapFilter):Void {
 		
-		nme_bitmap_data_apply_filter (__handle, sourceBitmapData.__handle, sourceRect, destPoint, filter);
+		lime_bitmap_data_apply_filter (__handle, sourceBitmapData.__handle, sourceRect, destPoint, filter);
 		
 	}
 	
 	
 	public function clear (color:Int):Void {
 		
-		nme_bitmap_data_clear (__handle, color);
+		lime_bitmap_data_clear (__handle, color);
 		
 	}
 	
@@ -82,7 +82,7 @@ class BitmapData implements IBitmapDrawable {
 	public function clone ():BitmapData {
 		
 		var bitmapData = new BitmapData (0, 0, transparent);
-		bitmapData.__handle = nme_bitmap_data_clone (__handle);
+		bitmapData.__handle = lime_bitmap_data_clone (__handle);
 		return bitmapData;
 		
 	}
@@ -90,21 +90,21 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function colorTransform (rect:Rectangle, colorTransform:ColorTransform):Void {
 		
-		nme_bitmap_data_color_transform (__handle, rect, colorTransform);
+		lime_bitmap_data_color_transform (__handle, rect, colorTransform);
 		
 	}
 	
 	
 	public function copyChannel (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, sourceChannel:Int, destChannel:Int):Void {
 		
-		nme_bitmap_data_copy_channel (sourceBitmapData.__handle, sourceRect, __handle, destPoint, sourceChannel, destChannel);
+		lime_bitmap_data_copy_channel (sourceBitmapData.__handle, sourceRect, __handle, destPoint, sourceChannel, destChannel);
 		
 	}
 	
 	
 	public function copyPixels (sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, alphaBitmapData:BitmapData = null, alphaPoint:Point = null, mergeAlpha:Bool = false):Void {
 		
-		nme_bitmap_data_copy (sourceBitmapData.__handle, sourceRect, __handle, destPoint, mergeAlpha);
+		lime_bitmap_data_copy (sourceBitmapData.__handle, sourceRect, __handle, destPoint, mergeAlpha);
 		
 	}
 	
@@ -119,14 +119,14 @@ class BitmapData implements IBitmapDrawable {
 	#if cpp
 	public function createHardwareSurface ():Void {
 		
-		nme_bitmap_data_create_hardware_surface (__handle);
+		lime_bitmap_data_create_hardware_surface (__handle);
 		
 	}
 	
 	
 	public function destroyHardwareSurface ():Void {
 		
-		nme_bitmap_data_destroy_hardware_surface (__handle);
+		lime_bitmap_data_destroy_hardware_surface (__handle);
 		
 	}
 	#end
@@ -136,7 +136,7 @@ class BitmapData implements IBitmapDrawable {
 		
 		if (__handle != null) {
 			
-			nme_bitmap_data_dispose (__handle);
+			lime_bitmap_data_dispose (__handle);
 			
 		}
 		
@@ -154,14 +154,14 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function dumpBits ():Void {
 		
-		nme_bitmap_data_dump_bits (__handle);
+		lime_bitmap_data_dump_bits (__handle);
 		
 	}
 	
 	
 	public function encode (format:String, quality:Float = 0.9):ByteArray {
 		
-		return nme_bitmap_data_encode (__handle, format, quality);
+		return lime_bitmap_data_encode (__handle, format, quality);
 		
 	}
 	
@@ -182,21 +182,21 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function fillRect (rect:Rectangle, color:Int):Void {
 		
-		nme_bitmap_data_fill (__handle, rect, color & 0xFFFFFF, color >>> 24);
+		lime_bitmap_data_fill (__handle, rect, color & 0xFFFFFF, color >>> 24);
 		
 	}
 	
 	
 	public function fillRectEx (rect:Rectangle, color:Int, alpha:Int = 0xFF):Void {
 		
-		nme_bitmap_data_fill (__handle, rect, color, alpha);
+		lime_bitmap_data_fill (__handle, rect, color, alpha);
 		
 	}
 	
 	
 	public function floodFill (x:Int, y:Int, color:Int):Void {
 		
-		nme_bitmap_data_flood_fill (__handle, x, y, color);
+		lime_bitmap_data_flood_fill (__handle, x, y, color);
 		
 	}
 	
@@ -204,7 +204,7 @@ class BitmapData implements IBitmapDrawable {
 	public function generateFilterRect (sourceRect:Rectangle, filter:BitmapFilter):Rectangle {
 		
 		var result = new Rectangle ();
-		nme_bitmap_data_generate_filter_rect (sourceRect, filter, result);
+		lime_bitmap_data_generate_filter_rect (sourceRect, filter, result);
 		return result;
 		
 	}
@@ -213,7 +213,7 @@ class BitmapData implements IBitmapDrawable {
 	public function getColorBoundsRect (mask:Int, color:Int, findColor:Bool = true):Rectangle {
 		
 		var result = new Rectangle ();
-		nme_bitmap_data_get_color_bounds_rect (__handle, mask, color, findColor, result);
+		lime_bitmap_data_get_color_bounds_rect (__handle, mask, color, findColor, result);
 		return result;
 		
 	}
@@ -221,21 +221,21 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function getPixel (x:Int, y:Int):Int {
 		
-		return nme_bitmap_data_get_pixel (__handle, x, y);
+		return lime_bitmap_data_get_pixel (__handle, x, y);
 		
 	}
 	
 	
 	public function getPixel32 (x:Int, y:Int):Int {
 		
-		return nme_bitmap_data_get_pixel32 (__handle, x, y);
+		return lime_bitmap_data_get_pixel32 (__handle, x, y);
 		
 	}
 	
 	
 	public function getPixels (rect:Rectangle):ByteArray {
 		
-		var result:ByteArray = nme_bitmap_data_get_pixels (__handle, rect);
+		var result:ByteArray = lime_bitmap_data_get_pixels (__handle, rect);
 		if (result != null) result.position = result.length;
 		return result;
 		
@@ -277,9 +277,9 @@ class BitmapData implements IBitmapDrawable {
 		result[pixels - 1] = 0;
 		
 		#if cpp
-		nme_bitmap_data_get_array (__handle, rect, result);
+		lime_bitmap_data_get_array (__handle, rect, result);
 		#else
-		var bytes:ByteArray = nme_bitmap_data_get_pixels (__handle, rect);
+		var bytes:ByteArray = lime_bitmap_data_get_pixels (__handle, rect);
 		bytes.position = 0;
 		for (i in 0...pixels) result[i] = bytes.readInt ();
 		#end
@@ -292,7 +292,7 @@ class BitmapData implements IBitmapDrawable {
 	public static function load (filename:String, format:Int = 0):BitmapData {
 		
 		var result = new BitmapData (0, 0);
-		result.__handle = nme_bitmap_data_load (filename, format);
+		result.__handle = lime_bitmap_data_load (filename, format);
 		return result;
 		
 	}
@@ -323,14 +323,14 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function multiplyAlpha ():Void {
 		
-		nme_bitmap_data_multiply_alpha (__handle);
+		lime_bitmap_data_multiply_alpha (__handle);
 		
 	}
 	
 	
 	public function noise (randomSeed:Int, low:Int = 0, high:Int = 255, channelOptions:Int = 7, grayScale:Bool = false):Void {
 		
-		nme_bitmap_data_noise (__handle, randomSeed, low, high, channelOptions, grayScale);
+		lime_bitmap_data_noise (__handle, randomSeed, low, high, channelOptions, grayScale);
 		
 	}
 	
@@ -391,14 +391,14 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function scroll (x:Int, y:Int):Void {
 		
-		nme_bitmap_data_scroll (__handle, x, y);
+		lime_bitmap_data_scroll (__handle, x, y);
 		
 	}
 	
 	
 	public function setAlphaMode (alphaMode:Int):Void {
 		
-		nme_bitmap_data_set_alpha_mode (__handle, alphaMode);
+		lime_bitmap_data_set_alpha_mode (__handle, alphaMode);
 		
 	}
 	
@@ -406,28 +406,28 @@ class BitmapData implements IBitmapDrawable {
 	public function setFlags (flags:Int):Void {
 		
 		// Used for optimization
-		nme_bitmap_data_set_flags (__handle, flags);
+		lime_bitmap_data_set_flags (__handle, flags);
 		
 	}
 	
 	
 	public function setFormat (format:Int):Void {
 		
-		nme_bitmap_data_set_format (__handle, format);
+		lime_bitmap_data_set_format (__handle, format);
 		
 	}
 	
 	
 	public function setPixel (x:Int, y:Int, color:Int):Void {
 		
-		nme_bitmap_data_set_pixel (__handle, x, y, color);
+		lime_bitmap_data_set_pixel (__handle, x, y, color);
 		
 	}
 	
 	
 	public function setPixel32 (x:Int, y:Int, color:Int):Void {
 		
-		nme_bitmap_data_set_pixel32 (__handle, x, y, color);
+		lime_bitmap_data_set_pixel32 (__handle, x, y, color);
 		
 	}
 	
@@ -436,7 +436,7 @@ class BitmapData implements IBitmapDrawable {
 		
 		var size = Std.int (rect.width * rect.height * 4);
 		pixels.checkData (Std.int (size));
-		nme_bitmap_data_set_bytes (__handle, rect, pixels, pixels.position);
+		lime_bitmap_data_set_bytes (__handle, rect, pixels, pixels.position);
 		pixels.position += size;
 		
 	}
@@ -448,7 +448,7 @@ class BitmapData implements IBitmapDrawable {
 		if (pixels.length < count) return;
 		
 		#if cpp
-		nme_bitmap_data_set_array (__handle, rect, pixels);
+		lime_bitmap_data_set_array (__handle, rect, pixels);
 		#else
 		var bytes = new ByteArray ();
 		
@@ -458,7 +458,7 @@ class BitmapData implements IBitmapDrawable {
 			
 		}
 		
-		nme_bitmap_data_set_bytes (__handle, rect, bytes, 0);
+		lime_bitmap_data_set_bytes (__handle, rect, bytes, 0);
 		#end
 		
 	}
@@ -624,14 +624,14 @@ class BitmapData implements IBitmapDrawable {
 	
 	public function unmultiplyAlpha ():Void {
 		
-		nme_bitmap_data_unmultiply_alpha (__handle);
+		lime_bitmap_data_unmultiply_alpha (__handle);
 		
 	}
 	
 	
 	@:noCompletion public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
 		
-		nme_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
+		lime_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
 		
 	}
 	
@@ -645,7 +645,7 @@ class BitmapData implements IBitmapDrawable {
 	
 	@:noCompletion private inline function __loadFromBytes (bytes:ByteArray, rawAlpha:ByteArray = null):Void {
 		
-		__handle = nme_bitmap_data_from_bytes (bytes, rawAlpha);
+		__handle = lime_bitmap_data_from_bytes (bytes, rawAlpha);
 		
 	}
 	
@@ -712,8 +712,8 @@ class BitmapData implements IBitmapDrawable {
 	
 	
 	private function get_rect ():Rectangle { return new Rectangle (0, 0, width, height); }
-	private function get_width ():Int { return nme_bitmap_data_width (__handle); }
-	private function get_height ():Int { return nme_bitmap_data_height (__handle); }
+	private function get_width ():Int { return lime_bitmap_data_width (__handle); }
+	private function get_height ():Int { return lime_bitmap_data_height (__handle); }
 	private function get_transparent ():Bool { return __transparent; }
 	
 	
@@ -724,49 +724,49 @@ class BitmapData implements IBitmapDrawable {
 	
 	
 	
-	private static var nme_bitmap_data_create = Lib.load ("nme", "nme_bitmap_data_create", -1);
-	private static var nme_bitmap_data_load = Lib.load ("nme", "nme_bitmap_data_load", 2);
-	private static var nme_bitmap_data_from_bytes = Lib.load ("nme", "nme_bitmap_data_from_bytes", 2);
-	private static var nme_bitmap_data_clear = Lib.load ("nme", "nme_bitmap_data_clear", 2);
-	private static var nme_bitmap_data_clone = Lib.load ("nme", "nme_bitmap_data_clone", 1);
-	private static var nme_bitmap_data_apply_filter = Lib.load ("nme", "nme_bitmap_data_apply_filter", 5);
-	private static var nme_bitmap_data_color_transform = Lib.load ("nme", "nme_bitmap_data_color_transform", 3);
-	private static var nme_bitmap_data_copy = Lib.load ("nme", "nme_bitmap_data_copy", 5);
-	private static var nme_bitmap_data_copy_channel = Lib.load ("nme", "nme_bitmap_data_copy_channel", -1);
-	private static var nme_bitmap_data_fill = Lib.load ("nme", "nme_bitmap_data_fill", 4);
-	private static var nme_bitmap_data_get_pixels = Lib.load ("nme", "nme_bitmap_data_get_pixels", 2);
-	private static var nme_bitmap_data_get_pixel = Lib.load ("nme", "nme_bitmap_data_get_pixel", 3);
-	private static var nme_bitmap_data_get_pixel32 = Lib.load ("nme", "nme_bitmap_data_get_pixel32", 3);
-	private static var nme_bitmap_data_get_pixel_rgba = Lib.load ("nme", "nme_bitmap_data_get_pixel_rgba", 3);
+	private static var lime_bitmap_data_create = Lib.load ("lime", "lime_bitmap_data_create", -1);
+	private static var lime_bitmap_data_load = Lib.load ("lime", "lime_bitmap_data_load", 2);
+	private static var lime_bitmap_data_from_bytes = Lib.load ("lime", "lime_bitmap_data_from_bytes", 2);
+	private static var lime_bitmap_data_clear = Lib.load ("lime", "lime_bitmap_data_clear", 2);
+	private static var lime_bitmap_data_clone = Lib.load ("lime", "lime_bitmap_data_clone", 1);
+	private static var lime_bitmap_data_apply_filter = Lib.load ("lime", "lime_bitmap_data_apply_filter", 5);
+	private static var lime_bitmap_data_color_transform = Lib.load ("lime", "lime_bitmap_data_color_transform", 3);
+	private static var lime_bitmap_data_copy = Lib.load ("lime", "lime_bitmap_data_copy", 5);
+	private static var lime_bitmap_data_copy_channel = Lib.load ("lime", "lime_bitmap_data_copy_channel", -1);
+	private static var lime_bitmap_data_fill = Lib.load ("lime", "lime_bitmap_data_fill", 4);
+	private static var lime_bitmap_data_get_pixels = Lib.load ("lime", "lime_bitmap_data_get_pixels", 2);
+	private static var lime_bitmap_data_get_pixel = Lib.load ("lime", "lime_bitmap_data_get_pixel", 3);
+	private static var lime_bitmap_data_get_pixel32 = Lib.load ("lime", "lime_bitmap_data_get_pixel32", 3);
+	private static var lime_bitmap_data_get_pixel_rgba = Lib.load ("lime", "lime_bitmap_data_get_pixel_rgba", 3);
 	#if cpp
-	private static var nme_bitmap_data_get_array = Lib.load ("nme", "nme_bitmap_data_get_array", 3);
+	private static var lime_bitmap_data_get_array = Lib.load ("lime", "lime_bitmap_data_get_array", 3);
 	#end
-	private static var nme_bitmap_data_get_color_bounds_rect = Lib.load ("nme", "nme_bitmap_data_get_color_bounds_rect", 5);
-	private static var nme_bitmap_data_scroll = Lib.load ("nme", "nme_bitmap_data_scroll", 3);
-	private static var nme_bitmap_data_set_pixel = Lib.load ("nme", "nme_bitmap_data_set_pixel", 4);
-	private static var nme_bitmap_data_set_pixel32 = Lib.load ("nme", "nme_bitmap_data_set_pixel32", 4);
-	private static var nme_bitmap_data_set_pixel_rgba = Lib.load ("nme", "nme_bitmap_data_set_pixel_rgba", 4);
-	private static var nme_bitmap_data_set_bytes = Lib.load ("nme", "nme_bitmap_data_set_bytes", 4);
-	private static var nme_bitmap_data_set_format = Lib.load ("nme", "nme_bitmap_data_set_format", 2);
+	private static var lime_bitmap_data_get_color_bounds_rect = Lib.load ("lime", "lime_bitmap_data_get_color_bounds_rect", 5);
+	private static var lime_bitmap_data_scroll = Lib.load ("lime", "lime_bitmap_data_scroll", 3);
+	private static var lime_bitmap_data_set_pixel = Lib.load ("lime", "lime_bitmap_data_set_pixel", 4);
+	private static var lime_bitmap_data_set_pixel32 = Lib.load ("lime", "lime_bitmap_data_set_pixel32", 4);
+	private static var lime_bitmap_data_set_pixel_rgba = Lib.load ("lime", "lime_bitmap_data_set_pixel_rgba", 4);
+	private static var lime_bitmap_data_set_bytes = Lib.load ("lime", "lime_bitmap_data_set_bytes", 4);
+	private static var lime_bitmap_data_set_format = Lib.load ("lime", "lime_bitmap_data_set_format", 2);
 	#if cpp
-	private static var nme_bitmap_data_set_array = Lib.load ("nme", "nme_bitmap_data_set_array", 3);
-	private static var nme_bitmap_data_create_hardware_surface = Lib.load ("nme", "nme_bitmap_data_create_hardware_surface", 1);
-	private static var nme_bitmap_data_destroy_hardware_surface = Lib.load ("nme", "nme_bitmap_data_destroy_hardware_surface", 1);
+	private static var lime_bitmap_data_set_array = Lib.load ("lime", "lime_bitmap_data_set_array", 3);
+	private static var lime_bitmap_data_create_hardware_surface = Lib.load ("lime", "lime_bitmap_data_create_hardware_surface", 1);
+	private static var lime_bitmap_data_destroy_hardware_surface = Lib.load ("lime", "lime_bitmap_data_destroy_hardware_surface", 1);
 	#end
-	private static var nme_bitmap_data_dispose = Lib.load ("nme", "nme_bitmap_data_dispose", 1);
-	private static var nme_bitmap_data_generate_filter_rect = Lib.load ("nme", "nme_bitmap_data_generate_filter_rect", 3);
-	private static var nme_render_surface_to_surface = Lib.load ("nme", "nme_render_surface_to_surface", -1);
-	private static var nme_bitmap_data_height = Lib.load ("nme", "nme_bitmap_data_height", 1);
-	private static var nme_bitmap_data_width = Lib.load ("nme", "nme_bitmap_data_width", 1);
-	private static var nme_bitmap_data_get_transparent = Lib.load ("nme", "nme_bitmap_data_get_transparent", 1);
-	private static var nme_bitmap_data_set_flags = Lib.load ("nme", "nme_bitmap_data_set_flags", 1);
-	private static var nme_bitmap_data_encode = Lib.load ("nme", "nme_bitmap_data_encode", 3);
-	private static var nme_bitmap_data_dump_bits = Lib.load ("nme", "nme_bitmap_data_dump_bits", 1);
-	private static var nme_bitmap_data_flood_fill = Lib.load ("nme", "nme_bitmap_data_flood_fill", 4);
-	private static var nme_bitmap_data_noise = Lib.load ("nme", "nme_bitmap_data_noise", -1);
-	private static var nme_bitmap_data_unmultiply_alpha = Lib.load ("nme", "nme_bitmap_data_unmultiply_alpha", 1);
-	private static var nme_bitmap_data_multiply_alpha = Lib.load ("nme", "nme_bitmap_data_multiply_alpha", 1);
-	private static var nme_bitmap_data_set_alpha_mode = Lib.load ("nme", "nme_bitmap_data_set_alpha_mode", 2);
+	private static var lime_bitmap_data_dispose = Lib.load ("lime", "lime_bitmap_data_dispose", 1);
+	private static var lime_bitmap_data_generate_filter_rect = Lib.load ("lime", "lime_bitmap_data_generate_filter_rect", 3);
+	private static var lime_render_surface_to_surface = Lib.load ("lime", "lime_render_surface_to_surface", -1);
+	private static var lime_bitmap_data_height = Lib.load ("lime", "lime_bitmap_data_height", 1);
+	private static var lime_bitmap_data_width = Lib.load ("lime", "lime_bitmap_data_width", 1);
+	private static var lime_bitmap_data_get_transparent = Lib.load ("lime", "lime_bitmap_data_get_transparent", 1);
+	private static var lime_bitmap_data_set_flags = Lib.load ("lime", "lime_bitmap_data_set_flags", 1);
+	private static var lime_bitmap_data_encode = Lib.load ("lime", "lime_bitmap_data_encode", 3);
+	private static var lime_bitmap_data_dump_bits = Lib.load ("lime", "lime_bitmap_data_dump_bits", 1);
+	private static var lime_bitmap_data_flood_fill = Lib.load ("lime", "lime_bitmap_data_flood_fill", 4);
+	private static var lime_bitmap_data_noise = Lib.load ("lime", "lime_bitmap_data_noise", -1);
+	private static var lime_bitmap_data_unmultiply_alpha = Lib.load ("lime", "lime_bitmap_data_unmultiply_alpha", 1);
+	private static var lime_bitmap_data_multiply_alpha = Lib.load ("lime", "lime_bitmap_data_multiply_alpha", 1);
+	private static var lime_bitmap_data_set_alpha_mode = Lib.load ("lime", "lime_bitmap_data_set_alpha_mode", 2);
 	
 	
 }

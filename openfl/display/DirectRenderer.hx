@@ -12,10 +12,10 @@ class DirectRenderer extends DisplayObject {
 	
 	public function new (type:String = "DirectRenderer") {
 		
-		super (nme_direct_renderer_create (), type);
+		super (lime_direct_renderer_create (), type);
 		
-		addEventListener (Event.ADDED_TO_STAGE, function(_) nme_direct_renderer_set (__handle, __onRender));
-		addEventListener (Event.REMOVED_FROM_STAGE, function(_) nme_direct_renderer_set (__handle, null));
+		addEventListener (Event.ADDED_TO_STAGE, function(_) lime_direct_renderer_set (__handle, __onRender));
+		addEventListener (Event.REMOVED_FROM_STAGE, function(_) lime_direct_renderer_set (__handle, null));
 		
 	}
 	
@@ -41,8 +41,8 @@ class DirectRenderer extends DisplayObject {
 	
 	
 	
-	private static var nme_direct_renderer_create = Lib.load ("nme", "nme_direct_renderer_create", 0);
-	private static var nme_direct_renderer_set = Lib.load ("nme", "nme_direct_renderer_set", 2);
+	private static var lime_direct_renderer_create = Lib.load ("lime", "lime_direct_renderer_create", 0);
+	private static var lime_direct_renderer_set = Lib.load ("lime", "lime_direct_renderer_set", 2);
 	
 	
 }

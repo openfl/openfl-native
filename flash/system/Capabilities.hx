@@ -24,7 +24,7 @@ class Capabilities {
 	
 	private static function get_language():String {
 		
-		var locale:String = nme_capabilities_get_language ();
+		var locale:String = lime_capabilities_get_language ();
 		
 		if (locale == null || locale == "" || locale == "C" || locale == "POSIX") {
 			
@@ -68,13 +68,13 @@ class Capabilities {
 	}
 	
 	
-	private static function get_pixelAspectRatio ():Float { return nme_capabilities_get_pixel_aspect_ratio (); }
-	private static function get_screenDPI ():Float { return nme_capabilities_get_screen_dpi (); }
+	private static function get_pixelAspectRatio ():Float { return lime_capabilities_get_pixel_aspect_ratio (); }
+	private static function get_screenDPI ():Float { return lime_capabilities_get_screen_dpi (); }
 	
 	
 	private static function get_screenResolutions ():Array<Array<Int>> {
 		
-		var res:Array<Int> = nme_capabilities_get_screen_resolutions ();
+		var res:Array<Int> = lime_capabilities_get_screen_resolutions ();
 		
 		if (res == null) {
 			
@@ -95,8 +95,8 @@ class Capabilities {
 	}
 	
 	
-	private static function get_screenResolutionX ():Float { return nme_capabilities_get_screen_resolution_x (); }
-	private static function get_screenResolutionY ():Float { return nme_capabilities_get_screen_resolution_y (); }
+	private static function get_screenResolutionX ():Float { return lime_capabilities_get_screen_resolution_x (); }
+	private static function get_screenResolutionY ():Float { return lime_capabilities_get_screen_resolution_y (); }
 	
 	
 	
@@ -106,12 +106,12 @@ class Capabilities {
 	
 	
 	
-	private static var nme_capabilities_get_pixel_aspect_ratio = Lib.load ("nme", "nme_capabilities_get_pixel_aspect_ratio", 0);
-	private static var nme_capabilities_get_screen_dpi = Lib.load ("nme", "nme_capabilities_get_screen_dpi", 0);
-	private static var nme_capabilities_get_screen_resolution_x = Lib.load ("nme", "nme_capabilities_get_screen_resolution_x", 0);
-	private static var nme_capabilities_get_screen_resolution_y = Lib.load ("nme", "nme_capabilities_get_screen_resolution_y", 0);
-	private static var nme_capabilities_get_screen_resolutions = Lib.load ("nme", "nme_capabilities_get_screen_resolutions", 0 );
-	private static var nme_capabilities_get_language = Lib.load ("nme", "nme_capabilities_get_language", 0);
+	private static var lime_capabilities_get_pixel_aspect_ratio = Lib.load ("lime", "lime_capabilities_get_pixel_aspect_ratio", 0);
+	private static var lime_capabilities_get_screen_dpi = Lib.load ("lime", "lime_capabilities_get_screen_dpi", 0);
+	private static var lime_capabilities_get_screen_resolution_x = Lib.load ("lime", "lime_capabilities_get_screen_resolution_x", 0);
+	private static var lime_capabilities_get_screen_resolution_y = Lib.load ("lime", "lime_capabilities_get_screen_resolution_y", 0);
+	private static var lime_capabilities_get_screen_resolutions = Lib.load ("lime", "lime_capabilities_get_screen_resolutions", 0 );
+	private static var lime_capabilities_get_language = Lib.load ("lime", "lime_capabilities_get_language", 0);
 	
 	
 }

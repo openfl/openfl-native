@@ -13,7 +13,7 @@ class Sprite extends DisplayObjectContainer {
 	
 	public function new () {
 		
-		super (DisplayObjectContainer.nme_create_display_object_container (), __getType ());
+		super (DisplayObjectContainer.lime_create_display_object_container (), __getType ());
 		
 	}
 	

@@ -37,7 +37,7 @@ class SharedObject extends EventDispatcher {
 		
 		#if (iphone || android)
 		
-		untyped nme_clear_user_preference (name);
+		untyped lime_clear_user_preference (name);
 		
 		#else
 		
@@ -124,7 +124,7 @@ class SharedObject extends EventDispatcher {
 		
 		#if (iphone || android)
 		
-		untyped nme_set_user_preference (name, encodedData);
+		untyped lime_set_user_preference (name, encodedData);
 		
 		#else
 		
@@ -167,7 +167,7 @@ class SharedObject extends EventDispatcher {
 		
 		#if (iphone || android)
 		
-		var rawData:String = untyped nme_get_user_preference (name);
+		var rawData:String = untyped lime_get_user_preference (name);
 		
 		#else
 		
@@ -239,9 +239,9 @@ class SharedObject extends EventDispatcher {
 	
 	
 	#if (iphone || android)
-	private static var nme_get_user_preference = Lib.load ("nme", "nme_get_user_preference", 1);
-	private static var nme_set_user_preference = Lib.load ("nme", "nme_set_user_preference", 2);
-	private static var nme_clear_user_preference = Lib.load ("nme", "nme_clear_user_preference", 1);
+	private static var lime_get_user_preference = Lib.load ("lime", "lime_get_user_preference", 1);
+	private static var lime_set_user_preference = Lib.load ("lime", "lime_set_user_preference", 2);
+	private static var lime_clear_user_preference = Lib.load ("lime", "lime_clear_user_preference", 1);
 	#end
 	
 	

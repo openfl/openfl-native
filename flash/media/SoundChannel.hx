@@ -35,7 +35,7 @@ class SoundChannel extends EventDispatcher {
 		
 		if (handle != null) {
 			
-			__handle = nme_sound_channel_create (handle, startTime, loops, __transform);
+			__handle = lime_sound_channel_create (handle, startTime, loops, __transform);
 			
 		}
 		
@@ -65,7 +65,7 @@ class SoundChannel extends EventDispatcher {
 	
 	public function stop ():Void {
 		
-		nme_sound_channel_stop (__handle);
+		lime_sound_channel_stop (__handle);
 		__handle = null;
 		
 	}
@@ -75,21 +75,21 @@ class SoundChannel extends EventDispatcher {
 		
 		if (__handle != null) {
 			
-			if (__dataProvider != null && nme_sound_channel_needs_data (__handle)) {
+			if (__dataProvider != null && lime_sound_channel_needs_data (__handle)) {
 				
 				var request = new SampleDataEvent (SampleDataEvent.SAMPLE_DATA);
-				request.position = nme_sound_channel_get_data_position (__handle);
+				request.position = lime_sound_channel_get_data_position (__handle);
 				__dataProvider.dispatchEvent (request);
 				
 				if (request.data.length > 0) {
 					
-					nme_sound_channel_add_data (__handle, request.data);
+					lime_sound_channel_add_data (__handle, request.data);
 					
 				}
 				
 			}
 			
-			if (nme_sound_channel_is_complete (__handle)) {
+			if (lime_sound_channel_is_complete (__handle)) {
 				
 				__handle = null;
 				
@@ -147,10 +147,10 @@ class SoundChannel extends EventDispatcher {
 	
 	
 	
-	private function get_leftPeak ():Float { return nme_sound_channel_get_left (__handle); }
-	private function get_rightPeak ():Float { return nme_sound_channel_get_right (__handle); }
-	private function get_position ():Float { return nme_sound_channel_get_position (__handle); }
-	private function set_position (value:Float):Float { return nme_sound_channel_set_position (__handle, position); }
+	private function get_leftPeak ():Float { return lime_sound_channel_get_left (__handle); }
+	private function get_rightPeak ():Float { return lime_sound_channel_get_right (__handle); }
+	private function get_position ():Float { return lime_sound_channel_get_position (__handle); }
+	private function set_position (value:Float):Float { return lime_sound_channel_set_position (__handle, position); }
 	
 	
 	private function get_soundTransform ():SoundTransform {
@@ -169,7 +169,7 @@ class SoundChannel extends EventDispatcher {
 	private function set_soundTransform (value:SoundTransform):SoundTransform {
 		
 		__transform = value.clone ();
-		nme_sound_channel_set_transform (__handle, __transform);
+		lime_sound_channel_set_transform (__handle, __transform);
 		
 		return value;
 		
@@ -183,17 +183,17 @@ class SoundChannel extends EventDispatcher {
 	
 	
 	
-	private static var nme_sound_channel_is_complete = Lib.load ("nme", "nme_sound_channel_is_complete", 1);
-	private static var nme_sound_channel_get_left = Lib.load ("nme", "nme_sound_channel_get_left", 1);
-	private static var nme_sound_channel_get_right = Lib.load ("nme", "nme_sound_channel_get_right", 1);
-	private static var nme_sound_channel_get_position = Lib.load ("nme", "nme_sound_channel_get_position", 1);
-	private static var nme_sound_channel_set_position = Lib.load ("nme", "nme_sound_channel_set_position", 2);
-	private static var nme_sound_channel_get_data_position = Lib.load ("nme", "nme_sound_channel_get_data_position", 1);
-	private static var nme_sound_channel_stop = Lib.load ("nme", "nme_sound_channel_stop", 1);
-	private static var nme_sound_channel_create = Lib.load ("nme", "nme_sound_channel_create", 4);
-	private static var nme_sound_channel_set_transform = Lib.load ("nme", "nme_sound_channel_set_transform", 2);
-	private static var nme_sound_channel_needs_data = Lib.load ("nme", "nme_sound_channel_needs_data", 1);
-	private static var nme_sound_channel_add_data = Lib.load ("nme", "nme_sound_channel_add_data", 2);
+	private static var lime_sound_channel_is_complete = Lib.load ("lime", "lime_sound_channel_is_complete", 1);
+	private static var lime_sound_channel_get_left = Lib.load ("lime", "lime_sound_channel_get_left", 1);
+	private static var lime_sound_channel_get_right = Lib.load ("lime", "lime_sound_channel_get_right", 1);
+	private static var lime_sound_channel_get_position = Lib.load ("lime", "lime_sound_channel_get_position", 1);
+	private static var lime_sound_channel_set_position = Lib.load ("lime", "lime_sound_channel_set_position", 2);
+	private static var lime_sound_channel_get_data_position = Lib.load ("lime", "lime_sound_channel_get_data_position", 1);
+	private static var lime_sound_channel_stop = Lib.load ("lime", "lime_sound_channel_stop", 1);
+	private static var lime_sound_channel_create = Lib.load ("lime", "lime_sound_channel_create", 4);
+	private static var lime_sound_channel_set_transform = Lib.load ("lime", "lime_sound_channel_set_transform", 2);
+	private static var lime_sound_channel_needs_data = Lib.load ("lime", "lime_sound_channel_needs_data", 1);
+	private static var lime_sound_channel_add_data = Lib.load ("lime", "lime_sound_channel_add_data", 2);
 	
 	
 }

@@ -21,7 +21,7 @@ class StorageVolumeInfo extends EventDispatcher {
 		super ();
 		
 		__volumes = [];
-		nme_filesystem_get_volumes (__volumes, function (args:Array<Dynamic>) {
+		lime_filesystem_get_volumes (__volumes, function (args:Array<Dynamic>) {
 			return new StorageVolume (new File (args[0]), args[1], args[2], args[3], args[4], args[5]);
 		});
 		
@@ -65,7 +65,7 @@ class StorageVolumeInfo extends EventDispatcher {
 	
 	
 	
-	private static var nme_filesystem_get_volumes = Lib.load ("nme", "nme_filesystem_get_volumes", 2);
+	private static var lime_filesystem_get_volumes = Lib.load ("lime", "lime_filesystem_get_volumes", 2);
 	
 	
 	

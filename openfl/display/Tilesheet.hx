@@ -36,7 +36,7 @@ class Tilesheet {
 	public function new (image:BitmapData) {
 		
 		__bitmap = image;
-		__handle = nme_tilesheet_create (image.__handle);
+		__handle = lime_tilesheet_create (image.__handle);
 		
 		_bitmapWidth = __bitmap.width;
 		_bitmapHeight = __bitmap.height;
@@ -54,7 +54,7 @@ class Tilesheet {
 		if (centerPoint == null) _tilePoints.push(defaultRatio);
 		else _tilePoints.push(new Point(centerPoint.x / rectangle.width, centerPoint.y / rectangle.height));	
 		_tileUVs.push(new Rectangle(rectangle.left / _bitmapWidth, rectangle.top / _bitmapHeight, rectangle.right / _bitmapWidth, rectangle.bottom / _bitmapHeight));
-		return nme_tilesheet_add_rect (__handle, rectangle, centerPoint);
+		return lime_tilesheet_add_rect (__handle, rectangle, centerPoint);
 		
 	}
 	
@@ -84,8 +84,8 @@ class Tilesheet {
 	
 	
 	
-	private static var nme_tilesheet_create = Lib.load ("nme", "nme_tilesheet_create", 1);
-	private static var nme_tilesheet_add_rect = Lib.load ("nme", "nme_tilesheet_add_rect", 3);
+	private static var lime_tilesheet_create = Lib.load ("lime", "lime_tilesheet_create", 1);
+	private static var lime_tilesheet_add_rect = Lib.load ("lime", "lime_tilesheet_add_rect", 3);
 	
 	
 }

@@ -70,7 +70,7 @@ class Sound extends EventDispatcher {
 		
 		if (__handle != null) {
 			
-			nme_sound_close (__handle);
+			lime_sound_close (__handle);
 			
 		}
 		
@@ -85,7 +85,7 @@ class Sound extends EventDispatcher {
 		bytesLoaded = 0;
 		bytesTotal = 0;
 		
-		__handle = nme_sound_from_file (stream.url, forcePlayAsMusic);
+		__handle = lime_sound_from_file (stream.url, forcePlayAsMusic);
 		
 		if (__handle == null) {
 			
@@ -109,7 +109,7 @@ class Sound extends EventDispatcher {
 		bytesLoaded = length;
 		bytesTotal = length;
 		
-		__handle = nme_sound_from_data (bytes, length, forcePlayAsMusic);
+		__handle = lime_sound_from_data (bytes, length, forcePlayAsMusic);
 		
 		if (__handle == null) {
 			
@@ -179,7 +179,7 @@ class Sound extends EventDispatcher {
 			
 			if (request.data.length > 0) {
 				
-				__handle = nme_sound_channel_create_dynamic (request.data, soundTransform);
+				__handle = lime_sound_channel_create_dynamic (request.data, soundTransform);
 				
 			}
 			
@@ -212,7 +212,7 @@ class Sound extends EventDispatcher {
 		
 		if (!__dynamicSound && __loading && __handle != null) {
 			
-			var status:Dynamic = nme_sound_get_status (__handle);
+			var status:Dynamic = lime_sound_get_status (__handle);
 			
 			if (status == null) {
 				
@@ -262,7 +262,7 @@ class Sound extends EventDispatcher {
 		}
 		
 		var id3 = new ID3Info ();
-		nme_sound_get_id3 (__handle, id3);
+		lime_sound_get_id3 (__handle, id3);
 		return id3;
 		
 	}
@@ -284,7 +284,7 @@ class Sound extends EventDispatcher {
 			
 		}
 		
-		return nme_sound_get_length (__handle);
+		return lime_sound_get_length (__handle);
 		
 	}
 	
@@ -296,13 +296,13 @@ class Sound extends EventDispatcher {
 	
 	
 	
-	private static var nme_sound_from_file = Lib.load ("nme", "nme_sound_from_file", 2);
-	private static var nme_sound_from_data = Lib.load ("nme", "nme_sound_from_data", 3);
-	private static var nme_sound_get_id3 = Lib.load ("nme", "nme_sound_get_id3", 2);
-	private static var nme_sound_get_length = Lib.load ("nme", "nme_sound_get_length", 1);
-	private static var nme_sound_close = Lib.load ("nme", "nme_sound_close", 1);
-	private static var nme_sound_get_status = Lib.load ("nme", "nme_sound_get_status", 1);
-	private static var nme_sound_channel_create_dynamic = Lib.load ("nme", "nme_sound_channel_create_dynamic", 2);
+	private static var lime_sound_from_file = Lib.load ("lime", "lime_sound_from_file", 2);
+	private static var lime_sound_from_data = Lib.load ("lime", "lime_sound_from_data", 3);
+	private static var lime_sound_get_id3 = Lib.load ("lime", "lime_sound_get_id3", 2);
+	private static var lime_sound_get_length = Lib.load ("lime", "lime_sound_get_length", 1);
+	private static var lime_sound_close = Lib.load ("lime", "lime_sound_close", 1);
+	private static var lime_sound_get_status = Lib.load ("lime", "lime_sound_get_status", 1);
+	private static var lime_sound_channel_create_dynamic = Lib.load ("lime", "lime_sound_channel_create_dynamic", 2);
 	
 	
 }

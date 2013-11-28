@@ -14,7 +14,7 @@ class Bitmap extends DisplayObject {
 	
 	public function new (bitmapData:BitmapData = null, pixelSnapping:PixelSnapping = null, smoothing:Bool = false):Void {
 		
-		super (DisplayObject.nme_create_display_object (), "Bitmap");
+		super (DisplayObject.lime_create_display_object (), "Bitmap");
 		
 		this.pixelSnapping = (pixelSnapping == null ? PixelSnapping.AUTO : pixelSnapping);
 		this.smoothing = smoothing;

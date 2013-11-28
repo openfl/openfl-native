@@ -67,7 +67,7 @@ class Accelerometer extends EventDispatcher {
 	@:noCompletion private function __update ():Void {
 		
 		var event = new AccelerometerEvent (AccelerometerEvent.UPDATE);
-		var data = nme_input_get_acceleration ();
+		var data = lime_input_get_acceleration ();
 		
 		event.timestamp = Timer.stamp ();
 		event.accelerationX = data.x;
@@ -86,7 +86,7 @@ class Accelerometer extends EventDispatcher {
 	
 	
 	
-	private static function get_isSupported ():Bool { return nme_input_get_acceleration () != null; }
+	private static function get_isSupported ():Bool { return lime_input_get_acceleration () != null; }
 	
 	
 	
@@ -96,7 +96,7 @@ class Accelerometer extends EventDispatcher {
 	
 	
 	
-	private static var nme_input_get_acceleration = Lib.load ("nme", "nme_input_get_acceleration", 0);
+	private static var lime_input_get_acceleration = Lib.load ("lime", "lime_input_get_acceleration", 0);
 	
 	
 }

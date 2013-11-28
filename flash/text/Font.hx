@@ -81,7 +81,7 @@ class Font {
 				
 				__deviceFonts = new Array<Font> ();
 				var styles = [ FontStyle.BOLD, FontStyle.BOLD_ITALIC, FontStyle.ITALIC, FontStyle.REGULAR ];
-				nme_font_iterate_device_fonts (function (name, style) __deviceFonts.push (new Font (name, styles[style], FontType.DEVICE)));
+				lime_font_iterate_device_fonts (function (name, style) __deviceFonts.push (new Font (name, styles[style], FontType.DEVICE)));
 				
 			}
 			
@@ -118,7 +118,7 @@ class Font {
 			
 			if (Reflect.hasField (font, "resourceName")) {
 				
-				nme_font_register_font (instance.fontName, ByteArray.fromBytes (Resource.getBytes (Reflect.field (font, "resourceName"))));
+				lime_font_register_font (instance.fontName, ByteArray.fromBytes (Resource.getBytes (Reflect.field (font, "resourceName"))));
 				
 			}
 			
@@ -143,9 +143,9 @@ class Font {
 	
 	
 	
-	private static var freetype_import_font = Lib.load ("nme", "freetype_import_font", 4);
-	private static var nme_font_register_font = Lib.load ("nme", "nme_font_register_font", 2);
-	private static var nme_font_iterate_device_fonts = Lib.load ("nme", "nme_font_iterate_device_fonts", 1);
+	private static var freetype_import_font = Lib.load ("lime", "freetype_import_font", 4);
+	private static var lime_font_register_font = Lib.load ("lime", "lime_font_register_font", 2);
+	private static var lime_font_iterate_device_fonts = Lib.load ("lime", "lime_font_iterate_device_fonts", 1);
 	
 	
 }

@@ -42,11 +42,11 @@ class File {
 	
 	
 	
-	private static function get_applicationDirectory ():File { return new File (nme_filesystem_get_special_dir (APP)); }
-	private static function get_applicationStorageDirectory ():File { return new File (nme_filesystem_get_special_dir (STORAGE)); }
-	private static function get_desktopDirectory ():File { return new File (nme_filesystem_get_special_dir (DESKTOP)); }
-	private static function get_documentsDirectory ():File { return new File (nme_filesystem_get_special_dir (DOCS)); }
-	private static function get_userDirectory ():File { return new File (nme_filesystem_get_special_dir (USER)); }
+	private static function get_applicationDirectory ():File { return new File (lime_filesystem_get_special_dir (APP)); }
+	private static function get_applicationStorageDirectory ():File { return new File (lime_filesystem_get_special_dir (STORAGE)); }
+	private static function get_desktopDirectory ():File { return new File (lime_filesystem_get_special_dir (DESKTOP)); }
+	private static function get_documentsDirectory ():File { return new File (lime_filesystem_get_special_dir (DOCS)); }
+	private static function get_userDirectory ():File { return new File (lime_filesystem_get_special_dir (USER)); }
 	
 	
 	private function set_nativePath (value:String):String {
@@ -68,7 +68,7 @@ class File {
 			url = StringTools.replace (value, " ", "%20");
 			
 			#if iphone
-			if (StringTools.startsWith (value, nme_get_resource_path ())) {
+			if (StringTools.startsWith (value, lime_get_resource_path ())) {
 				
 				url = "app:" + url;
 				
@@ -93,18 +93,18 @@ class File {
 	
 	
 	#if iphone
-	private static var nme_get_resource_path = Lib.load ("nme", "nme_get_resource_path", 0);
+	private static var lime_get_resource_path = Lib.load ("lime", "lime_get_resource_path", 0);
 	#end
 	
 	#if !android
-	private static var nme_filesystem_get_special_dir = Lib.load ("nme", "nme_filesystem_get_special_dir", 1);
+	private static var lime_filesystem_get_special_dir = Lib.load ("lime", "lime_filesystem_get_special_dir", 1);
 	#else
 	private static var jni_filesystem_get_special_dir:Dynamic = null;
-	private static function nme_filesystem_get_special_dir (which:Int):String {
+	private static function lime_filesystem_get_special_dir (which:Int):String {
 		
 		if (jni_filesystem_get_special_dir == null) {
 			
-			jni_filesystem_get_special_dir = JNI.createStaticMethod ("org/haxe/nme/GameActivity", "getSpecialDir", "(I)Ljava/lang/String;");
+			jni_filesystem_get_special_dir = JNI.createStaticMethod ("org/haxe/lime/GameActivity", "getSpecialDir", "(I)Ljava/lang/String;");
 			
 		}
 		

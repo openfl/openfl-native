@@ -27,14 +27,14 @@ class InteractiveObject extends DisplayObject {
 	
 	public function __dismissSoftKeyboard ():Bool {
 		
-		return nme_display_object_dismiss_soft_keyboard (__handle);
+		return lime_display_object_dismiss_soft_keyboard (__handle);
 		
 	}
 	
 	
 	public function requestSoftKeyboard ():Bool {
 		
-		return nme_display_object_request_soft_keyboard (__handle);
+		return lime_display_object_request_soft_keyboard (__handle);
 		
 	}
 	
@@ -57,7 +57,7 @@ class InteractiveObject extends DisplayObject {
 	private function set_mouseEnabled (value:Bool):Bool {
 		
 		__mouseEnabled = value;
-		nme_display_object_set_mouse_enabled (__handle, value);
+		lime_display_object_set_mouse_enabled (__handle, value);
 		return __mouseEnabled;
 		
 	}
@@ -65,7 +65,7 @@ class InteractiveObject extends DisplayObject {
 	
 	private function set_moveForSoftKeyboard (value:Bool):Bool {
 		
-		nme_display_object_set_moves_for_soft_keyboard (__handle, value);
+		lime_display_object_set_moves_for_soft_keyboard (__handle, value);
 		return value;
 		
 	}
@@ -73,14 +73,14 @@ class InteractiveObject extends DisplayObject {
 	
 	private function get_moveForSoftKeyboard ():Bool {
 		
-		return nme_display_object_get_moves_for_soft_keyboard (__handle);
+		return lime_display_object_get_moves_for_soft_keyboard (__handle);
 		
 	}
 	
 	
 	private function set_needsSoftKeyboard (value):Bool {
 		
-		nme_display_object_set_needs_soft_keyboard (__handle, value);
+		lime_display_object_set_needs_soft_keyboard (__handle, value);
 		return value;
 		
 	}
@@ -88,7 +88,7 @@ class InteractiveObject extends DisplayObject {
 	
 	private function get_needsSoftKeyboard ():Bool {
 		
-		return nme_display_object_get_needs_soft_keyboard (__handle);
+		return lime_display_object_get_needs_soft_keyboard (__handle);
 		
 	}
 	
@@ -100,13 +100,13 @@ class InteractiveObject extends DisplayObject {
 	
 	
 	
-	private static var nme_display_object_set_mouse_enabled = Lib.load ("nme", "nme_display_object_set_mouse_enabled", 2);
-	private static var nme_display_object_set_needs_soft_keyboard = Lib.load ("nme", "nme_display_object_set_needs_soft_keyboard", 2);
-	private static var nme_display_object_get_needs_soft_keyboard = Lib.load ("nme", "nme_display_object_get_needs_soft_keyboard", 1);
-	private static var nme_display_object_set_moves_for_soft_keyboard = Lib.load ("nme", "nme_display_object_set_moves_for_soft_keyboard", 2);
-	private static var nme_display_object_get_moves_for_soft_keyboard = Lib.load ("nme", "nme_display_object_get_moves_for_soft_keyboard", 1);
-	private static var nme_display_object_dismiss_soft_keyboard = Lib.load ("nme", "nme_display_object_dismiss_soft_keyboard", 1);
-	private static var nme_display_object_request_soft_keyboard = Lib.load ("nme", "nme_display_object_request_soft_keyboard", 1);
+	private static var lime_display_object_set_mouse_enabled = Lib.load ("lime", "lime_display_object_set_mouse_enabled", 2);
+	private static var lime_display_object_set_needs_soft_keyboard = Lib.load ("lime", "lime_display_object_set_needs_soft_keyboard", 2);
+	private static var lime_display_object_get_needs_soft_keyboard = Lib.load ("lime", "lime_display_object_get_needs_soft_keyboard", 1);
+	private static var lime_display_object_set_moves_for_soft_keyboard = Lib.load ("lime", "lime_display_object_set_moves_for_soft_keyboard", 2);
+	private static var lime_display_object_get_moves_for_soft_keyboard = Lib.load ("lime", "lime_display_object_get_moves_for_soft_keyboard", 1);
+	private static var lime_display_object_dismiss_soft_keyboard = Lib.load ("lime", "lime_display_object_dismiss_soft_keyboard", 1);
+	private static var lime_display_object_request_soft_keyboard = Lib.load ("lime", "lime_display_object_request_soft_keyboard", 1);
 	
 	
 }

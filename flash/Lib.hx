@@ -59,7 +59,7 @@ class Lib {
 	
 	public static function close ():Void {
 		
-		var close = Lib.load ("nme", "nme_close", 0);
+		var close = Lib.load ("lime", "lime_close", 0);
 		close ();
 		
 	}
@@ -84,13 +84,13 @@ class Lib {
 		initWidth = width;
 		initHeight = height;
 		
-		var create_main_frame = Lib.load ("nme", "nme_create_main_frame", -1);
+		var create_main_frame = Lib.load ("lime", "lime_create_main_frame", -1);
 		
 		create_main_frame (function (frameHandle:Dynamic) {
 			
 			#if android try { #end
 			__mainFrame = frameHandle;
-			var stage_handle = nme_get_frame_stage (__mainFrame);
+			var stage_handle = lime_get_frame_stage (__mainFrame);
 			
 			Lib.__stage = (stageClass == null ? new Stage (stage_handle, width, height) : Type.createInstance (stageClass, [ stage_handle, width, height]));
 			Lib.__stage.frameRate = frameRate;
@@ -183,7 +183,7 @@ class Lib {
 		}
 		
 		#if waxe
-		if (library == "nme") {
+		if (library == "lime") {
 			
 			flash.Lib.load ("waxe", "wx_boot", 1);
 			
@@ -228,7 +228,7 @@ class Lib {
 		loaderTrace ("Result : " + result);
 		
 		#if neko
-		if (library == "nme") {
+		if (library == "lime") {
 			
 			loadNekoAPI ();
 			
@@ -305,11 +305,11 @@ class Lib {
 	
 	private static function loadNekoAPI ():Void {
 		
-		var init = load ("nme", "neko_init", 5);
+		var init = load ("lime", "neko_init", 5);
 		
 		if (init != null) {
 			
-			loaderTrace ("Found nekoapi @ " + __moduleNames.get ("nme"));
+			loaderTrace ("Found nekoapi @ " + __moduleNames.get ("lime"));
 			init (function(s) return new String (s), function (len:Int) { var r = []; if (len > 0) r[len - 1] = null; return r; }, null, true, false);
 			
 		} else {
@@ -346,7 +346,7 @@ class Lib {
 	
 	public static function forceClose ():Void {
 		
-		var terminate = Lib.load ("nme", "nme_terminate", 0);
+		var terminate = Lib.load ("lime", "lime_terminate", 0);
 		terminate ();
 		
 	}
@@ -361,14 +361,14 @@ class Lib {
 	
 	public static function getURL (url:URLRequest, target:String = null):Void {
 		
-		nme_get_url (url.url);
+		lime_get_url (url.url);
 		
 	}
 	
 	
 	public static function pause ():Void {
 		
-		nme_pause_animation ();
+		lime_pause_animation ();
 		
 	}
 	
@@ -376,7 +376,7 @@ class Lib {
 	public static function postUICallback (inCallback:Void->Void):Void {
 		
 		#if android
-		nme_post_ui_callback (inCallback);
+		lime_post_ui_callback (inCallback);
 		#else
 		inCallback ();
 		#end
@@ -386,14 +386,14 @@ class Lib {
 	
 	public static function resume ():Void {
 		
-		nme_resume_animation ();
+		lime_resume_animation ();
 		
 	}
 	
 	
 	public static function setIcon (path:String):Void {
 		
-		var set_icon = Lib.load ("nme", "nme_set_icon", 1);
+		var set_icon = Lib.load ("lime", "lime_set_icon", 1);
 		set_icon (path);
 		
 	}
@@ -406,7 +406,7 @@ class Lib {
 		Lib.packageName = packageName;
 		Lib.version = version;
 		
-		nme_set_package (company, file, packageName, version);
+		lime_set_package (company, file, packageName, version);
 		
 	}
 	
@@ -472,13 +472,13 @@ class Lib {
 	
 	
 	#if android
-	private static var nme_post_ui_callback = Lib.load ("nme", "nme_post_ui_callback", 1);
+	private static var lime_post_ui_callback = Lib.load ("lime", "lime_post_ui_callback", 1);
 	#end
-	private static var nme_set_package = Lib.load ("nme", "nme_set_package", 4);
-	private static var nme_get_frame_stage = Lib.load ("nme", "nme_get_frame_stage", 1);
-	private static var nme_get_url = Lib.load ("nme", "nme_get_url", 1);
-	private static var nme_pause_animation = Lib.load ("nme", "nme_pause_animation", 0);
-	private static var nme_resume_animation = Lib.load ("nme", "nme_resume_animation", 0);
+	private static var lime_set_package = Lib.load ("lime", "lime_set_package", 4);
+	private static var lime_get_frame_stage = Lib.load ("lime", "lime_get_frame_stage", 1);
+	private static var lime_get_url = Lib.load ("lime", "lime_get_url", 1);
+	private static var lime_pause_animation = Lib.load ("lime", "lime_pause_animation", 0);
+	private static var lime_resume_animation = Lib.load ("lime", "lime_resume_animation", 0);
 	
 	
 }

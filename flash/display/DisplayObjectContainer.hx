@@ -214,7 +214,7 @@ class DisplayObjectContainer extends InteractiveObject {
 			
 			child.__setParent (this);
 			__children.push (child);
-			nme_doc_add_child (__handle, child.__handle);
+			lime_doc_add_child (__handle, child.__handle);
 			
 		}
 		
@@ -379,7 +379,7 @@ class DisplayObjectContainer extends InteractiveObject {
 		
 		if (i >= 0) {
 			
-			nme_doc_remove_child (__handle, i);
+			lime_doc_remove_child (__handle, i);
 			__children.splice (i, 1);
 			
 		}
@@ -432,7 +432,7 @@ class DisplayObjectContainer extends InteractiveObject {
 			
 		}
 		
-		nme_doc_set_child_index (__handle, child.__handle, index);
+		lime_doc_set_child_index (__handle, child.__handle, index);
 		
 		if (index < firstIndex) {
 			
@@ -478,7 +478,7 @@ class DisplayObjectContainer extends InteractiveObject {
 			var temp = __children[index1];
 			__children[index1] = __children[index2];
 			__children[index2] = temp;
-			nme_doc_swap_children (__handle, index1, index2);
+			lime_doc_swap_children (__handle, index1, index2);
 			
 		}
 		
@@ -492,10 +492,10 @@ class DisplayObjectContainer extends InteractiveObject {
 	
 	
 	
-	private function get_mouseChildren ():Bool { return nme_doc_get_mouse_children (__handle); }
+	private function get_mouseChildren ():Bool { return lime_doc_get_mouse_children (__handle); }
 	private function set_mouseChildren (value:Bool):Bool {
 		
-		nme_doc_set_mouse_children (__handle, value);
+		lime_doc_set_mouse_children (__handle, value);
 		return value;
 		
 	}
@@ -513,13 +513,13 @@ class DisplayObjectContainer extends InteractiveObject {
 	
 	
 	
-	private static var nme_create_display_object_container = Lib.load ("nme", "nme_create_display_object_container", 0);
-	private static var nme_doc_add_child = Lib.load ("nme", "nme_doc_add_child", 2);
-	private static var nme_doc_remove_child = Lib.load ("nme", "nme_doc_remove_child", 2);
-	private static var nme_doc_set_child_index = Lib.load ("nme", "nme_doc_set_child_index", 3);
-	private static var nme_doc_get_mouse_children = Lib.load ("nme", "nme_doc_get_mouse_children", 1);
-	private static var nme_doc_set_mouse_children = Lib.load ("nme", "nme_doc_set_mouse_children", 2);
-	private static var nme_doc_swap_children = Lib.load ("nme", "nme_doc_swap_children", 3);
+	private static var lime_create_display_object_container = Lib.load ("lime", "lime_create_display_object_container", 0);
+	private static var lime_doc_add_child = Lib.load ("lime", "lime_doc_add_child", 2);
+	private static var lime_doc_remove_child = Lib.load ("lime", "lime_doc_remove_child", 2);
+	private static var lime_doc_set_child_index = Lib.load ("lime", "lime_doc_set_child_index", 3);
+	private static var lime_doc_get_mouse_children = Lib.load ("lime", "lime_doc_get_mouse_children", 1);
+	private static var lime_doc_set_mouse_children = Lib.load ("lime", "lime_doc_set_mouse_children", 2);
+	private static var lime_doc_swap_children = Lib.load ("lime", "lime_doc_swap_children", 3);
 	
 	
 }

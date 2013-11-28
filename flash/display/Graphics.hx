@@ -30,21 +30,21 @@ class Graphics {
 	
 	public function arcTo (controlX:Float, controlY:Float, x:Float, y:Float):Void {
 		
-		nme_gfx_arc_to (__handle, controlX, controlY, x, y);
+		lime_gfx_arc_to (__handle, controlX, controlY, x, y);
 		
 	}
 	
 	
 	public function beginBitmapFill (bitmap:BitmapData, matrix:Matrix = null, repeat:Bool = true, smooth:Bool = false):Void {
 		
-		nme_gfx_begin_bitmap_fill (__handle, bitmap.__handle, matrix, repeat, smooth);
+		lime_gfx_begin_bitmap_fill (__handle, bitmap.__handle, matrix, repeat, smooth);
 		
 	}
 	
 	
 	public function beginFill (color:Int, alpha:Float = 1.0):Void {
 		
-		nme_gfx_begin_fill (__handle, color, alpha);
+		lime_gfx_begin_fill (__handle, color, alpha);
 		
 	}
 	
@@ -58,35 +58,35 @@ class Graphics {
 			
 		}
 		
-		nme_gfx_begin_gradient_fill (__handle, Type.enumIndex (type), colors, alphas, ratios, matrix, spreadMethod == null ? 0 : Type.enumIndex (spreadMethod), interpolationMethod == null ? 0 : Type.enumIndex (interpolationMethod), focalPointRatio);
+		lime_gfx_begin_gradient_fill (__handle, Type.enumIndex (type), colors, alphas, ratios, matrix, spreadMethod == null ? 0 : Type.enumIndex (spreadMethod), interpolationMethod == null ? 0 : Type.enumIndex (interpolationMethod), focalPointRatio);
 		
 	}
 	
 	
 	public function clear ():Void {
 		
-		nme_gfx_clear (__handle);
+		lime_gfx_clear (__handle);
 		
 	}
 	
 	
 	public function curveTo (controlX:Float, controlY:Float, anchorX:Float, anchorY:Float):Void {
 		
-		nme_gfx_curve_to (__handle, controlX, controlY, anchorX, anchorY);
+		lime_gfx_curve_to (__handle, controlX, controlY, anchorX, anchorY);
 		
 	}
 	
 	
 	public function drawCircle (x:Float, y:Float, radius:Float):Void {
 		
-		nme_gfx_draw_ellipse (__handle, x - radius, y - radius, radius * 2, radius * 2);
+		lime_gfx_draw_ellipse (__handle, x - radius, y - radius, radius * 2, radius * 2);
 		
 	}
 	
 	
 	public function drawEllipse (x:Float, y:Float, width:Float, height:Float):Void {
 		
-		nme_gfx_draw_ellipse (__handle, x, y, width, height);
+		lime_gfx_draw_ellipse (__handle, x, y, width, height);
 		
 	}
 	
@@ -101,42 +101,42 @@ class Graphics {
 			
 		}
 		
-		nme_gfx_draw_data (__handle, handles);
+		lime_gfx_draw_data (__handle, handles);
 		
 	}
 	
 	
 	public function drawGraphicsDatum (graphicsDatum:IGraphicsData):Void {
 		
-		nme_gfx_draw_datum (__handle, graphicsDatum.__handle);
+		lime_gfx_draw_datum (__handle, graphicsDatum.__handle);
 		
 	}
 	
 	
 	public function drawPoints (xy:Array<Float>, pointRGBA:Array<Int> = null, defaultRGBA:Int = 0xffffffff, size:Float = -1.0):Void {
 		
-		nme_gfx_draw_points (__handle, xy, pointRGBA, defaultRGBA, false, size);
+		lime_gfx_draw_points (__handle, xy, pointRGBA, defaultRGBA, false, size);
 		
 	}
 	
 	
 	public function drawRect (x:Float, y:Float, width:Float, height:Float):Void {
 		
-		nme_gfx_draw_rect (__handle, x, y, width, height);
+		lime_gfx_draw_rect (__handle, x, y, width, height);
 		
 	}
 	
 	
 	public function drawRoundRect (x:Float, y:Float, width:Float, height:Float, radiusX:Float, radiusY:Null<Float> = null):Void {
 		
-		nme_gfx_draw_round_rect (__handle, x, y, width, height, radiusX, radiusY == null ? radiusX : radiusY);
+		lime_gfx_draw_round_rect (__handle, x, y, width, height, radiusX, radiusY == null ? radiusX : radiusY);
 		
 	}
 	
 	
 	public function drawPath (commands:Array<Int>, data:Array<Float>, winding:String = GraphicsPathWinding.EVEN_ODD):Void {
 		
-		nme_gfx_draw_path (__handle, commands, data, winding == GraphicsPathWinding.EVEN_ODD);
+		lime_gfx_draw_path (__handle, commands, data, winding == GraphicsPathWinding.EVEN_ODD);
 		
 	}
 	
@@ -151,7 +151,7 @@ class Graphics {
 			
 		}
 		
-		nme_gfx_draw_tiles (__handle, sheet.__handle, data, flags);
+		lime_gfx_draw_tiles (__handle, sheet.__handle, data, flags);
 		
 	}
 	
@@ -159,21 +159,21 @@ class Graphics {
 	public function drawTriangles (vertices:Array<Float>, indices:Array<Int> = null, uvtData:Array<Float> = null, culling:TriangleCulling = null, colors:Array<Int> = null, blendMode:Int = 0, viewport:Array<Float> = null):Void {
 		
 		var cull:Int = (culling == null ? 0 : Type.enumIndex (culling) - 1);
-		nme_gfx_draw_triangles (__handle, vertices, indices, uvtData, cull, colors, blendMode, viewport);
+		lime_gfx_draw_triangles (__handle, vertices, indices, uvtData, cull, colors, blendMode, viewport);
 		
 	}
 	
 	
 	public function endFill ():Void {
 		
-		nme_gfx_end_fill (__handle);
+		lime_gfx_end_fill (__handle);
 		
 	}
 	
 	
 	public function lineBitmapStyle (bitmap:BitmapData, matrix:Matrix = null, repeat:Bool = true, smooth:Bool = false):Void {
 		
-		nme_gfx_line_bitmap_fill (__handle, bitmap.__handle, matrix, repeat, smooth);
+		lime_gfx_line_bitmap_fill (__handle, bitmap.__handle, matrix, repeat, smooth);
 		
 	}
 	
@@ -187,28 +187,28 @@ class Graphics {
 			
 		}
 		
-		nme_gfx_line_gradient_fill (__handle, Type.enumIndex (type), colors, alphas, ratios, matrix, spreadMethod == null ? 0 : Type.enumIndex (spreadMethod), interpolationMethod == null ? 0 : Type.enumIndex (interpolationMethod), focalPointRatio);
+		lime_gfx_line_gradient_fill (__handle, Type.enumIndex (type), colors, alphas, ratios, matrix, spreadMethod == null ? 0 : Type.enumIndex (spreadMethod), interpolationMethod == null ? 0 : Type.enumIndex (interpolationMethod), focalPointRatio);
 		
 	}
 	
 	
 	public function lineStyle (thickness:Null<Float> = null, color:Int = 0, alpha:Float = 1.0, pixelHinting:Bool = false, scaleMode:LineScaleMode = null, caps:CapsStyle = null, joints:JointStyle = null, miterLimit:Float = 3):Void {
 		
-		nme_gfx_line_style (__handle, thickness, color, alpha, pixelHinting, scaleMode == null ?  0 : Type.enumIndex (scaleMode), caps == null ?  0 : Type.enumIndex (caps), joints == null ?  0 : Type.enumIndex (joints), miterLimit);
+		lime_gfx_line_style (__handle, thickness, color, alpha, pixelHinting, scaleMode == null ?  0 : Type.enumIndex (scaleMode), caps == null ?  0 : Type.enumIndex (caps), joints == null ?  0 : Type.enumIndex (joints), miterLimit);
 		
 	}
 	
 	
 	public function lineTo (x:Float, y:Float):Void {
 		
-		nme_gfx_line_to (__handle, x, y);
+		lime_gfx_line_to (__handle, x, y);
 		
 	}
 	
 	
 	public function moveTo (x:Float, y:Float):Void {
 		
-		nme_gfx_move_to (__handle, x, y);
+		lime_gfx_move_to (__handle, x, y);
 		
 	}
 	
@@ -227,27 +227,27 @@ class Graphics {
 	
 	
 	
-	private static var nme_gfx_clear = Lib.load ("nme", "nme_gfx_clear", 1);
-	private static var nme_gfx_begin_fill = Lib.load ("nme", "nme_gfx_begin_fill", 3);
-	private static var nme_gfx_begin_bitmap_fill = Lib.load ("nme", "nme_gfx_begin_bitmap_fill", 5);
-	private static var nme_gfx_line_bitmap_fill = Lib.load ("nme", "nme_gfx_line_bitmap_fill", 5);
-	private static var nme_gfx_begin_gradient_fill = Lib.load ("nme", "nme_gfx_begin_gradient_fill", -1);
-	private static var nme_gfx_line_gradient_fill = Lib.load ("nme", "nme_gfx_line_gradient_fill", -1);
-	private static var nme_gfx_end_fill = Lib.load ("nme", "nme_gfx_end_fill", 1);
-	private static var nme_gfx_line_style = Lib.load ("nme", "nme_gfx_line_style", -1);
-	private static var nme_gfx_move_to = Lib.load ("nme", "nme_gfx_move_to", 3);
-	private static var nme_gfx_line_to = Lib.load ("nme", "nme_gfx_line_to", 3);
-	private static var nme_gfx_curve_to = Lib.load ("nme", "nme_gfx_curve_to", 5);
-	private static var nme_gfx_arc_to = Lib.load ("nme", "nme_gfx_arc_to", 5);
-	private static var nme_gfx_draw_ellipse = Lib.load ("nme", "nme_gfx_draw_ellipse", 5);
-	private static var nme_gfx_draw_data = Lib.load ("nme", "nme_gfx_draw_data", 2);
-	private static var nme_gfx_draw_datum = Lib.load ("nme", "nme_gfx_draw_datum", 2);
-	private static var nme_gfx_draw_rect = Lib.load ("nme", "nme_gfx_draw_rect", 5);
-	private static var nme_gfx_draw_path = Lib.load ("nme", "nme_gfx_draw_path", 4);
-	private static var nme_gfx_draw_tiles = Lib.load ("nme", "nme_gfx_draw_tiles", 4);
-	private static var nme_gfx_draw_points = Lib.load ("nme", "nme_gfx_draw_points", -1);
-	private static var nme_gfx_draw_round_rect = Lib.load ("nme", "nme_gfx_draw_round_rect", -1);
-	private static var nme_gfx_draw_triangles = Lib.load ("nme", "nme_gfx_draw_triangles", -1);
+	private static var lime_gfx_clear = Lib.load ("lime", "lime_gfx_clear", 1);
+	private static var lime_gfx_begin_fill = Lib.load ("lime", "lime_gfx_begin_fill", 3);
+	private static var lime_gfx_begin_bitmap_fill = Lib.load ("lime", "lime_gfx_begin_bitmap_fill", 5);
+	private static var lime_gfx_line_bitmap_fill = Lib.load ("lime", "lime_gfx_line_bitmap_fill", 5);
+	private static var lime_gfx_begin_gradient_fill = Lib.load ("lime", "lime_gfx_begin_gradient_fill", -1);
+	private static var lime_gfx_line_gradient_fill = Lib.load ("lime", "lime_gfx_line_gradient_fill", -1);
+	private static var lime_gfx_end_fill = Lib.load ("lime", "lime_gfx_end_fill", 1);
+	private static var lime_gfx_line_style = Lib.load ("lime", "lime_gfx_line_style", -1);
+	private static var lime_gfx_move_to = Lib.load ("lime", "lime_gfx_move_to", 3);
+	private static var lime_gfx_line_to = Lib.load ("lime", "lime_gfx_line_to", 3);
+	private static var lime_gfx_curve_to = Lib.load ("lime", "lime_gfx_curve_to", 5);
+	private static var lime_gfx_arc_to = Lib.load ("lime", "lime_gfx_arc_to", 5);
+	private static var lime_gfx_draw_ellipse = Lib.load ("lime", "lime_gfx_draw_ellipse", 5);
+	private static var lime_gfx_draw_data = Lib.load ("lime", "lime_gfx_draw_data", 2);
+	private static var lime_gfx_draw_datum = Lib.load ("lime", "lime_gfx_draw_datum", 2);
+	private static var lime_gfx_draw_rect = Lib.load ("lime", "lime_gfx_draw_rect", 5);
+	private static var lime_gfx_draw_path = Lib.load ("lime", "lime_gfx_draw_path", 4);
+	private static var lime_gfx_draw_tiles = Lib.load ("lime", "lime_gfx_draw_tiles", 4);
+	private static var lime_gfx_draw_points = Lib.load ("lime", "lime_gfx_draw_points", -1);
+	private static var lime_gfx_draw_round_rect = Lib.load ("lime", "lime_gfx_draw_round_rect", -1);
+	private static var lime_gfx_draw_triangles = Lib.load ("lime", "lime_gfx_draw_triangles", -1);
 	
 	
 }

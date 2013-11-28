@@ -94,12 +94,12 @@ class Stage extends DisplayObjectContainer {
 		
 		#if android
 		__hatValue = 0;
-		renderRequest = nme_stage_request_render;
+		renderRequest = lime_stage_request_render;
 		#else
 		renderRequest = null;
 		#end
 		
-		nme_set_stage_handler (__handle, __processStageEvent, width, height);
+		lime_set_stage_handler (__handle, __processStageEvent, width, height);
 		__invalid = false;
 		__lastRender = 0;
 		__lastDown = [];
@@ -114,14 +114,14 @@ class Stage extends DisplayObjectContainer {
 	
 	public static dynamic function getOrientation ():Int {
 		
-		return nme_stage_get_orientation ();
+		return lime_stage_get_orientation ();
 		
 	}
 	
 	
 	public static dynamic function getNormalOrientation ():Int {
 		
-		return nme_stage_get_normal_orientation ();
+		return lime_stage_get_normal_orientation ();
 		
 	}
 	
@@ -135,7 +135,7 @@ class Stage extends DisplayObjectContainer {
 	
 	public function resize (width:Int, height:Int):Void {
 		
-		nme_stage_resize_window (__handle, width, height);
+		lime_stage_resize_window (__handle, width, height);
 		
 	}
 	
@@ -143,7 +143,7 @@ class Stage extends DisplayObjectContainer {
 	public static function setFixedOrientation (orientation:Int):Void {
 		
 		// If you set this, you don't need to set the 'shouldRotateInterface' function.
-		nme_stage_set_fixed_orientation (orientation);
+		lime_stage_set_fixed_orientation (orientation);
 		
 	}
 	
@@ -157,7 +157,7 @@ class Stage extends DisplayObjectContainer {
 	
 	public function showCursor (show:Bool):Void {
 		
-		nme_stage_show_cursor (__handle, show);
+		lime_stage_show_cursor (__handle, show);
 		
 	}
 	
@@ -962,7 +962,7 @@ class Stage extends DisplayObjectContainer {
 			
 		}
 		
-		nme_render_stage (__handle);
+		lime_render_stage (__handle);
 		
 	}
 	
@@ -1075,7 +1075,7 @@ class Stage extends DisplayObjectContainer {
 		}
 		
 		nextWake = __nextFrameDue (nextWake);
-		nme_stage_set_next_wake (__handle, nextWake);
+		lime_stage_set_next_wake (__handle, nextWake);
 		return nextWake;
 		
 	}
@@ -1090,7 +1090,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_align ():StageAlign {
 		
-		var i:Int = nme_stage_get_align (__handle);
+		var i:Int = lime_stage_get_align (__handle);
 		return Type.createEnumIndex (StageAlign, i);
 		
 	}
@@ -1098,7 +1098,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function set_align (value:StageAlign):StageAlign {
 		
-		nme_stage_set_align (__handle, Type.enumIndex (value));
+		lime_stage_set_align (__handle, Type.enumIndex (value));
 		return value;
 		
 	}
@@ -1120,7 +1120,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_displayState ():StageDisplayState {
 		
-		var i:Int = nme_stage_get_display_state (__handle);
+		var i:Int = lime_stage_get_display_state (__handle);
 		return Type.createEnumIndex (StageDisplayState, i);
 		
 	}
@@ -1128,7 +1128,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function set_displayState (value:StageDisplayState):StageDisplayState {
 		
-		nme_stage_set_display_state (__handle, Type.enumIndex (value));
+		lime_stage_set_display_state (__handle, Type.enumIndex (value));
 		return value;
 		
 	}
@@ -1136,14 +1136,14 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_dpiScale ():Float {
 		
-		return nme_stage_get_dpi_scale (__handle);
+		return lime_stage_get_dpi_scale (__handle);
 		
 	}
 	
 	
 	private function get_focus ():InteractiveObject {
 		
-		var id = nme_stage_get_focus_id (__handle);
+		var id = lime_stage_get_focus_id (__handle);
 		var object = __findByID (id);
 		return cast object;
 		
@@ -1154,11 +1154,11 @@ class Stage extends DisplayObjectContainer {
 		
 		if (value == null) {
 			
-			nme_stage_set_focus (__handle, null, 0);
+			lime_stage_set_focus (__handle, null, 0);
 			
 		} else {
 			
-			nme_stage_set_focus (__handle, value.__handle, 0);
+			lime_stage_set_focus (__handle, value.__handle, 0);
 			
 		}
 		
@@ -1183,14 +1183,14 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_isOpenGL ():Bool {
 		
-		return nme_stage_is_opengl (__handle);
+		return lime_stage_is_opengl (__handle);
 		
 	}
 	
 	
 	private function get_quality ():StageQuality {
 		
-		var i:Int = nme_stage_get_quality (__handle);
+		var i:Int = lime_stage_get_quality (__handle);
 		return Type.createEnumIndex (StageQuality, i);
 		
 	}
@@ -1198,7 +1198,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function set_quality (value:StageQuality):StageQuality {
 		
-		nme_stage_set_quality (__handle, Type.enumIndex (value));
+		lime_stage_set_quality (__handle, Type.enumIndex (value));
 		return value;
 		
 	}
@@ -1206,7 +1206,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_scaleMode ():StageScaleMode {
 		
-		var i:Int = nme_stage_get_scale_mode (__handle);
+		var i:Int = lime_stage_get_scale_mode (__handle);
 		return Type.createEnumIndex (StageScaleMode, i);
 		
 	}
@@ -1214,7 +1214,7 @@ class Stage extends DisplayObjectContainer {
 	
 	private function set_scaleMode (value:StageScaleMode):StageScaleMode {
 		
-		nme_stage_set_scale_mode (__handle, Type.enumIndex (value));
+		lime_stage_set_scale_mode (__handle, Type.enumIndex (value));
 		return value;
 		
 	}
@@ -1227,10 +1227,10 @@ class Stage extends DisplayObjectContainer {
 	}
 	
 	
-	private function get_stageFocusRect ():Bool { return nme_stage_get_focus_rect (__handle); }
+	private function get_stageFocusRect ():Bool { return lime_stage_get_focus_rect (__handle); }
 	private function set_stageFocusRect (value:Bool):Bool {
 		
-		nme_stage_set_focus_rect (__handle, value);
+		lime_stage_set_focus_rect (__handle, value);
 		return value;
 		
 	}
@@ -1238,14 +1238,14 @@ class Stage extends DisplayObjectContainer {
 	
 	private function get_stageHeight ():Int {
 		
-		return Std.int (cast (nme_stage_get_stage_height (__handle), Float));
+		return Std.int (cast (lime_stage_get_stage_height (__handle), Float));
 		
 	}
 	
 	
 	private function get_stageWidth ():Int {
 		
-		return Std.int (cast (nme_stage_get_stage_width (__handle), Float));
+		return Std.int (cast (lime_stage_get_stage_width (__handle), Float));
 		
 	}
 	
@@ -1257,31 +1257,31 @@ class Stage extends DisplayObjectContainer {
 	
 	
 	
-	private static var nme_set_stage_handler = Lib.load ("nme", "nme_set_stage_handler", 4);
-	private static var nme_render_stage = Lib.load ("nme", "nme_render_stage", 1);
-	private static var nme_stage_get_focus_id = Lib.load ("nme", "nme_stage_get_focus_id", 1);
-	private static var nme_stage_set_focus = Lib.load ("nme", "nme_stage_set_focus", 3);
-	private static var nme_stage_get_focus_rect = Lib.load ("nme", "nme_stage_get_focus_rect", 1);
-	private static var nme_stage_set_focus_rect = Lib.load ("nme", "nme_stage_set_focus_rect", 2);
-	private static var nme_stage_is_opengl = Lib.load ("nme", "nme_stage_is_opengl", 1);
-	private static var nme_stage_get_stage_width = Lib.load ("nme", "nme_stage_get_stage_width", 1);
-	private static var nme_stage_get_stage_height = Lib.load ("nme", "nme_stage_get_stage_height", 1);
-	private static var nme_stage_get_dpi_scale = Lib.load ("nme", "nme_stage_get_dpi_scale", 1);
-	private static var nme_stage_get_scale_mode = Lib.load ("nme", "nme_stage_get_scale_mode", 1);
-	private static var nme_stage_set_scale_mode = Lib.load ("nme", "nme_stage_set_scale_mode", 2);
-	private static var nme_stage_get_align = Lib.load ("nme", "nme_stage_get_align", 1);
-	private static var nme_stage_set_align = Lib.load ("nme", "nme_stage_set_align", 2);
-	private static var nme_stage_get_quality = Lib.load ("nme", "nme_stage_get_quality", 1);
-	private static var nme_stage_set_quality = Lib.load ("nme", "nme_stage_set_quality", 2);
-	private static var nme_stage_get_display_state = Lib.load ("nme", "nme_stage_get_display_state", 1);
-	private static var nme_stage_set_display_state = Lib.load ("nme", "nme_stage_set_display_state", 2);
-	private static var nme_stage_set_next_wake = Lib.load ("nme", "nme_stage_set_next_wake", 2);
-	private static var nme_stage_request_render = Lib.load ("nme", "nme_stage_request_render", 0);
-	private static var nme_stage_resize_window = Lib.load ("nme", "nme_stage_resize_window", 3);
-	private static var nme_stage_show_cursor = Lib.load ("nme", "nme_stage_show_cursor", 2);
-	private static var nme_stage_set_fixed_orientation = Lib.load ("nme", "nme_stage_set_fixed_orientation", 1);
-	private static var nme_stage_get_orientation = Lib.load ("nme", "nme_stage_get_orientation", 0);
-	private static var nme_stage_get_normal_orientation = Lib.load ("nme", "nme_stage_get_normal_orientation", 0);
+	private static var lime_set_stage_handler = Lib.load ("lime", "lime_set_stage_handler", 4);
+	private static var lime_render_stage = Lib.load ("lime", "lime_render_stage", 1);
+	private static var lime_stage_get_focus_id = Lib.load ("lime", "lime_stage_get_focus_id", 1);
+	private static var lime_stage_set_focus = Lib.load ("lime", "lime_stage_set_focus", 3);
+	private static var lime_stage_get_focus_rect = Lib.load ("lime", "lime_stage_get_focus_rect", 1);
+	private static var lime_stage_set_focus_rect = Lib.load ("lime", "lime_stage_set_focus_rect", 2);
+	private static var lime_stage_is_opengl = Lib.load ("lime", "lime_stage_is_opengl", 1);
+	private static var lime_stage_get_stage_width = Lib.load ("lime", "lime_stage_get_stage_width", 1);
+	private static var lime_stage_get_stage_height = Lib.load ("lime", "lime_stage_get_stage_height", 1);
+	private static var lime_stage_get_dpi_scale = Lib.load ("lime", "lime_stage_get_dpi_scale", 1);
+	private static var lime_stage_get_scale_mode = Lib.load ("lime", "lime_stage_get_scale_mode", 1);
+	private static var lime_stage_set_scale_mode = Lib.load ("lime", "lime_stage_set_scale_mode", 2);
+	private static var lime_stage_get_align = Lib.load ("lime", "lime_stage_get_align", 1);
+	private static var lime_stage_set_align = Lib.load ("lime", "lime_stage_set_align", 2);
+	private static var lime_stage_get_quality = Lib.load ("lime", "lime_stage_get_quality", 1);
+	private static var lime_stage_set_quality = Lib.load ("lime", "lime_stage_set_quality", 2);
+	private static var lime_stage_get_display_state = Lib.load ("lime", "lime_stage_get_display_state", 1);
+	private static var lime_stage_set_display_state = Lib.load ("lime", "lime_stage_set_display_state", 2);
+	private static var lime_stage_set_next_wake = Lib.load ("lime", "lime_stage_set_next_wake", 2);
+	private static var lime_stage_request_render = Lib.load ("lime", "lime_stage_request_render", 0);
+	private static var lime_stage_resize_window = Lib.load ("lime", "lime_stage_resize_window", 3);
+	private static var lime_stage_show_cursor = Lib.load ("lime", "lime_stage_show_cursor", 2);
+	private static var lime_stage_set_fixed_orientation = Lib.load ("lime", "lime_stage_set_fixed_orientation", 1);
+	private static var lime_stage_get_orientation = Lib.load ("lime", "lime_stage_get_orientation", 0);
+	private static var lime_stage_get_normal_orientation = Lib.load ("lime", "lime_stage_get_normal_orientation", 0);
 	
 	
 }

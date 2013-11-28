@@ -153,7 +153,7 @@ class Timer {
 	 */
 	@:noCompletion static public function __nextWake (limit:Float):Float {
 		
-		var now = nme_time_stamp () * 1000.0;
+		var now = lime_time_stamp () * 1000.0;
 		var sleep;
 		
 		for (timer in sRunningTimers) {
@@ -231,12 +231,12 @@ class Timer {
 	
 	static public function stamp ():Float {
 		
-		return nme_time_stamp ();
+		return lime_time_stamp ();
 		
 	}
 	
 
-	static var nme_time_stamp = flash.Lib.load ("nme", "nme_time_stamp", 0);
+	static var lime_time_stamp = flash.Lib.load ("lime", "lime_time_stamp", 0);
 	
 	
 }

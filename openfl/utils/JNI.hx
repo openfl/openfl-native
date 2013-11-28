@@ -19,7 +19,7 @@ class JNI {
 		if (!initialized) {
 			
 			initialized = true;
-			var method = Lib.load ("nme", "nme_jni_init_callback", 1);
+			var method = Lib.load ("lime", "lime_jni_init_callback", 1);
 			method (onCallback);
 			
 		}
@@ -47,7 +47,7 @@ class JNI {
 		
 		init ();
 		
-		return new JNIMemberField (nme_jni_create_field (className, memberName, signature, false));
+		return new JNIMemberField (lime_jni_create_field (className, memberName, signature, false));
 		
 	}
 	
@@ -56,7 +56,7 @@ class JNI {
 		
 		init ();
 		
-		var method = new JNIMethod (nme_jni_create_method (className, memberName, signature, false));
+		var method = new JNIMethod (lime_jni_create_method (className, memberName, signature, false));
 		return method.getMemberMethod (useArray);
 		
 	}
@@ -73,14 +73,14 @@ class JNI {
 	        alreadyCreated.set(className, true);
 	    }
 	    return null;
-	    //return nme_jni_create_interface(haxeClass, className, bytes == null ? null : bytes.getData());
+	    //return lime_jni_create_interface(haxeClass, className, bytes == null ? null : bytes.getData());
 	}
 
 	public static function createStaticField (className:String, memberName:String, signature:String):JNIStaticField {
 		
 		init ();
 		
-		return new JNIStaticField (nme_jni_create_field (className, memberName, signature, true));
+		return new JNIStaticField (lime_jni_create_field (className, memberName, signature, true));
 		
 	}
 	
@@ -89,7 +89,7 @@ class JNI {
 		
 		init ();
 		
-		var method = new JNIMethod (nme_jni_create_method (className, memberName, signature, true));
+		var method = new JNIMethod (lime_jni_create_method (className, memberName, signature, true));
 		return method.getStaticMethod (useArray);
 		
 	}
@@ -99,7 +99,7 @@ class JNI {
 		
 		init ();
 		
-		return nme_jni_get_env ();
+		return lime_jni_get_env ();
 		
 	}
 	
@@ -111,10 +111,10 @@ class JNI {
 	
 	
 	
-	private static var nme_jni_create_field = Lib.load ("nme", "nme_jni_create_field", 4);
-	private static var nme_jni_create_method = Lib.load ("nme", "nme_jni_create_method", 4);
-	private static var nme_jni_get_env = Lib.load ("nme", "nme_jni_get_env", 0);
-	//private static var nme_jni_create_interface = Lib.load("nme", "nme_jni_create_interface", 3);
+	private static var lime_jni_create_field = Lib.load ("lime", "lime_jni_create_field", 4);
+	private static var lime_jni_create_method = Lib.load ("lime", "lime_jni_create_method", 4);
+	private static var lime_jni_get_env = Lib.load ("lime", "lime_jni_get_env", 0);
+	//private static var lime_jni_create_interface = Lib.load("lime", "lime_jni_create_interface", 3);
 	
 }
 
@@ -134,14 +134,14 @@ class JNIMemberField {
 	
 	public function get (jobject:Dynamic):Dynamic {
 		
-		return nme_jni_get_member (field, jobject);
+		return lime_jni_get_member (field, jobject);
 		
 	}
 	
 	
 	public function set (jobject:Dynamic, value:Dynamic):Dynamic {
 		
-		nme_jni_set_member (field, jobject, value);
+		lime_jni_set_member (field, jobject, value);
 		return value;
 		
 	}
@@ -154,8 +154,8 @@ class JNIMemberField {
 	
 	
 	
-	private static var nme_jni_get_member = Lib.load ("nme", "nme_jni_get_member", 2);
-	private static var nme_jni_set_member = Lib.load ("nme", "nme_jni_set_member", 3);
+	private static var lime_jni_get_member = Lib.load ("lime", "lime_jni_get_member", 2);
+	private static var lime_jni_set_member = Lib.load ("lime", "lime_jni_set_member", 3);
 	
 	
 }
@@ -176,14 +176,14 @@ class JNIStaticField {
 	
 	public function get ():Dynamic {
 		
-		return nme_jni_get_static (field);
+		return lime_jni_get_static (field);
 		
 	}
 	
 	
 	public function set (value:Dynamic):Dynamic {
 		
-		nme_jni_set_static (field, value);
+		lime_jni_set_static (field, value);
 		return value;
 		
 	}
@@ -196,8 +196,8 @@ class JNIStaticField {
 	
 	
 	
-	private static var nme_jni_get_static = Lib.load ("nme", "nme_jni_get_static", 1);
-	private static var nme_jni_set_static = Lib.load ("nme", "nme_jni_set_static", 2);
+	private static var lime_jni_get_static = Lib.load ("lime", "lime_jni_get_static", 1);
+	private static var lime_jni_set_static = Lib.load ("lime", "lime_jni_set_static", 2);
 	
 	
 }
@@ -218,14 +218,14 @@ class JNIMethod {
 	public function callMember (args:Array<Dynamic>):Dynamic {
 		
 		var jobject = args.shift ();
-		return nme_jni_call_member (method, jobject, args);
+		return lime_jni_call_member (method, jobject, args);
 		
 	}
 	
 	
 	public function callStatic (args:Array<Dynamic>):Dynamic {
 		
-		return nme_jni_call_static (method, args);
+		return lime_jni_call_static (method, args);
 		
 	}
 	
@@ -267,8 +267,8 @@ class JNIMethod {
 	
 	
 	
-	private static var nme_jni_call_member = Lib.load ("nme", "nme_jni_call_member", 3);
-	private static var nme_jni_call_static = Lib.load ("nme", "nme_jni_call_static", 2);
+	private static var lime_jni_call_member = Lib.load ("lime", "lime_jni_call_member", 3);
+	private static var lime_jni_call_static = Lib.load ("lime", "lime_jni_call_static", 2);
 	
 	
 }

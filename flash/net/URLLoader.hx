@@ -60,7 +60,7 @@ class URLLoader extends EventDispatcher {
 	
 	public function getCookies ():Array<String> {
 		
-		return nme_curl_get_cookies (__handle);
+		return lime_curl_get_cookies (__handle);
 		
 	}
 	
@@ -74,7 +74,7 @@ class URLLoader extends EventDispatcher {
 	
 	public static function initialize (caCertFilePath:String):Void {
 		
-		nme_curl_initialize (caCertFilePath);
+		lime_curl_initialize (caCertFilePath);
 		
 	}
 	
@@ -116,7 +116,7 @@ class URLLoader extends EventDispatcher {
 		} else {
 			
 			request.__prepare ();
-			__handle = nme_curl_create (request);
+			__handle = lime_curl_create (request);
 			
 			if (__handle == null) {
 				
@@ -154,7 +154,7 @@ class URLLoader extends EventDispatcher {
 			
 			var old_loaded = bytesLoaded;
 			var old_total = bytesTotal;
-			nme_curl_update_loader (__handle, this);
+			lime_curl_update_loader (__handle, this);
 			
 			if (old_total < 0 && bytesTotal > 0) {
 				
@@ -168,7 +168,7 @@ class URLLoader extends EventDispatcher {
 				
 			}
 			
-			var code:Int = nme_curl_get_code (__handle);
+			var code:Int = lime_curl_get_code (__handle);
 			
 			if (state == urlComplete) {
 				
@@ -176,7 +176,7 @@ class URLLoader extends EventDispatcher {
 				
 				if (code < 400) {
 					
-					var bytes:ByteArray = nme_curl_get_data (__handle);
+					var bytes:ByteArray = lime_curl_get_data (__handle);
 					
 					switch (dataFormat) {
 						
@@ -201,7 +201,7 @@ class URLLoader extends EventDispatcher {
 				
 				dispatchHTTPStatus (code);
 				
-				var event = new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, nme_curl_get_error_message (__handle), code);
+				var event = new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, lime_curl_get_error_message (__handle), code);
 				__handle = null;
 				dispatchEvent (event);
 				
@@ -248,7 +248,7 @@ class URLLoader extends EventDispatcher {
 		
 		if (!activeLoaders.isEmpty ()) {
 			
-			nme_curl_process_loaders ();
+			lime_curl_process_loaders ();
 			var oldLoaders = activeLoaders;
 			activeLoaders = new List<URLLoader> ();
 			
@@ -275,14 +275,14 @@ class URLLoader extends EventDispatcher {
 	
 	
 	
-	private static var nme_curl_create = Lib.load ("nme", "nme_curl_create", 1);
-	private static var nme_curl_process_loaders = Lib.load ("nme", "nme_curl_process_loaders", 0);
-	private static var nme_curl_update_loader = Lib.load ("nme", "nme_curl_update_loader", 2);
-	private static var nme_curl_get_code = Lib.load ("nme", "nme_curl_get_code", 1);
-	private static var nme_curl_get_error_message = Lib.load ("nme", "nme_curl_get_error_message", 1);
-	private static var nme_curl_get_data = Lib.load ("nme", "nme_curl_get_data", 1);
-	private static var nme_curl_get_cookies = Lib.load ("nme", "nme_curl_get_cookies", 1);
-	private static var nme_curl_initialize = Lib.load ("nme", "nme_curl_initialize", 1);
+	private static var lime_curl_create = Lib.load ("lime", "lime_curl_create", 1);
+	private static var lime_curl_process_loaders = Lib.load ("lime", "lime_curl_process_loaders", 0);
+	private static var lime_curl_update_loader = Lib.load ("lime", "lime_curl_update_loader", 2);
+	private static var lime_curl_get_code = Lib.load ("lime", "lime_curl_get_code", 1);
+	private static var lime_curl_get_error_message = Lib.load ("lime", "lime_curl_get_error_message", 1);
+	private static var lime_curl_get_data = Lib.load ("lime", "lime_curl_get_data", 1);
+	private static var lime_curl_get_cookies = Lib.load ("lime", "lime_curl_get_cookies", 1);
+	private static var lime_curl_initialize = Lib.load ("lime", "lime_curl_initialize", 1);
 	
 	
 }
