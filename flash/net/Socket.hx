@@ -267,11 +267,7 @@ class Socket extends EventDispatcher implements IDataInput /*implements IDataOut
 	public function writeBytes( bytes:ByteArray, offset : Int = 0, length : Int = 0 ):Void { 
 		if ( _socket == null ) 
 			throw new IOError("Operation attempted on invalid socket.");
-		try {
-			_output.writeBytes(bytes, _output.position + offset, length);
-		} catch (e:Dynamic) {
-			
-		}
+		_output.writeBytes(bytes, offset, length);
 	}
     public function writeDouble( value:Float ):Void { 
 		if ( _socket == null ) 
