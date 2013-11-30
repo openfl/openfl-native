@@ -89,7 +89,7 @@ class Sound extends EventDispatcher {
 		
 		if (__handle == null) {
 			
-			throw("Could not load:" + stream.url);
+			trace ("Error: Could not load \"" + stream.url + "\"");
 			
 		} else {
 			
@@ -185,7 +185,7 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null) {
 				
-				return null;
+				return new SoundChannel (null, startTime, loops, soundTransform);
 				
 			}
 			
@@ -197,7 +197,7 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null || __loading) {
 				
-				return null;
+				return new SoundChannel (null, startTime, loops, soundTransform);
 				
 			}
 			
