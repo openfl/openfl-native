@@ -29,6 +29,10 @@ class ApplicationMain {
 		
 		::if (APP_INIT != null)::::APP_INIT::::end::
 		
+		::if (WIN_ORIENTATION == "landscape")::#if tizen
+		flash.display.Stage.setFixedOrientation (flash.display.Stage.OrientationLandscapeRight);
+		#end::end::
+		
 		flash.Lib.create (function () {
 				
 				flash.Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
