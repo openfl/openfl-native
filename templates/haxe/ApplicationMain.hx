@@ -39,26 +39,24 @@ class ApplicationMain {
 				flash.Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
 				flash.Lib.current.loaderInfo = flash.display.LoaderInfo.create (null);
 				
-				#if mobile
-				if (::WIN_WIDTH:: != 0 && ::WIN_HEIGHT:: != 0) {
-					
-					forceWidth = ::WIN_WIDTH::;
-					forceHeight = ::WIN_HEIGHT::;
-					
-					container = new flash.display.Sprite ();
-					barA = new flash.display.Sprite ();
-					barB = new flash.display.Sprite ();
-					
-					flash.Lib.current.stage.addChild (container);
-					container.addChild (flash.Lib.current);
-					container.addChild (barA);
-					container.addChild (barB);
-					
-					applyScale ();
-					flash.Lib.current.stage.addEventListener (flash.events.Event.RESIZE, applyScale);
-					
-				}
-				#end
+				::if (WIN_WIDTH != 0)::::if (WIN_HEIGHT != 0)::#if mobile
+				
+				forceWidth = ::WIN_WIDTH::;
+				forceHeight = ::WIN_HEIGHT::;
+				
+				container = new flash.display.Sprite ();
+				barA = new flash.display.Sprite ();
+				barB = new flash.display.Sprite ();
+				
+				flash.Lib.current.stage.addChild (container);
+				container.addChild (flash.Lib.current);
+				container.addChild (barA);
+				container.addChild (barB);
+				
+				applyScale ();
+				flash.Lib.current.stage.addEventListener (flash.events.Event.RESIZE, applyScale);
+				
+				#end::end::::end::
 				
 				#if windows
 				try {
