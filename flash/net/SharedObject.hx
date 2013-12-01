@@ -35,7 +35,7 @@ class SharedObject extends EventDispatcher {
 	
 	public function clear ():Void {
 		
-		#if (iphone || android)
+		#if (iphone || android || tizen)
 		
 		untyped lime_clear_user_preference (name);
 		
@@ -61,7 +61,7 @@ class SharedObject extends EventDispatcher {
 	}
 	
 	
-	#if !(iphone || android)
+	#if (!iphone && !android && !tizen)
 	
 	static public function mkdir (directory:String):Void {
 		
@@ -122,7 +122,7 @@ class SharedObject extends EventDispatcher {
 		
 		var encodedData = Serializer.run (data);
 		
-		#if (iphone || android)
+		#if (iphone || android || tizen)
 		
 		untyped lime_set_user_preference (name, encodedData);
 		
@@ -165,7 +165,7 @@ class SharedObject extends EventDispatcher {
 			
 		}
 		
-		#if (iphone || android)
+		#if (iphone || android || tizen)
 		
 		var rawData:String = untyped lime_get_user_preference (name);
 		
@@ -238,7 +238,7 @@ class SharedObject extends EventDispatcher {
 	
 	
 	
-	#if (iphone || android)
+	#if (iphone || android || tizen)
 	private static var lime_get_user_preference = Lib.load ("lime", "lime_get_user_preference", 1);
 	private static var lime_set_user_preference = Lib.load ("lime", "lime_set_user_preference", 2);
 	private static var lime_clear_user_preference = Lib.load ("lime", "lime_clear_user_preference", 1);
