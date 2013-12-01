@@ -30,7 +30,7 @@ class StorageVolumeInfo extends EventDispatcher {
 	
 	public function getStorageVolumes ():Array<StorageVolume> {
 		
-		return volumes.copy ();
+		return __volumes.copy ();
 		
 	}
 	
