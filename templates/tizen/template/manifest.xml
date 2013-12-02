@@ -11,7 +11,7 @@
 	<Apps>
 		<ApiVersion>2.2</ApiVersion>
 		<Privileges/>
-		<UiApp Name="::APP_FILE::" Main="True" MenuIconVisible="False">
+		<UiApp HwAcceleration="On" Name="::APP_FILE::" Main="True" MenuIconVisible="True">
 			<UiScalability CoordinateSystem="Physical"></UiScalability>
 			<UiTheme SystemTheme="Black"></UiTheme>
 			<DisplayNames>
