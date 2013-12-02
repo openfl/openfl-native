@@ -6,6 +6,15 @@ import flash.events.EventDispatcher;
 import flash.events.SampleDataEvent;
 import flash.Lib;
 
+#if !audio_thread_disabled 
+	#if cpp
+		import cpp.vm.Thread;
+	#end
+	#if neko
+		import neko.vm.Thread;
+	#end
+#end
+
 
 class SoundChannel extends EventDispatcher {
 	
@@ -70,6 +79,110 @@ class SoundChannel extends EventDispatcher {
 		
 	}
 	
+#if !audio_thread_disabled
+
+		var __background_thread_running : Bool = false;
+		var __background_thread_should_check : Bool = false;
+		var __check_complete_thread : Thread;
+		var __main_thread : Thread;	
+
+	@:noCompletion function __check_complete_background_thread() {
+
+		var _last_complete = false;
+
+		while(__background_thread_running) {
+
+				//first time we want to wait for the message, after that we don't
+			var thread_message : Dynamic = Thread.readMessage( (__main_thread == null) );
+
+				//the first message is always the calling thread
+			if(__main_thread == null) {
+
+				__main_thread = thread_message;
+				__background_thread_should_check = true;
+
+			} else {
+
+				switch(thread_message) {
+					case 'play' :
+						__background_thread_should_check = true;
+					case 'pause' :
+						__background_thread_should_check = false;
+					case 'check_complete' :				
+						__main_thread.sendMessage( "complete" );
+						__main_thread.sendMessage( _last_complete );
+					case 'destroy' :
+						__background_thread_running = false;
+					default:
+
+				}
+
+			}
+
+			if(__background_thread_should_check) {
+				_last_complete = __run_check_complete();
+			}
+
+				//10 ms sleep time, 
+				//should be configurable
+			Sys.sleep( 0.01 );
+
+		} //keep running
+
+	}
+
+	@:noCompletion function __ping_check_complete_thread() {
+
+			//If no background thread right now, create one
+		if(__check_complete_thread == null) {	
+			__background_thread_running = true;
+			__check_complete_thread = Thread.create(__check_complete_background_thread);
+			__check_complete_thread.sendMessage( Thread.current() );
+			__check_complete_thread.sendMessage( 'play' );
+		}
+
+			//check if there are any messages from the background thread
+		var _message : Dynamic = Thread.readMessage(false);
+		if(_message != null) {
+			switch (_message) {
+				case 'complete':	
+						//ok to block here because we need the second message 
+					var iscomplete : Bool = Thread.readMessage(true);
+					if(iscomplete) {
+						var complete_event = new Event (Event.SOUND_COMPLETE);
+							dispatchEvent (complete_event);
+					}
+				case 'ack_death':
+					__background_thread_running = false;
+					__check_complete_thread = null;
+			}
+		}
+
+		__check_complete_thread.sendMessage('check_complete');
+
+	}
+
+#end //audio_thread_disabled
+
+	@:noCompletion function __run_check_complete() {
+
+		if (lime_sound_channel_is_complete (__handle)) {
+			
+			__handle = null;
+			
+			if (__dataProvider != null) {
+				
+				__dynamicSoundCount--;
+				
+			}
+						
+			return true;
+			
+		}
+
+		return false;
+
+	}
 	
 	@:noCompletion private function __checkComplete ():Bool {
 		
@@ -88,22 +201,19 @@ class SoundChannel extends EventDispatcher {
 				}
 				
 			}
-			
-			if (lime_sound_channel_is_complete (__handle)) {
 				
-				__handle = null;
-				
-				if (__dataProvider != null) {
-					
-					__dynamicSoundCount--;
-					
+			#if audio_thread_disabled
+
+				if(__run_check_complete()) {
+
+					var complete_event = new Event (Event.SOUND_COMPLETE);
+						dispatchEvent (complete_event);
+
 				}
-				
-				var complete = new Event (Event.SOUND_COMPLETE);
-				dispatchEvent (complete);
-				return true;
-				
-			}
+
+			#else
+				__ping_check_complete_thread();
+			#end
 			
 			return false;
 			
