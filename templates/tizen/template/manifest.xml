@@ -6,7 +6,10 @@
 	<Requirements>
 		<!-- <Feature Name="http://tizen.org/feature/platform.native.api.version">2.2</Feature> -->
         <Feature Name="http://tizen.org/feature/screen.size.all">true</Feature>
-        <!-- <Feature Name="http://tizen.org/api/filesystem">true</Feature> -->
+		<Feature Name="http://tizen.org/api/filesystem">true</Feature>
+		<Feature Name="http://tizen.org/privilege/application.launch">true</Feature>
+		<Feature Name="http://tizen.org/privilege/web.privacy">true</Feature>
+		<Feature Name="http://tizen.org/privilege/web.service">true</Feature>
 	</Requirements>
 	<Apps>
 		<ApiVersion>2.2</ApiVersion>
