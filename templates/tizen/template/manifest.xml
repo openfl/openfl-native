@@ -4,16 +4,14 @@
 	<Version>::APP_VERSION::</Version>
 	<Type>C++App</Type>
 	<Requirements>
-		<!-- <Feature Name="http://tizen.org/feature/platform.native.api.version">2.2</Feature> -->
         <Feature Name="http://tizen.org/feature/screen.size.all">true</Feature>
 		<Feature Name="http://tizen.org/api/filesystem">true</Feature>
-		<Feature Name="http://tizen.org/privilege/application.launch">true</Feature>
-		<Feature Name="http://tizen.org/privilege/web.privacy">true</Feature>
-		<Feature Name="http://tizen.org/privilege/web.service">true</Feature>
 	</Requirements>
 	<Apps>
 		<ApiVersion>2.2</ApiVersion>
-		<Privileges/>
+		<Privileges>
+			<Privilege>http://tizen.org/privilege/application.launch</Privilege>
+		</Privileges>
 		<UiApp HwAcceleration="On" Name="::APP_FILE::" Main="True" MenuIconVisible="True">
 			<UiScalability CoordinateSystem="Physical"></UiScalability>
 			<UiTheme SystemTheme="Black"></UiTheme>
