@@ -11,6 +11,11 @@ import flash.utils.ByteArray;
 import flash.utils.Endian;
 import flash.Lib;
 
+@:noCompletion enum InternalAudioType {
+	music; 
+	sound;
+	unknown;
+}
 
 @:autoBuild(openfl.Assets.embedSound())
 class Sound extends EventDispatcher {
@@ -23,6 +28,8 @@ class Sound extends EventDispatcher {
 	public var length (get, null):Float;
 	public var url (default, null):String;
 	
+	@:noCompletion public var __audio_type:InternalAudioType;
+
 	@:noCompletion private var __handle:Dynamic;
 	@:noCompletion private var __loading:Bool;
 	@:noCompletion private var __dynamicSound:Bool;
@@ -31,6 +38,9 @@ class Sound extends EventDispatcher {
 	public function new (stream:URLRequest = null, context:SoundLoaderContext = null, forcePlayAsMusic:Bool = false) {
 		
 		super ();
+
+			//Default to sound unless force as music
+		__audio_type = (forcePlayAsMusic) ? InternalAudioType.music : InternalAudioType.sound;
 		
 		bytesLoaded = 0;
 		bytesTotal = 0;
@@ -185,7 +195,10 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null) {
 				
-				return new SoundChannel (null, startTime, loops, soundTransform);
+				var _sound_channel = new SoundChannel (null, startTime, loops, soundTransform);
+					_sound_channel.__sound_instance = this;
+
+				return _sound_channel;
 				
 			}
 			
@@ -197,11 +210,17 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null || __loading) {
 				
-				return new SoundChannel (null, startTime, loops, soundTransform);
+				var _sound_channel = new SoundChannel (null, startTime, loops, soundTransform);
+					_sound_channel.__sound_instance = this;
+
+				return _sound_channel;
 				
 			}
 			
-			return new SoundChannel (__handle, startTime, loops, soundTransform);
+			var _sound_channel = new SoundChannel (__handle, startTime, loops, soundTransform);
+				_sound_channel.__sound_instance = this;
+
+				return _sound_channel;
 			
 		}
 		

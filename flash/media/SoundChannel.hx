@@ -24,18 +24,19 @@ class SoundChannel extends EventDispatcher {
 	public var position (get, set):Float;
 	public var soundTransform (get, set):SoundTransform;
 	
+	@:noCompletion public var __sound_instance : flash.media.Sound;
+
 	@:noCompletion public static var __dynamicSoundCount = 0;
 	@:noCompletion private static var __incompleteList = new Array<SoundChannel> ();
 	
 	@:noCompletion private var __handle:Dynamic;
 	@:noCompletion private var __transform:SoundTransform;
 	@:noCompletion public var __dataProvider:EventDispatcher;
-	
-	
+
 	public function new (handle:Dynamic, startTime:Float, loops:Int, soundTransform:SoundTransform) {
 		
 		super ();
-		
+
 		if (soundTransform != null) {
 			
 			__transform = soundTransform.clone ();
@@ -74,6 +75,10 @@ class SoundChannel extends EventDispatcher {
 	
 	public function stop ():Void {
 		
+		#if !audio_thread_disabled
+			__background_thread_running = false;
+		#end //audio_thread_disabled
+
 		lime_sound_channel_stop (__handle);
 		__handle = null;
 		
@@ -83,14 +88,17 @@ class SoundChannel extends EventDispatcher {
 
 		var __background_thread_running : Bool = false;
 		var __background_thread_should_check : Bool = false;
-		var __check_complete_thread : Thread;
+		var __background_thread : Thread;
 		var __main_thread : Thread;	
 
-	@:noCompletion function __check_complete_background_thread() {
+		var __audio_message_check_complete = 1;
+		var __audio_message_complete = 2;
+
+	@:noCompletion function __check_complete_background_thread() {		
 
 		var _last_complete = false;
 
-		while(__background_thread_running) {
+		while(__background_thread_running) {			
 
 				//first time we want to wait for the message, after that we don't
 			var thread_message : Dynamic = Thread.readMessage( (__main_thread == null) );
@@ -104,23 +112,18 @@ class SoundChannel extends EventDispatcher {
 			} else {
 
 				switch(thread_message) {
-					case 'play' :
-						__background_thread_should_check = true;
-					case 'pause' :
-						__background_thread_should_check = false;
-					case 'check_complete' :				
-						__main_thread.sendMessage( "complete" );
-						__main_thread.sendMessage( _last_complete );
-					case 'destroy' :
-						__background_thread_running = false;
-					default:
 
-				}
+					case __audio_message_check_complete :
+						if(_last_complete == true) {
+							__main_thread.sendMessage( __audio_message_complete );	
+						} 
 
-			}
+				} //switch thread message
 
-			if(__background_thread_should_check) {
-				_last_complete = __run_check_complete();
+			} //if main thread != null
+
+			if(__background_thread_should_check) {				
+				_last_complete = __run_check_complete();				
 			}
 
 				//10 ms sleep time, 
@@ -129,38 +132,47 @@ class SoundChannel extends EventDispatcher {
 
 		} //keep running
 
-	}
+			//clean up
+		__background_thread = null;
+		__background_thread_running = false;
+		__background_thread_should_check = false;
+
+	} //__check_complete_background_thread
 
 	@:noCompletion function __ping_check_complete_thread() {
 
 			//If no background thread right now, create one
-		if(__check_complete_thread == null) {	
+		if(__background_thread == null) {
+
 			__background_thread_running = true;
-			__check_complete_thread = Thread.create(__check_complete_background_thread);
-			__check_complete_thread.sendMessage( Thread.current() );
-			__check_complete_thread.sendMessage( 'play' );
+			__background_thread = Thread.create(__check_complete_background_thread);
+			__background_thread.sendMessage( Thread.current() );
+
+			return;
+		}
+
+		if(__background_thread_running != true) {			
+			return;
 		}
 
 			//check if there are any messages from the background thread
 		var _message : Dynamic = Thread.readMessage(false);
-		if(_message != null) {
+
+		if(_message != null) {			
 			switch (_message) {
-				case 'complete':	
-						//ok to block here because we need the second message 
-					var iscomplete : Bool = Thread.readMessage(true);
-					if(iscomplete) {
-						var complete_event = new Event (Event.SOUND_COMPLETE);
-							dispatchEvent (complete_event);
-					}
-				case 'ack_death':
-					__background_thread_running = false;
-					__check_complete_thread = null;
-			}
-		}
+				case __audio_message_complete:
 
-		__check_complete_thread.sendMessage('check_complete');
+					var complete_event = new Event (Event.SOUND_COMPLETE);
+						dispatchEvent (complete_event);
 
-	}
+					return;
+
+			} //switch message
+		} //message != null
+
+		__background_thread.sendMessage( __audio_message_check_complete );
+
+	} //__ping_check_complete_thread
 
 #end //audio_thread_disabled
 
@@ -212,7 +224,22 @@ class SoundChannel extends EventDispatcher {
 				}
 
 			#else
-				__ping_check_complete_thread();
+
+				if( __sound_instance != null && __sound_instance.__audio_type == flash.media.Sound.InternalAudioType.music ) {
+
+					__ping_check_complete_thread();
+
+				} else { //sound doesn't thread, only music
+
+					if(__run_check_complete()) {
+
+						var complete_event = new Event (Event.SOUND_COMPLETE);
+							dispatchEvent (complete_event);
+
+					} //if complete
+
+				} //not music
+
 			#end
 			
 			return false;
