@@ -4,8 +4,11 @@ package flash;
 import flash.display.BitmapData;
 import flash.display.MovieClip;
 import flash.display.Stage;
+import flash.events.UncaughtErrorEvent;
 import flash.net.URLRequest;
 import flash.Lib;
+import haxe.io.Bytes;
+import haxe.CallStack;
 import haxe.Timer;
 import openfl.display.ManagedStage;
 import sys.io.Process;
@@ -88,23 +91,29 @@ class Lib {
 		
 		create_main_frame (function (frameHandle:Dynamic) {
 			
-			#if android try { #end
-			__mainFrame = frameHandle;
-			var stage_handle = lime_get_frame_stage (__mainFrame);
+			try {
 			
-			Lib.__stage = (stageClass == null ? new Stage (stage_handle, width, height) : Type.createInstance (stageClass, [ stage_handle, width, height]));
-			Lib.__stage.frameRate = frameRate;
-			Lib.__stage.opaqueBackground = color;
-			Lib.__stage.onQuit = close;
-			
-			if (__current != null) {
+				__mainFrame = frameHandle;
+				var stage_handle = lime_get_frame_stage (__mainFrame);
 				
-				Lib.__stage.addChild (__current);
+				Lib.__stage = (stageClass == null ? new Stage (stage_handle, width, height) : Type.createInstance (stageClass, [ stage_handle, width, height]));
+				Lib.__stage.frameRate = frameRate;
+				Lib.__stage.opaqueBackground = color;
+				Lib.__stage.onQuit = close;
+				
+				if (__current != null) {
+					
+					Lib.__stage.addChild (__current);
+					
+				}
+				
+				onLoaded ();
+				
+			} catch (error:Dynamic) { 
+				
+				rethrow (error);
 				
 			}
-			
-			onLoaded ();
-			#if android } catch(e:Dynamic) { trace("ERROR: " +  e); } #end
 			
 		}, width, height, flags, title, icon == null ? null : icon.__handle);
 		
@@ -252,6 +261,45 @@ class Lib {
 		if (debug) {
 			
 			Sys.println (message);
+			
+		}
+		
+	}
+	
+	
+	public static function rethrow (error:Dynamic):Void {
+		
+		var event = new UncaughtErrorEvent (UncaughtErrorEvent.UNCAUGHT_ERROR, true, true, error);
+		Lib.current.loaderInfo.uncaughtErrorEvents.dispatchEvent (event);
+		
+		if (!event.__getIsCancelled ()) {
+			
+			var message = "";
+			
+			if (error != null && error != "") {
+				
+				message = error + "";
+				
+			}
+			
+			var stack = CallStack.exceptionStack ();
+			
+			if (stack.length > 0) {
+				
+				message += CallStack.toString (stack) + "\n";
+				
+			} else {
+				
+				message += "\n";
+				
+			}
+			
+			#if (mobile && !ios)
+			trace (message);
+			#else
+			Sys.stderr ().write (Bytes.ofString (message));
+			#end
+			Sys.exit (1);
 			
 		}
 		

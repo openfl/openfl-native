@@ -15,6 +15,8 @@ import flash.net.URLLoader;
 import flash.ui.Keyboard;
 import flash.Lib;
 import flash.Vector;
+import haxe.io.Bytes;
+import haxe.CallStack;
 import haxe.Timer;
 import openfl.events.JoystickEvent;
 import openfl.events.SystemEvent;
@@ -317,154 +319,155 @@ class Stage extends DisplayObjectContainer {
 		var type = Std.int (Reflect.field (event, "type"));
 		
 		try {
-		
-		switch (type) {
 			
-			case 2: // etChar
+			switch (type) {
 				
-				if (onKey != null)
-					untyped onKey (event.code, event.down, event.char, event.flags);
-			
-			case 1: // etKeyDown
-				
-				__onKey (event, KeyboardEvent.KEY_DOWN);
-			
-			case 3: // etKeyUp
-				
-				__onKey (event, KeyboardEvent.KEY_UP);
-			
-			case 4: // etMouseMove
-				
-				__onMouse (event, MouseEvent.MOUSE_MOVE, true);
-			
-			case 5: // etMouseDown
-				
-				__onMouse (event, MouseEvent.MOUSE_DOWN, true);
-			
-			case 6: // etMouseClick
-				
-				__onMouse (event, MouseEvent.CLICK, true);
-			
-			case 7: // etMouseUp
-				
-				__onMouse (event, MouseEvent.MOUSE_UP, true);
-			
-			case 8: // etResize
-				
-				__onResize (event.x, event.y);
-				if (renderRequest == null) {
+				case 2: // etChar
 					
-					__render (false);
+					if (onKey != null)
+						untyped onKey (event.code, event.down, event.char, event.flags);
+				
+				case 1: // etKeyDown
 					
-				}
-			
-			case 9: // etPoll
+					__onKey (event, KeyboardEvent.KEY_DOWN);
 				
-				__pollTimers ();
-			
-			case 10: // etQuit
-				
-				if (onQuit != null)
-					untyped onQuit ();
-			
-			case 11: // etFocus
-				
-				__onFocus (event);
-			
-			case 12: // etShouldRotate
-				
-				if (shouldRotateInterface (event.value))
-					event.result = 2;
-			
-			case 14: // etRedraw
-				
-				__render (true);
-			
-			case 15: // etTouchBegin
-				
-				var touchInfo = new TouchInfo ();
-				__touchInfo.set (event.value, touchInfo);
-				__onTouch (event, TouchEvent.TOUCH_BEGIN, touchInfo);
-				
-				if ((event.flags & 0x8000) > 0) {
+				case 3: // etKeyUp
 					
-					__onMouse (event, MouseEvent.MOUSE_DOWN, false);
+					__onKey (event, KeyboardEvent.KEY_UP);
+				
+				case 4: // etMouseMove
 					
-				}
-			
-			case 16: // etTouchMove
+					__onMouse (event, MouseEvent.MOUSE_MOVE, true);
 				
-				var touchInfo = __touchInfo.get (event.value);
-				__onTouch (event, TouchEvent.TOUCH_MOVE, touchInfo);
-			
-			case 17: // etTouchEnd
-				
-				var touchInfo = __touchInfo.get (event.value);
-				__onTouch (event, TouchEvent.TOUCH_END, touchInfo);
-				__touchInfo.remove (event.value);
-				
-				if ((event.flags & 0x8000) > 0) {
+				case 5: // etMouseDown
 					
-					__onMouse (event, MouseEvent.MOUSE_UP, false);
+					__onMouse (event, MouseEvent.MOUSE_DOWN, true);
+				
+				case 6: // etMouseClick
 					
-				}
-			
-			case 18: // etTouchTap
+					__onMouse (event, MouseEvent.CLICK, true);
 				
-				//_onTouchTap (event.TouchEvent.TOUCH_TAP);
-			
-			case 19: // etChange
+				case 7: // etMouseUp
+					
+					__onMouse (event, MouseEvent.MOUSE_UP, true);
 				
-				__onChange (event);
-			
-			case 20: // etActivate
+				case 8: // etResize
+					
+					__onResize (event.x, event.y);
+					if (renderRequest == null) {
+						
+						__render (false);
+						
+					}
 				
-				__setActive (true);
-			
-			case 21: // etDeactivate
+				case 9: // etPoll
+					
+					__pollTimers ();
 				
-				__setActive (false);
-			
-			case 22: // etGotInputFocus
+				case 10: // etQuit
+					
+					if (onQuit != null)
+						untyped onQuit ();
 				
-				__dispatchEvent (new Event (FocusEvent.FOCUS_IN));
-			
-			case 23: // etLostInputFocus
+				case 11: // etFocus
+					
+					__onFocus (event);
 				
-				__dispatchEvent (new Event (FocusEvent.FOCUS_OUT));
-			
-			case 24: // etJoyAxisMove
+				case 12: // etShouldRotate
+					
+					if (shouldRotateInterface (event.value))
+						event.result = 2;
 				
-				__onJoystick (event, JoystickEvent.AXIS_MOVE);
-			
-			case 25: // etJoyBallMove
+				case 14: // etRedraw
+					
+					__render (true);
 				
-				__onJoystick (event, JoystickEvent.BALL_MOVE);
-			
-			case 26: // etJoyHatMove
+				case 15: // etTouchBegin
+					
+					var touchInfo = new TouchInfo ();
+					__touchInfo.set (event.value, touchInfo);
+					__onTouch (event, TouchEvent.TOUCH_BEGIN, touchInfo);
+					
+					if ((event.flags & 0x8000) > 0) {
+						
+						__onMouse (event, MouseEvent.MOUSE_DOWN, false);
+						
+					}
 				
-				__onJoystick (event, JoystickEvent.HAT_MOVE);
-			
-			case 27: // etJoyButtonDown
+				case 16: // etTouchMove
+					
+					var touchInfo = __touchInfo.get (event.value);
+					__onTouch (event, TouchEvent.TOUCH_MOVE, touchInfo);
 				
-				__onJoystick (event, JoystickEvent.BUTTON_DOWN);
-			
-			case 28: // etJoyButtonUp
+				case 17: // etTouchEnd
+					
+					var touchInfo = __touchInfo.get (event.value);
+					__onTouch (event, TouchEvent.TOUCH_END, touchInfo);
+					__touchInfo.remove (event.value);
+					
+					if ((event.flags & 0x8000) > 0) {
+						
+						__onMouse (event, MouseEvent.MOUSE_UP, false);
+						
+					}
 				
-				__onJoystick (event, JoystickEvent.BUTTON_UP);
-			
-			case 29: // etSysWM
+				case 18: // etTouchTap
+					
+					//_onTouchTap (event.TouchEvent.TOUCH_TAP);
 				
-				__onSysWM (event);
+				case 19: // etChange
+					
+					__onChange (event);
+				
+				case 20: // etActivate
+					
+					__setActive (true);
+				
+				case 21: // etDeactivate
+					
+					__setActive (false);
+				
+				case 22: // etGotInputFocus
+					
+					__dispatchEvent (new Event (FocusEvent.FOCUS_IN));
+				
+				case 23: // etLostInputFocus
+					
+					__dispatchEvent (new Event (FocusEvent.FOCUS_OUT));
+				
+				case 24: // etJoyAxisMove
+					
+					__onJoystick (event, JoystickEvent.AXIS_MOVE);
+				
+				case 25: // etJoyBallMove
+					
+					__onJoystick (event, JoystickEvent.BALL_MOVE);
+				
+				case 26: // etJoyHatMove
+					
+					__onJoystick (event, JoystickEvent.HAT_MOVE);
+				
+				case 27: // etJoyButtonDown
+					
+					__onJoystick (event, JoystickEvent.BUTTON_DOWN);
+				
+				case 28: // etJoyButtonUp
+					
+					__onJoystick (event, JoystickEvent.BUTTON_UP);
+				
+				case 29: // etSysWM
+					
+					__onSysWM (event);
+				
+				// TODO: user, sys_wm, sound_finished
+				
+			}
 			
-			// TODO: user, sys_wm, sound_finished
+		} catch (error:Dynamic) {
+			
+			Lib.rethrow (error);
 			
 		}
-		
-		}catch ( error : Dynamic ) {
-			Lib.current.loaderInfo.uncaughtErrorEvents.dispatchEvent( new UncaughtErrorEvent( UncaughtErrorEvent.UNCAUGHT_ERROR, true, true, error ) );
-		}
-
 		
 		result = __updateNextWake ();
 		return result;
