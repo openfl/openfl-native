@@ -18,6 +18,7 @@ import flash.Vector;
 import haxe.io.Bytes;
 import haxe.CallStack;
 import haxe.Timer;
+import openfl.display.OpenGLView;
 import openfl.events.JoystickEvent;
 import openfl.events.SystemEvent;
 
@@ -459,6 +460,14 @@ class Stage extends DisplayObjectContainer {
 					
 					__onSysWM (event);
 				
+				case 30: // etRenderContextLost
+					
+					__onRenderContext (false);
+				
+				case 31: // etRenderContextRestored
+					
+					__onRenderContext (true);
+				
 				// TODO: user, sys_wm, sound_finished
 				
 			}
@@ -867,6 +876,14 @@ class Stage extends DisplayObjectContainer {
 			__lastDown[button] = null;
 			
 		}
+		
+	}
+	
+	
+	@:noCompletion private function __onRenderContext (active:Bool):Void {
+		
+		var event = new Event (!active ? OpenGLView.CONTEXT_LOST : OpenGLView.CONTEXT_RESTORED);
+		__dispatchEvent (event);
 		
 	}
 	
