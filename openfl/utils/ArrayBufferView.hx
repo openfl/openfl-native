@@ -124,6 +124,13 @@ class ArrayBufferView implements IMemoryRange {
 	}
 	
 	
+	public function getNativePointer ():Dynamic {
+		
+		return buffer.getNativePointer ();
+		
+	}
+	
+	
 	public function getStart ():Int {
 		
 		return byteOffset;

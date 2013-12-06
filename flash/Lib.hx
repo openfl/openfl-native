@@ -92,7 +92,7 @@ class Lib {
 		create_main_frame (function (frameHandle:Dynamic) {
 			
 			try {
-			
+				
 				__mainFrame = frameHandle;
 				var stage_handle = lime_get_frame_stage (__mainFrame);
 				

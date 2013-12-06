@@ -199,6 +199,13 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	}
 	
 	
+	public function getNativePointer ():Dynamic {
+		
+		return lime_byte_array_get_native_pointer (this);
+		
+	}
+	
+	
 	public function getStart ():Int {
 		
 		return 0;
@@ -769,6 +776,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	private static var lime_byte_array_overwrite_file = Lib.load ("lime", "lime_byte_array_overwrite_file", 2);
 	private static var lime_byte_array_read_file = Lib.load ("lime", "lime_byte_array_read_file", 1);
 	#end
+	private static var lime_byte_array_get_pointer = Lib.load ("lime", "lime_byte_array_get_pointer", 1);
 	private static var lime_lzma_encode = Lib.load ("lime", "lime_lzma_encode", 1);
 	private static var lime_lzma_decode = Lib.load ("lime", "lime_lzma_decode", 1);
 	

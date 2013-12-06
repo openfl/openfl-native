@@ -629,19 +629,6 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
-	@:noCompletion public function __beginRender (rectangle:Rectangle = null):Void {
-		
-		if (rect == null) {
-			
-			rect = this.rect;
-			
-		}
-		
-		lime_surface_begin_render (__handle, rect);
-		
-	}
-	
-	
 	@:noCompletion public function __drawToSurface (surface:Dynamic, matrix:Matrix, colorTransform:ColorTransform, blendMode:String, clipRect:Rectangle, smoothing:Bool):Void {
 		
 		lime_render_surface_to_surface (surface, __handle, matrix, colorTransform, blendMode, clipRect, smoothing);
@@ -649,23 +636,9 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
-	@:noCompletion public function __endRender ():Void {
-		
-		lime_surface_end_render (__handle);
-		
-	}
-	
-	
 	@:noCompletion private static inline function __flipPixel (pixel:Int):Int {
 		
 		return (pixel & 0xFF) << 24 | (pixel >>  8 & 0xFF) << 16 | (pixel >> 16 & 0xFF) <<  8 | (pixel >> 24 & 0xFF);
-		
-	}
-	
-	
-	@:noCompletion public function __getBase ():Dynamic {
-		
-		return lime_surface_get_base (__handle);
 		
 	}
 	
@@ -794,9 +767,6 @@ class BitmapData implements IBitmapDrawable {
 	private static var lime_bitmap_data_unmultiply_alpha = Lib.load ("lime", "lime_bitmap_data_unmultiply_alpha", 1);
 	private static var lime_bitmap_data_multiply_alpha = Lib.load ("lime", "lime_bitmap_data_multiply_alpha", 1);
 	private static var lime_bitmap_data_set_alpha_mode = Lib.load ("lime", "lime_bitmap_data_set_alpha_mode", 2);
-	private static var lime_surface_begin_render = Lib.load ("lime", "lime_surface_begin_render", 2);
-	private static var lime_surface_get_base = Lib.load ("lime", "lime_surface_get_base", 1);
-	private static var lime_surface_end_render = Lib.load ("lime", "lime_surface_end_render", 1);
 	
 	
 }
