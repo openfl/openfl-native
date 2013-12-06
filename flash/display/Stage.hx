@@ -141,6 +141,21 @@ class Stage extends DisplayObjectContainer {
 		lime_stage_resize_window (__handle, width, height);
 		
 	}
+
+
+	public function setResolution (width:Int, height:Int):Void {
+		lime_stage_set_resolution(__handle, width, height);
+	}
+
+
+	public function setScreenMode (mode:flash.system.ScreenMode):Void {
+		lime_stage_set_screenmode(__handle, mode.width, mode.height, mode.refreshRate, 0);
+	}
+
+
+	public function setFullscreen (full:Bool):Void {
+		lime_stage_set_fullscreen(__handle, full);
+	}
 	
 	
 	public static function setFixedOrientation (orientation:Int):Void {
@@ -1298,6 +1313,9 @@ class Stage extends DisplayObjectContainer {
 	private static var lime_stage_set_next_wake = Lib.load ("lime", "lime_stage_set_next_wake", 2);
 	private static var lime_stage_request_render = Lib.load ("lime", "lime_stage_request_render", 0);
 	private static var lime_stage_resize_window = Lib.load ("lime", "lime_stage_resize_window", 3);
+	private static var lime_stage_set_resolution = Lib.load ("lime", "lime_stage_set_resolution", 3);
+	private static var lime_stage_set_screenmode = Lib.load("lime","lime_stage_set_screenmode", 5);
+	private static var lime_stage_set_fullscreen = Lib.load ("lime", "lime_stage_set_fullscreen", 2);
 	private static var lime_stage_show_cursor = Lib.load ("lime", "lime_stage_show_cursor", 2);
 	private static var lime_stage_set_fixed_orientation = Lib.load ("lime", "lime_stage_set_fixed_orientation", 1);
 	private static var lime_stage_get_orientation = Lib.load ("lime", "lime_stage_get_orientation", 0);
