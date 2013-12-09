@@ -11,11 +11,6 @@ import flash.utils.ByteArray;
 import flash.utils.Endian;
 import flash.Lib;
 
-@:noCompletion enum InternalAudioType {
-	music; 
-	sound;
-	unknown;
-}
 
 @:autoBuild(openfl.Assets.embedSound())
 class Sound extends EventDispatcher {
@@ -28,8 +23,8 @@ class Sound extends EventDispatcher {
 	public var length (get, null):Float;
 	public var url (default, null):String;
 	
-	@:noCompletion public var __audio_type:InternalAudioType;
-
+	@:noCompletion public var __audioType:InternalAudioType;
+	
 	@:noCompletion private var __handle:Dynamic;
 	@:noCompletion private var __loading:Bool;
 	@:noCompletion private var __dynamicSound:Bool;
@@ -38,9 +33,8 @@ class Sound extends EventDispatcher {
 	public function new (stream:URLRequest = null, context:SoundLoaderContext = null, forcePlayAsMusic:Bool = false) {
 		
 		super ();
-
-			//Default to sound unless force as music
-		__audio_type = (forcePlayAsMusic) ? InternalAudioType.music : InternalAudioType.sound;
+		
+		__audioType = (forcePlayAsMusic) ? InternalAudioType.MUSIC : InternalAudioType.SOUND;
 		
 		bytesLoaded = 0;
 		bytesTotal = 0;
@@ -195,10 +189,10 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null) {
 				
-				var _sound_channel = new SoundChannel (null, startTime, loops, soundTransform);
-					_sound_channel.__sound_instance = this;
-
-				return _sound_channel;
+				var channel = new SoundChannel (null, startTime, loops, soundTransform);
+				channel.__soundInstance = this;
+				
+				return channel;
 				
 			}
 			
@@ -210,17 +204,17 @@ class Sound extends EventDispatcher {
 			
 			if (__handle == null || __loading) {
 				
-				var _sound_channel = new SoundChannel (null, startTime, loops, soundTransform);
-					_sound_channel.__sound_instance = this;
+				var channel = new SoundChannel (null, startTime, loops, soundTransform);
+				channel.__soundInstance = this;
 
-				return _sound_channel;
+				return channel;
 				
 			}
 			
-			var _sound_channel = new SoundChannel (__handle, startTime, loops, soundTransform);
-				_sound_channel.__sound_instance = this;
-
-				return _sound_channel;
+			var channel = new SoundChannel (__handle, startTime, loops, soundTransform);
+			channel.__soundInstance = this;
+			
+			return channel;
 			
 		}
 		
@@ -323,5 +317,14 @@ class Sound extends EventDispatcher {
 	private static var lime_sound_get_status = Lib.load ("lime", "lime_sound_get_status", 1);
 	private static var lime_sound_channel_create_dynamic = Lib.load ("lime", "lime_sound_channel_create_dynamic", 2);
 	
+	
+}
+
+
+@:noCompletion enum InternalAudioType {
+	
+	MUSIC; 
+	SOUND;
+	UNKNOWN;
 	
 }
