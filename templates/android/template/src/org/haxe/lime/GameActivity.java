@@ -688,6 +688,12 @@ public class GameActivity extends Activity implements SensorEventListener {
 	
 	public static void showKeyboard (boolean show) {
 		
+		if (activity == null) {
+			
+			return;
+			
+		}
+		
 		InputMethodManager mgr = (InputMethodManager)activity.getSystemService (Context.INPUT_METHOD_SERVICE);
 		mgr.hideSoftInputFromWindow (activity.mView.getWindowToken (), 0);
 		
