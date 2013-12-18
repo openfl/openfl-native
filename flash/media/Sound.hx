@@ -25,7 +25,7 @@ class Sound extends EventDispatcher {
 	
 	@:noCompletion public var __audioType:InternalAudioType;
 	
-	@:noCompletion private var __handle:Dynamic;
+	@:noCompletion public var __handle:Dynamic;
 	@:noCompletion private var __loading:Bool;
 	@:noCompletion private var __dynamicSound:Bool;
 	
