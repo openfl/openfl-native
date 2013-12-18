@@ -167,13 +167,23 @@ class Timer {
 		if (mRunning) {
 			
 			mRunning = false;
-			sRunningTimers.remove (this);
+			
+			for (i in 0...sRunningTimers.length) {
+				
+				if (sRunningTimers[i] == this) {
+					
+					sRunningTimers[i] = null;
+					break;
+					
+				}
+				
+			}
 			
 		}
 		
 	}
 	
-
+	
 	@:noCompletion private function __check (inTime:Float) {
 		
 		if (inTime >= mFireAt) {
@@ -189,12 +199,28 @@ class Timer {
 	@:noCompletion public static function __checkTimers () {
 		
 		var now = getMS ();
-		var index = 0;
+		var foundNull = false;
+		var timer;
 		
-		while (index < sRunningTimers.length) {
+		for (i in 0...sRunningTimers.length) {
 			
-			sRunningTimers[index].__check (now);
-			index++;
+			timer = sRunningTimers[i];
+			
+			if (timer != null) {
+				
+				timer.__check (now);
+				
+			} else {
+				
+				foundNull = true;
+				
+			}
+			
+		}
+		
+		if (foundNull) {
+			
+			sRunningTimers = sRunningTimers.filter (function (val) { return val != null; });
 			
 		}
 		
@@ -207,6 +233,9 @@ class Timer {
 		var sleep;
 		
 		for (timer in sRunningTimers) {
+			
+			if (timer == null)
+				continue;
 			
 			sleep = timer.mFireAt - now;
 			
