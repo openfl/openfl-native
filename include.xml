@@ -3,7 +3,8 @@
 	
 	<echo value="Warning: Including &quot;openfl-native&quot; on a target platform that is not native" unless="native" />
 	
-	<haxelib name="lime" />
+	<set name="openfl" />
+	<include haxelib="lime" />
 	
 	<templatePath name="templates" />
 	
