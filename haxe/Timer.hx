@@ -210,11 +210,9 @@ class Timer {
 				
 				timer.__check (now);
 				
-			} else {
-				
-				foundNull = true;
-				
 			}
+			
+			foundNull = (foundNull || sRunningTimers[i] == null);
 			
 		}
 		
