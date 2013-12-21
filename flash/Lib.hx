@@ -41,7 +41,7 @@ class Lib {
 	
 	@:noCompletion private static var __current:MovieClip = null;
 	@:noCompletion private static var __isInit = false;
-	@:noCompletion private static var __loadedNekoAPI = false;
+	@:noCompletion private static var __loadedNekoAPI:Bool;
 	@:noCompletion private static var __mainFrame:Dynamic = null;
 	@:noCompletion private static var __moduleNames:Map<String, String> = null;
 	@:noCompletion private static var __stage:Stage = null;
