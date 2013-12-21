@@ -41,6 +41,7 @@ class Lib {
 	
 	@:noCompletion private static var __current:MovieClip = null;
 	@:noCompletion private static var __isInit = false;
+	@:noCompletion private static var __loadedNekoAPI = false;
 	@:noCompletion private static var __mainFrame:Dynamic = null;
 	@:noCompletion private static var __moduleNames:Map<String, String> = null;
 	@:noCompletion private static var __stage:Stage = null;
@@ -353,16 +354,22 @@ class Lib {
 	
 	private static function loadNekoAPI ():Void {
 		
-		var init = load ("lime", "neko_init", 5);
-		
-		if (init != null) {
+		if (__loadedNekoAPI) {
 			
-			loaderTrace ("Found nekoapi @ " + __moduleNames.get ("lime"));
-			init (function(s) return new String (s), function (len:Int) { var r = []; if (len > 0) r[len - 1] = null; return r; }, null, true, false);
+			var init = load ("lime", "neko_init", 5);
 			
-		} else {
+			if (init != null) {
+				
+				loaderTrace ("Found nekoapi @ " + __moduleNames.get ("lime"));
+				init (function(s) return new String (s), function (len:Int) { var r = []; if (len > 0) r[len - 1] = null; return r; }, null, true, false);
+				
+			} else {
+				
+				throw ("Could not find NekoAPI interface.");
+				
+			}
 			
-			throw ("Could not find NekoAPI interface.");
+			__loadedNekoAPI = true;
 			
 		}
 		
