@@ -354,7 +354,7 @@ class Lib {
 	
 	private static function loadNekoAPI ():Void {
 		
-		if (__loadedNekoAPI) {
+		if (!__loadedNekoAPI) {
 			
 			var init = load ("lime", "neko_init", 5);
 			
