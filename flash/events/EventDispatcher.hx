@@ -77,10 +77,11 @@ class EventDispatcher implements IEventDispatcher {
 		if (list != null) {
 			
 			var index = 0;
+			var length = list.length;
 			
 			var listItem, listener;
 			
-			while (index < list.length) {
+			while (index < length) {
 				
 				listItem = list[index];
 				listener = ((listItem != null && listItem.listener.get() != null) ? listItem : null);
@@ -88,6 +89,7 @@ class EventDispatcher implements IEventDispatcher {
 				if (listener == null) {
 					
 					list.splice (index, 1);
+					length--;
 					
 				} else {
 					
