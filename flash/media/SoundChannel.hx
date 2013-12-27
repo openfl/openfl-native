@@ -7,7 +7,7 @@ import flash.events.SampleDataEvent;
 import flash.media.Sound;
 import flash.Lib;
 
-#if !audio_thread_disabled 
+#if (!audio_thread_disabled && !emscripten)
 #if neko
 import neko.vm.Thread;
 import neko.vm.Mutex;
@@ -34,7 +34,7 @@ class SoundChannel extends EventDispatcher {
 	@:noCompletion public var __soundInstance:Sound;
 	@:noCompletion private var __transform:SoundTransform;
 	
-	#if !audio_thread_disabled
+	#if (!audio_thread_disabled && !emscripten)
 	
 	@:noCompletion private static var __audioMessageCheckComplete = 1;
 	@:noCompletion private static var __audioState:AudioThreadState;
@@ -88,7 +88,7 @@ class SoundChannel extends EventDispatcher {
 	
 	public function stop ():Void {
 		
-		#if !audio_thread_disabled
+		#if (!audio_thread_disabled && !emscripten)
 		
 		if (__soundInstance != null && __soundInstance.__audioType == InternalAudioType.MUSIC) {
 			
@@ -123,7 +123,7 @@ class SoundChannel extends EventDispatcher {
 				
 			}
 			
-			#if !audio_thread_disabled
+			#if (!audio_thread_disabled && !emscripten)
 			
 			if (__addedToThread || (__soundInstance != null && __soundInstance.__audioType == InternalAudioType.MUSIC)) {
 				
@@ -172,7 +172,7 @@ class SoundChannel extends EventDispatcher {
 	}
 	
 	
-	#if !audio_thread_disabled
+	#if (!audio_thread_disabled && !emscripten)
 	
 	private static function __checkCompleteBackgroundThread () {		
 		
@@ -312,7 +312,7 @@ class SoundChannel extends EventDispatcher {
 }
 
 
-#if !audio_thread_disabled
+#if (!audio_thread_disabled && !emscripten)
 
 @:access(flash.media.SoundChannel) class AudioThreadState {
 	
