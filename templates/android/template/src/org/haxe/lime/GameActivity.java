@@ -134,6 +134,8 @@ public class GameActivity extends Activity implements SensorEventListener {
 		mView = mMainView;*/
 		mView = new MainView (getApplication (), this);
 		setContentView (mView);
+
+		Extension.mainView = mView;
 		
 		sensorManager = (SensorManager)activity.getSystemService (Context.SENSOR_SERVICE);
 		
