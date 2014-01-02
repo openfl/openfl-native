@@ -154,19 +154,40 @@ class DisplayObjectContainer extends InteractiveObject {
 	}
 
 
-	public function removeChildren (beginIndex:Int = 0, endIndex:Int = 0x7fffffff):Void {
-
-		if (endIndex == 0x7fffffff) endIndex = __children.length;
-		if (endIndex < beginIndex) throw new RangeError("removeChildren : endIndex must not be less than beginIndex");
-		if (beginIndex < 0) throw new RangeError("removeChildren : beginIndex out of bounds " + beginIndex);
-		if (endIndex > __children.length) throw new RangeError("removeChildren : endIndex out of bounds " + endIndex + "/" + __children.length);
-
+	public function removeChildren (beginIndex:Int = 0, endIndex:Int = 0x7FFFFFFF):Void {
+		
+		if (endIndex == 0x7FFFFFFF) { 
+			
+			endIndex = __children.length - 1;
+			
+			if (endIndex < 0) {
+				
+				return;
+				
+			}
+			
+		}
+		
+		if (beginIndex > __children.length - 1) {
+			
+			return;
+			
+		} else if (endIndex < beginIndex || beginIndex < 0 || endIndex > __children.length) {
+			
+			throw new RangeError ("The supplied index is out of bounds.");
+			
+		}
+		
 		var numRemovals = endIndex - beginIndex;
 		while (numRemovals >= 0) {
-			removeChildAt(beginIndex);
-			numRemovals --;
+			
+			removeChildAt (beginIndex);
+			numRemovals--;
+			
 		}
-	}	
+		
+	}
+	
 	
 	public function setChildIndex (child:DisplayObject, index:Int):Void {
 		
