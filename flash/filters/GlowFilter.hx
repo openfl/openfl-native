@@ -8,7 +8,6 @@ class GlowFilter extends BitmapFilter {
 	public var blurX:Float;
 	public var blurY:Float;
 	public var color:Int;
-	public var hideObject:Bool;
 	public var inner:Bool;
 	public var knockout:Bool;
 	public var quality:Int;
@@ -16,9 +15,10 @@ class GlowFilter extends BitmapFilter {
 	
 	private var angle:Float;
 	private var distance:Float;
+	public var hideObject:Bool;
 	
 	
-	public function new (color:Int = 0, alpha:Float = 1.0, blurX:Float = 4.0, blurY:Float = 4.0, strength:Float = 1.0, quality:Int = 1, inner:Bool = false, knockout:Bool = false, hideObject:Bool = false) {
+	public function new (color:Int = 0, alpha:Float = 1.0, blurX:Float = 4.0, blurY:Float = 4.0, strength:Float = 1.0, quality:Int = 1, inner:Bool = false, knockout:Bool = false) {
 		
 		super ("DropShadowFilter");
 		
@@ -32,14 +32,14 @@ class GlowFilter extends BitmapFilter {
 		this.quality = quality;
 		this.inner = inner;
 		this.knockout = knockout;
-		this.hideObject = hideObject;
+		this.hideObject = false;
 		
 	}
 	
 	
 	override public function clone ():BitmapFilter {
 		
-		return new GlowFilter (color, alpha, blurX, blurY, strength, quality, inner, knockout, hideObject);
+		return new GlowFilter (color, alpha, blurX, blurY, strength, quality, inner, knockout);
 		
 	}
 	
