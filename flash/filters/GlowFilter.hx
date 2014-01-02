@@ -1,12 +1,38 @@
 package flash.filters;
 
 
-class GlowFilter extends DropShadowFilter {
+class GlowFilter extends BitmapFilter {
 	
 	
-	public function new (color:Int = 0, alpha:Float = 1.0, blurX:Float = 6.0, blurY:Float = 6.0, strength:Float = 2.0, quality:Int = 1, inner:Bool = false, knockout:Bool = false) {
+	public var alpha:Float;
+	public var blurX:Float;
+	public var blurY:Float;
+	public var color:Int;
+	public var hideObject:Bool;
+	public var inner:Bool;
+	public var knockout:Bool;
+	public var quality:Int;
+	public var strength:Float;
+	
+	private var angle:Float;
+	private var distance:Float;
+	
+	
+	public function new (color:Int = 0, alpha:Float = 1.0, blurX:Float = 4.0, blurY:Float = 4.0, strength:Float = 1.0, quality:Int = 1, inner:Bool = false, knockout:Bool = false, hideObject:Bool = false) {
 		
-		super (0, 0, color, alpha, blurX, blurY, strength, quality, inner, knockout, false);
+		super ("DropShadowFilter");
+		
+		this.distance = 0;
+		this.angle = 0;
+		this.color = color;
+		this.alpha = alpha;
+		this.blurX = blurX;
+		this.blurY = blurY;
+		this.strength = strength;
+		this.quality = quality;
+		this.inner = inner;
+		this.knockout = knockout;
+		this.hideObject = hideObject;
 		
 	}
 	
