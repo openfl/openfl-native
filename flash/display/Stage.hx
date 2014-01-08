@@ -64,9 +64,6 @@ class Stage extends DisplayObjectContainer {
 	@:noCompletion private static var sDownEvents = [ "mouseDown", "middleMouseDown", "rightMouseDown" ];
 	@:noCompletion private static var sUpEvents = [ "mouseUp", "middleMouseUp", "rightMouseUp" ];
 	
-	@:noCompletion private static var __mouseChanges:Array<String> = [ MouseEvent.MOUSE_OUT, MouseEvent.MOUSE_OVER, MouseEvent.ROLL_OUT, MouseEvent.ROLL_OVER ];
-	@:noCompletion private static var __touchChanges:Array<String> = [ TouchEvent.TOUCH_OUT, TouchEvent.TOUCH_OVER,	TouchEvent.TOUCH_ROLL_OUT, TouchEvent.TOUCH_ROLL_OVER ];
-	
 	#if android
 	@:noCompletion private var __hatValue:Int;
 	#end
@@ -200,7 +197,6 @@ class Stage extends DisplayObjectContainer {
 	@:noCompletion private function __checkInOuts (event:MouseEvent, stack:Array<InteractiveObject>, touchInfo:TouchInfo = null):Bool {
 		
 		var prev = (touchInfo == null ? __mouseOverObjects : touchInfo.touchOverObjects);
-		var events = (touchInfo == null ? __mouseChanges : __touchChanges);
 		
 		var newLength = stack.length;
 		var newObject = newLength > 0 ? stack[newLength - 1] : null;
@@ -211,13 +207,25 @@ class Stage extends DisplayObjectContainer {
 			
 			if (oldObject != null) {
 				
-				oldObject.__fireEvent (event.__createSimilar (events[0], newObject, oldObject));
+				if (touchInfo != null) {
+					
+					oldObject.__fireEvent (event.__createSimilar (TouchEvent.TOUCH_OUT, newObject, oldObject));
+					
+				}
+				
+				oldObject.__fireEvent (event.__createSimilar (MouseEvent.MOUSE_OUT, newObject, oldObject));
 				
 			}
 			
 			if (newObject != null) {
 				
-				newObject.__fireEvent (event.__createSimilar (events[1], newObject, newObject));
+				if (touchInfo != null) {
+					
+					oldObject.__fireEvent (event.__createSimilar (TouchEvent.TOUCH_OVER, newObject, oldObject));
+					
+				}
+				
+				newObject.__fireEvent (event.__createSimilar (MouseEvent.MOUSE_OVER, newObject, newObject));
 				
 			}
 			
@@ -228,7 +236,21 @@ class Stage extends DisplayObjectContainer {
 				
 			}
 			
-			var rollOut = event.__createSimilar (events[2], newObject, oldObject);
+			if (touchInfo != null) {
+				
+				var rollOut = event.__createSimilar (TouchEvent.TOUCH_ROLL_OUT, newObject, oldObject);
+				
+				var i = oldLength - 1;
+				while (i >= common) {
+					
+					prev[i].__dispatchEvent (rollOut);
+					i--;
+					
+				}
+				
+			}
+			
+			var rollOut = event.__createSimilar (MouseEvent.ROLL_OUT, newObject, oldObject);
 			
 			var i = oldLength - 1;
 			while (i >= common) {
@@ -238,7 +260,21 @@ class Stage extends DisplayObjectContainer {
 				
 			}
 			
-			var rollOver = event.__createSimilar (events[3], oldObject);
+			if (touchInfo != null) {
+				
+				var rollOver = event.__createSimilar (TouchEvent.TOUCH_ROLL_OVER, oldObject);
+				
+				var i = newLength - 1;
+				while (i >= common) {
+					
+					stack[i].__dispatchEvent (rollOver);
+					i--;
+					
+				}
+				
+			}
+			
+			var rollOver = event.__createSimilar (MouseEvent.ROLL_OVER, oldObject);
 			
 			var i = newLength - 1;
 			while (i >= common) {
