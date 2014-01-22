@@ -203,6 +203,16 @@ class Rectangle {
 	}
 	
 	
+	public function setTo (xa:Float, ya:Float, widtha:Float, heighta:Float):Void {
+		
+		x = xa;
+		y = ya;
+		width = widtha;
+		height = heighta;
+		
+	}
+	
+	
 	public function toString ():String {
 		
 		return "(x=" + x + ", y=" + y + ", width=" + width + ", height=" + height + ")";
