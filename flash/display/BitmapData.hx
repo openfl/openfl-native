@@ -344,27 +344,22 @@ class BitmapData implements IBitmapDrawable {
 		memory.position = 0;
 		Memory.select (memory);
 		
-		var width_yy:Int, position:Int, pixelMask:Int;
-		var pixelValue:Int, r:Int, g:Int, b:Int, color:Int;
+		var position:Int, pixelValue:Int, r:Int, g:Int, b:Int, color:Int;
 		
-		for (yy in 0...sh) {
-			width_yy = sw * yy;
+		for (i in 0...(sh*sw)) {
+			position = i * 4;
+			pixelValue = cast Memory.getI32(position);
 			
-			for (xx in 0...sw) {
-				position = (width_yy + xx) * 4;
-				pixelValue = cast Memory.getI32(position);
-				
-				r = (pixelValue >> 8) & 0xFF;
-				g = (pixelValue >> 16) & 0xFF;
-				b = (pixelValue >> 24) & 0xFF;
-				
-				color = __flipPixel((0xff << 24) |
-					redArray[r] | 
-					greenArray[g] | 
-					blueArray[b]);
-				
-				Memory.setI32(position, color);
-			}
+			r = (pixelValue >> 8) & 0xFF;
+			g = (pixelValue >> 16) & 0xFF;
+			b = (pixelValue >> 24) & 0xFF;
+			
+			color = __flipPixel((0xff << 24) |
+				redArray[r] | 
+				greenArray[g] | 
+				blueArray[b]);
+			
+			Memory.setI32(position, color);
 		}
 		
 		memory.position = 0;
