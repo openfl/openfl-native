@@ -65,6 +65,16 @@ class ApplicationMain {
 					Sys.setCwd (currentPath);
 					
 				} catch (e:Dynamic) {}
+				#elseif linux
+				try {
+					
+					if (!sys.FileSystem.exists (Sys.getCwd () + "/lime.ndll")) {
+						
+						Sys.setCwd (haxe.io.Path.directory (Sys.executablePath ()));
+						
+					}
+					
+				} catch (e:Dynamic) {}
 				#end
 				
 				var hasMain = false;
