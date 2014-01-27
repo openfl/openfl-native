@@ -32,13 +32,17 @@ class XMLSocket extends EventDispatcher {
 	
 	public function close():Void {
 		
+		_socket.removeEventListener(Event.CONNECT, onOpenHandler);
+		_socket.removeEventListener(ProgressEvent.SOCKET_DATA, onMessageHandler);
+		
 		_socket.close();
 		
 	}
 	
 	
 	public function connect(host: String, port:Int):Void {
-		_socket = new Socket(host, port);
+		_socket = new Socket();
+		_socket.connect(host, port);
 		_socket.addEventListener(Event.CONNECT, onOpenHandler);
 		_socket.addEventListener(ProgressEvent.SOCKET_DATA, onMessageHandler);
 		
@@ -46,10 +50,9 @@ class XMLSocket extends EventDispatcher {
 	
 	
 	public function send(object:Dynamic):Void {
-		
 		_socket.writeUTFBytes(object);
-		//_socket.writeByte(0);
-		
+		_socket.writeByte(0);
+
 	}
 
 	// Event Handlers
@@ -61,7 +64,7 @@ class XMLSocket extends EventDispatcher {
 	
 	
 	private function onOpenHandler(_):Void {
-		
+		connected = true;
 		dispatchEvent(new Event(Event.CONNECT));
 		
 	}
