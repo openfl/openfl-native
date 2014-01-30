@@ -238,6 +238,7 @@ class SoundChannel extends EventDispatcher {
 		if (lime_sound_channel_is_complete (__handle)) {
 			
 			__soundInstance = null;
+			__handle = null;
 			
 			if (__dataProvider != null) {
 				
