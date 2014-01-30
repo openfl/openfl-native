@@ -92,7 +92,9 @@ class SoundChannel extends EventDispatcher {
 		
 		if (__soundInstance != null && __soundInstance.__audioType == InternalAudioType.MUSIC) {
 			
-			__audioState.remove (this);
+			if(__audioState != null) {
+				__audioState.remove (this);
+			}
 			
 		}
 		
@@ -235,7 +237,6 @@ class SoundChannel extends EventDispatcher {
 		
 		if (lime_sound_channel_is_complete (__handle)) {
 			
-			__handle = null;
 			__soundInstance = null;
 			
 			if (__dataProvider != null) {
@@ -396,7 +397,11 @@ class SoundChannel extends EventDispatcher {
 		
 		for (channel in channelList.keys ()) {
 			
-			channelList.set (channel, channel.__runCheckComplete ());
+			if(channel != null) {
+				channelList.set (channel, channel.__runCheckComplete ());
+			} else {
+				channelList.remove (channel);
+			}
 			
 		}
 		
