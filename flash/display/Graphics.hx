@@ -156,10 +156,10 @@ class Graphics {
 	}
 	
 	
-	public function drawTriangles (vertices:Array<Float>, indices:Array<Int> = null, uvtData:Array<Float> = null, culling:TriangleCulling = null, colors:Array<Int> = null, blendMode:Int = 0, viewport:Array<Float> = null):Void {
+	public function drawTriangles (vertices:Array<Float>, indices:Array<Int> = null, uvtData:Array<Float> = null, culling:TriangleCulling = null, colors:Array<Int> = null, blendMode:Int = 0):Void {
 		
 		var cull:Int = (culling == null ? 0 : Type.enumIndex (culling) - 1);
-		lime_gfx_draw_triangles (__handle, vertices, indices, uvtData, cull, colors, blendMode, viewport);
+		lime_gfx_draw_triangles (__handle, vertices, indices, uvtData, cull, colors, blendMode);
 		
 	}
 	
