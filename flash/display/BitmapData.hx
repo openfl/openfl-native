@@ -396,13 +396,6 @@ class BitmapData implements IBitmapDrawable {
 	}
 	
 	
-	public function setAlphaMode (alphaMode:Int):Void {
-		
-		lime_bitmap_data_set_alpha_mode (__handle, alphaMode);
-		
-	}
-	
-	
 	public function setFlags (flags:Int):Void {
 		
 		// Used for optimization
@@ -766,7 +759,6 @@ class BitmapData implements IBitmapDrawable {
 	private static var lime_bitmap_data_noise = Lib.load ("lime", "lime_bitmap_data_noise", -1);
 	private static var lime_bitmap_data_unmultiply_alpha = Lib.load ("lime", "lime_bitmap_data_unmultiply_alpha", 1);
 	private static var lime_bitmap_data_multiply_alpha = Lib.load ("lime", "lime_bitmap_data_multiply_alpha", 1);
-	private static var lime_bitmap_data_set_alpha_mode = Lib.load ("lime", "lime_bitmap_data_set_alpha_mode", 2);
 	
 	
 }
