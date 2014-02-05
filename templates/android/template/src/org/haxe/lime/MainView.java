@@ -303,34 +303,18 @@ class MainView extends GLSurfaceView {
 				
 				if (range != null) {
 					
-					final float flat = range.getFlat ();
 					final float value = event.getAxisValue (axis);
 					
-					if (Math.abs (value) > flat) {
+					queueEvent (new Runnable () {
 						
-						queueEvent (new Runnable () {
+						public void run () {
 							
-							public void run () {
-								
-								me.HandleResult (Lime.onJoyMotion (deviceId, axis, ((value - range.getMin ()) / (range.getRange ())) * 65535 - 32768));
-								
-							}
+							me.HandleResult (Lime.onJoyMotion (deviceId, axis, ((value - range.getMin ()) / (range.getRange ())) * 65535 - 32768));
 							
-						});
+						}
 						
-					} else {
+					});
 						
-						queueEvent (new Runnable () {
-							
-							public void run () {
-								
-								me.HandleResult (Lime.onJoyMotion (deviceId, axis, 0));
-								
-							}
-							
-						});
-						
-					}
 				}
 				
 			}
