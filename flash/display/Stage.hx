@@ -27,6 +27,7 @@ class Stage extends DisplayObjectContainer {
 	
 	
 	@:noCompletion public static var __earlyWakeup = 0.005;
+	@:noCompletion public static var __exiting = false;
 	
 	public static var OrientationPortrait = 1;
 	public static var OrientationPortraitUpsideDown = 2;
@@ -368,7 +369,7 @@ class Stage extends DisplayObjectContainer {
 				case 10: // etQuit
 					
 					if (onQuit != null)
-						untyped onQuit ();
+						onQuit ();
 				
 				case 11: // etFocus
 					
@@ -961,6 +962,12 @@ class Stage extends DisplayObjectContainer {
 	
 	
 	@:noCompletion public function __pollTimers ():Void {
+		
+		if (__exiting) {
+			
+			return;
+			
+		}
 		
 		Timer.__checkTimers ();
 		SoundChannel.__pollComplete ();

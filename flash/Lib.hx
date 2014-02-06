@@ -63,6 +63,7 @@ class Lib {
 	
 	public static function close ():Void {
 		
+		Stage.__exiting = true;
 		var close = Lib.load ("lime", "lime_close", 0);
 		close ();
 		
