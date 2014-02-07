@@ -30,6 +30,7 @@ class BitmapData implements IBitmapDrawable {
 	public inline static var FORMAT_565 = 2;  //16 bit 565 without alpha
 		
 	public var height (get, null):Int;
+	public var premultipliedAlpha (get, set):Bool;
 	public var rect (get, null):Rectangle;
 	public var transparent (get, null):Bool;
 	public var width (get, null):Int;
@@ -38,7 +39,7 @@ class BitmapData implements IBitmapDrawable {
 	@:noCompletion private var __transparent:Bool;
 	
 	
-	public function new (width:Int, height:Int, transparent:Bool = true, fillColor:Int = 0xFFFFFFFF, gpuMode:Null<Bool> = null) {
+	public function new (width:Int, height:Int, transparent:Bool = true, fillColor:Int = 0xFFFFFFFF, gpuMode:Null<Int> = null) {
 		
 		__transparent = transparent;
 		
@@ -704,6 +705,8 @@ class BitmapData implements IBitmapDrawable {
 	
 	
 	
+	private function get_premultipliedAlpha ():Bool { return lime_bitmap_data_get_prem_alpha (__handle); }
+	private function set_premultipliedAlpha (value:Bool):Bool { lime_bitmap_data_set_prem_alpha (__handle, value); return value; }
 	private function get_rect ():Rectangle { return new Rectangle (0, 0, width, height); }
 	private function get_width ():Int { return lime_bitmap_data_width (__handle); }
 	private function get_height ():Int { return lime_bitmap_data_height (__handle); }
@@ -759,7 +762,8 @@ class BitmapData implements IBitmapDrawable {
 	private static var lime_bitmap_data_noise = Lib.load ("lime", "lime_bitmap_data_noise", -1);
 	private static var lime_bitmap_data_unmultiply_alpha = Lib.load ("lime", "lime_bitmap_data_unmultiply_alpha", 1);
 	private static var lime_bitmap_data_multiply_alpha = Lib.load ("lime", "lime_bitmap_data_multiply_alpha", 1);
-	
+	private static var lime_bitmap_data_get_prem_alpha = Lib.load ("lime", "lime_bitmap_data_get_prem_alpha", 1);
+	private static var lime_bitmap_data_set_prem_alpha = Lib.load ("lime", "lime_bitmap_data_set_prem_alpha", 2);
 	
 }
 
