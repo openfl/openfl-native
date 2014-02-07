@@ -42,6 +42,7 @@ class MainView extends GLSurfaceView {
 	int mTimerID = 0;
 	TimerTask pendingTimer;
 	Runnable pollMe;
+	boolean renderPending = false;
 	
 	
 	public MainView (Context context, Activity inActivity) {
@@ -219,6 +220,12 @@ class MainView extends GLSurfaceView {
 		
 		double wake = Lime.getNextWake ();
 		int delayMS = (int)(wake * 1000);
+		
+		if (renderPending && delayMS < 5) {
+			
+			delayMS = 5;
+			
+		}
 		
 		if (delayMS <= 1) {
 			
@@ -527,6 +534,7 @@ class MainView extends GLSurfaceView {
 	
 	static public void renderNow () { //Called directly from C++
 		
+		mRefreshView.renderPending = true;
 		mRefreshView.requestRender ();
 		
 	}
@@ -588,6 +596,7 @@ class MainView extends GLSurfaceView {
 		
 		public void onDrawFrame (GL10 gl) {
 			
+			mMainView.renderPending = false;
 			mMainView.HandleResult (Lime.onRender ());
 			Sound.checkSoundCompletion ();
 			
