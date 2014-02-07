@@ -167,7 +167,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 	}
 	
 	// IMMERSIVE MODE SUPPORT
-	::if (ANDROID_TARGET_SDK_VERSION >= 19)::
+	::if (WIN_FULLSCREEN)::::if (ANDROID_TARGET_SDK_VERSION >= 19)::
 	
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
@@ -190,7 +190,7 @@ public class GameActivity extends Activity implements SensorEventListener {
 			| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 	}
 	
-	::end::
+	::end::::end::
 	
 	public static double CapabilitiesGetPixelAspectRatio () {
 		
