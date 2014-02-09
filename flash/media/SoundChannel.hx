@@ -35,13 +35,15 @@ class SoundChannel extends EventDispatcher {
 	@:noCompletion private var __transform:SoundTransform;
 	
 	#if (!audio_thread_disabled && !emscripten)
-	
-	@:noCompletion private static var __audioMessageCheckComplete = 1;
+		
+		//These relate to the audio thread state
 	@:noCompletion private static var __audioState:AudioThreadState;
 	@:noCompletion private static var __audioThreadIsIdle:Bool = true;
 	@:noCompletion private static var __audioThreadRunning:Bool = false;
-	
-	@:noCompletion private var __addedToThread:Bool;
+		
+		//This relates so this single channel
+	@:noCompletion public var __thread_completed:Bool = false;
+	@:noCompletion private var __addedToThread:Bool = false;
 	
 	#end	
 	
@@ -104,9 +106,8 @@ class SoundChannel extends EventDispatcher {
 		__handle = null;
 		__soundInstance = null;
 		
-	}
-	
-	
+	}	
+
 	@:noCompletion private function __checkComplete ():Bool {
 		
 		if (__handle != null) {
@@ -138,26 +139,23 @@ class SoundChannel extends EventDispatcher {
 					
 					__audioState.mainThread = Thread.current ();
 					__audioState.audioThread = Thread.create (__checkCompleteBackgroundThread);
-					
+
 				}
 				
 				if (!__addedToThread) {
 					
 					__audioState.add (this);
 					__addedToThread = true;
-					
+
 				}
 				
-				__audioState.audioThread.sendMessage (__audioMessageCheckComplete);
+				return __thread_completed;
 				
 			} else
 			
 			#end
 			
 			if (__runCheckComplete ()) {
-				
-				var completeEvent = new Event (Event.SOUND_COMPLETE);
-				dispatchEvent (completeEvent);
 				
 				return true;
 				
@@ -178,19 +176,12 @@ class SoundChannel extends EventDispatcher {
 	
 	private static function __checkCompleteBackgroundThread () {		
 		
-		while (__audioThreadRunning) {		
-			
-			var threadMessage:Dynamic = Thread.readMessage (false);
-			
-			if (threadMessage == __audioMessageCheckComplete) {
-				
-				__audioState.checkComplete ();
-				
-			}
-			
+		while (__audioThreadRunning) {
+
 			if (!__audioThreadIsIdle) {
 				
 				__audioState.updateComplete ();
+
 				Sys.sleep (0.01);
 				
 			} else {
@@ -245,6 +236,9 @@ class SoundChannel extends EventDispatcher {
 				__dynamicSoundCount--;
 				
 			}
+
+			var completeEvent = new Event (Event.SOUND_COMPLETE);
+				dispatchEvent (completeEvent);
 			
 			return true;
 			
@@ -320,7 +314,7 @@ class SoundChannel extends EventDispatcher {
 	
 	
 	public var audioThread:Thread;
-	public var channelList:Map <SoundChannel, Bool>;
+	public var channelList:Array<SoundChannel>;
 	public var mainThread:Thread;
 	public var mutex:Mutex;
 	
@@ -328,46 +322,20 @@ class SoundChannel extends EventDispatcher {
 	public function new () {
 		 
 		mutex = new Mutex ();
-		channelList = new Map ();
+		channelList = [];
 		
 	}
 	
 	
 	public function add (channel:SoundChannel):Void {
 		
-		mutex.acquire ();
-		
-		if (!channelList.exists (channel)) {
+		if (!Lambda.has( channelList, channel ) ) {
 			
-			channelList.set (channel, false);
+			channelList.push( channel );
 			SoundChannel.__audioThreadIsIdle = false;
 			
 		}
 		
-		mutex.release ();
-		
-	}
-	
-	
-	public function checkComplete () {
-		
-		for (channel in channelList.keys ()) {
-			
-			var isComplete = channelList.get (channel);
-			
-			if (isComplete) {
-				
-				var completeEvent = new Event (Event.SOUND_COMPLETE);
-				channel.dispatchEvent (completeEvent);
-				
-				mutex.acquire ();
-				channelList.remove (channel);
-				mutex.release ();
-				
-			}
-			
-		}
-			
 	}
 	
 	
@@ -375,11 +343,19 @@ class SoundChannel extends EventDispatcher {
 		
 		mutex.acquire ();
 		
-		if (channelList.exists (channel)) {
-			
-			channelList.remove (channel);			
-			
-			if (Lambda.count (channelList) == 0) {
+		if ( Lambda.has(channelList,channel) ) {			
+
+				//flag as removed because we are no longer tracking
+			channel.__addedToThread = false;
+				//and whenever we remove from this we are considering it
+				//completed so we set the flag here too
+			channel.__thread_completed = true;
+				
+				//remove it from the list	
+			channelList.remove (channel);
+
+				//if there are no more, idle for CPU
+			if (channelList.length == 0) {
 				
 				SoundChannel.__audioThreadIsIdle = true;
 				
@@ -394,19 +370,21 @@ class SoundChannel extends EventDispatcher {
 	
 	public function updateComplete () {
 		
-		mutex.acquire ();
-		
-		for (channel in channelList.keys ()) {
+		for (channel in channelList) {
 			
 			if(channel != null) {
-				channelList.set (channel, channel.__runCheckComplete ());
+
+				if(channel.__runCheckComplete()){
+					remove(channel);
+				}
+
 			} else {
+
 				channelList.remove (channel);
+
 			}
 			
 		}
-		
-		mutex.release ();
 		
 	}
 	
