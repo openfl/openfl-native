@@ -370,6 +370,8 @@ class SoundChannel extends EventDispatcher {
 	
 	public function updateComplete () {
 		
+		mutex.acquire();
+
 		for (channel in channelList) {
 			
 			if(channel != null) {
@@ -385,6 +387,8 @@ class SoundChannel extends EventDispatcher {
 			}
 			
 		}
+
+		mutex.release();
 		
 	}
 	
