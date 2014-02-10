@@ -14,7 +14,7 @@ class Capabilities {
 	public static var screenResolutionX (get, null):Float;
 	public static var screenResolutionY (get, null):Float;
 	
-	
+	public static var screenModes (get, null):Array<ScreenMode>;
 	
 	
 	// Getters & Setters
@@ -98,7 +98,25 @@ class Capabilities {
 	private static function get_screenResolutionX ():Float { return lime_capabilities_get_screen_resolution_x (); }
 	private static function get_screenResolutionY ():Float { return lime_capabilities_get_screen_resolution_y (); }
 	
-	
+	private static function get_screenModes ():Array<ScreenMode> {
+		var modes:Array<Int> = lime_capabilities_get_screen_modes ();
+		var out = new Array<ScreenMode> ();
+
+		if (modes == null) {
+			return out;
+		}
+
+		for (c in 0...Std.int (modes.length / 4)) {
+			var mode = new ScreenMode();
+			mode.width = modes[ c * 4 + 0 ];
+			mode.height = modes[ c * 4 + 1 ];
+			mode.refreshRate = modes[ c * 4 + 2 ];
+			mode.format = Type.createEnumIndex( PixelFormat, modes[ c * 4 + 3 ] );
+			out.push (mode);
+		}
+
+		return out;
+	}
 	
 	
 	// Native Methods
@@ -111,6 +129,7 @@ class Capabilities {
 	private static var lime_capabilities_get_screen_resolution_x = Lib.load ("lime", "lime_capabilities_get_screen_resolution_x", 0);
 	private static var lime_capabilities_get_screen_resolution_y = Lib.load ("lime", "lime_capabilities_get_screen_resolution_y", 0);
 	private static var lime_capabilities_get_screen_resolutions = Lib.load ("lime", "lime_capabilities_get_screen_resolutions", 0 );
+	private static var lime_capabilities_get_screen_modes = Lib.load ("lime", "lime_capabilities_get_screen_modes", 0 );
 	private static var lime_capabilities_get_language = Lib.load ("lime", "lime_capabilities_get_language", 0);
 	
 	
