@@ -936,7 +936,7 @@ class Stage extends DisplayObjectContainer {
 			var object = stack[0];
 			stack.reverse ();
 			var local = object.globalToLocal (new Point (event.x, event.y));
-			var touchEvent = TouchEvent.__create (type, event, local, object, event.sx, event.sy);
+			var touchEvent = TouchEvent.__create (type, event, local, object, event.scaleX, event.scaleY);
 			touchEvent.touchPointID = event.value;
 			touchEvent.isPrimaryTouchPoint = (event.flags & 0x8000) > 0;
 			
@@ -966,7 +966,7 @@ class Stage extends DisplayObjectContainer {
 			
 		} else {
 			
-			var touchEvent = TouchEvent.__create (type, event, new Point (event.x, event.y), null, event.sx, event.sy);
+			var touchEvent = TouchEvent.__create (type, event, new Point (event.x, event.y), null, event.scaleX, event.scaleY);
 			touchEvent.touchPointID = event.value;
 			touchEvent.isPrimaryTouchPoint = (event.flags & 0x8000) > 0;
 			__checkInOuts (touchEvent, stack, touchInfo);
