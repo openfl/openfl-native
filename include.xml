@@ -6,6 +6,8 @@
 	<set name="openfl" />
 	<include haxelib="lime" />
 	
+	<haxeflag name="--macro" value="allowPackage('flash')" />
+	
 	<templatePath name="templates" />
 	
 </extension>
