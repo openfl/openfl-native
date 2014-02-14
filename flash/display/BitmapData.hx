@@ -835,9 +835,10 @@ class OptimizedPerlin {
 	private var baseFactor:Float;
 	
 	
-	public function new (seed = 123, octaves = 4, falloff = 0.5) {
+	public function new (seed = 123, numOctaves = 4, falloff = 0.5) {
 		
 		baseFactor = 1 / 64;
+		octaves = numOctaves;
 		seedOffset (seed);
 		octFreqPers (falloff);
 		
@@ -958,7 +959,7 @@ class OptimizedPerlin {
 	}
 	
 	
-	private function octFreqPers (fPersistence) {
+	private function octFreqPers (fPersistence:Float):Void {
 		
 		var fFreq:Float, fPers:Float;
 		
@@ -981,7 +982,7 @@ class OptimizedPerlin {
 	}
 	
 	
-	private function seedOffset (iSeed:Int) {
+	private function seedOffset (iSeed:Int):Void {
 		
 		iXoffset = iSeed = Std.int((iSeed * 16807.) % 2147483647);
 		iYoffset = iSeed = Std.int((iSeed * 16807.) % 2147483647);
