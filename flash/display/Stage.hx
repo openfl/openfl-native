@@ -472,15 +472,23 @@ class Stage extends DisplayObjectContainer {
 					
 					__onJoystick (event, JoystickEvent.BUTTON_UP);
 				
-				case 29: // etSysWM
+				case 29: //etJoyDeviceAdded
+
+			        __onJoystick (event, JoystickEvent.DEVICE_ADDED);
+
+		        case 30: //etJoyDeviceRemoved
+
+		    	    __onJoystick (event, JoystickEvent.DEVICE_REMOVED);
+
+				case 31: // etSysWM
 					
 					__onSysWM (event);
 				
-				case 30: // etRenderContextLost
+				case 32: // etRenderContextLost
 					
 					__onRenderContext (false);
 				
-				case 31: // etRenderContextRestored
+				case 33: // etRenderContextRestored
 					
 					__onRenderContext (true);
 				
@@ -654,6 +662,14 @@ class Stage extends DisplayObjectContainer {
 				
 				joystickEvent = new JoystickEvent (type, false, false, event.id, event.code, event.x, event.y);
 			
+		    case JoystickEvent.DEVICE_ADDED:
+		
+		        joystickEvent = new JoystickEvent (type, false, false, event.id); 
+
+		    case JoystickEvent.DEVICE_REMOVED:
+
+		        joystickEvent = new JoystickEvent (type, false, false, event.id);
+
 			case JoystickEvent.HAT_MOVE:
 				
 				var x = 0;
