@@ -174,24 +174,24 @@ class URLLoader extends EventDispatcher {
 				
 				dispatchHTTPStatus (code);
 				
+				var bytes:ByteArray = lime_curl_get_data (__handle);
+				
+				switch (dataFormat) {
+					
+					case TEXT, VARIABLES:
+						data = bytes == null ? "" : bytes.asString ();
+					default:
+						data = bytes;
+					
+				}
+				
 				if (code < 400) {
-					
-					var bytes:ByteArray = lime_curl_get_data (__handle);
-					
-					switch (dataFormat) {
-						
-						case TEXT, VARIABLES:
-							data = bytes == null ? "" : bytes.asString ();
-						default:
-							data = bytes;
-						
-					}
 					
 					__dataComplete ();
 					
 				} else {
 					
-					var event = new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, "HTTP status code " + Std.string (code), code);
+					var event = new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, data, code);
 					__handle = null;
 					dispatchEvent (event);
 					
