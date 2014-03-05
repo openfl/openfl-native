@@ -1,7 +1,7 @@
 package flash;
 
 
-@:arrayAccess abstract Vector<T>(Array<T>) {
+@:arrayAccess abstract Vector<T>(Array<T>) from Array<T> to Array<T> {
 	
 	
 	public var length (get, set):Int;
@@ -149,20 +149,6 @@ package flash;
 	public inline static function convert<T,U> (v:Array<T>):Vector<U> {
 		
 		return cast v;
-		
-	}
-	
-	
-	@:from static public inline function fromArray<T, U> (a:Array<U>):Vector<T> {
-		
-		return cast a;
-		
-	}
-	
-	
-	@:to public inline function toArray<T> ():Array<T> {
-		
-		return this;
 		
 	}
 	
