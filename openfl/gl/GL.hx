@@ -593,6 +593,7 @@ class GL {
 
 	public static inline  function cullFace(mode:Int):Void 
 	{
+		lime_gl_cull_face(mode);
 	}
 
 	public static inline function deleteBuffer(buffer:GLBuffer):Void 
@@ -1210,8 +1211,11 @@ class GL {
 	private static var lime_gl_create_render_buffer = load("lime_gl_create_render_buffer", 0);
 	private static var lime_gl_create_shader = load("lime_gl_create_shader", 1);
 	private static var lime_gl_create_texture = load("lime_gl_create_texture", 0);
+	private static var lime_gl_cull_face = load("lime_gl_cull_face", 1);
 	private static var lime_gl_delete_buffer = load("lime_gl_delete_buffer", 1);
+	private static var lime_gl_delete_framebuffer = load("lime_gl_delete_framebuffer", 1);
 	private static var lime_gl_delete_program = load("lime_gl_delete_program", 1);
+	private static var lime_gl_delete_render_buffer = load("lime_gl_delete_render_buffer", 1);
 	private static var lime_gl_delete_shader = load("lime_gl_delete_shader", 1);
 	private static var lime_gl_delete_texture = load("lime_gl_delete_texture", 1);
 	private static var lime_gl_depth_func = load("lime_gl_depth_func", 1);
