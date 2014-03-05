@@ -17,7 +17,7 @@ package flash;
 	
 	public function concat (?a:Array<T>):Vector<T> {
 		
-		return cast this.concat (a);
+		return this.concat (a);
 		
 	}
 	
@@ -80,7 +80,7 @@ package flash;
 	
 	public function slice (?pos:Int, ?end:Int):Vector<T> {
 		
-		return cast this.slice (pos, end);
+		return this.slice (pos, end);
 		
 	}
 	
@@ -94,7 +94,7 @@ package flash;
 	
 	public function splice (pos:Int, len:Int):Vector<T> {
 		
-		return cast this.splice (pos, len);
+		return this.splice (pos, len);
 		
 	}
 	
