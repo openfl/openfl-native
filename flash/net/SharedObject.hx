@@ -74,7 +74,7 @@ class SharedObject extends EventDispatcher {
 			
 		}
 		
-		var parts = directory.split ("/");
+		var parts = directory.split("/");
 		var oldPath = "";
 		
 		if (parts.length > 0 && parts[0].indexOf (":") > -1) {
@@ -89,7 +89,7 @@ class SharedObject extends EventDispatcher {
 			
 			if (part != "." && part != "") {
 				
-				if (total != "") {
+				if (total != "" && total != "/") {
 					
 					total += "/";
 					
