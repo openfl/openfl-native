@@ -36,6 +36,7 @@ class Stage extends DisplayObjectContainer {
 	public static var OrientationFaceUp = 5;
 	public static var OrientationFaceDown = 6;
 	
+	public var autos3d (get, set):Bool;
 	public var active (default, null):Bool;
 	public var align (get, set):StageAlign;
 	public var color (get, set):Int;
@@ -1297,6 +1298,15 @@ class Stage extends DisplayObjectContainer {
 		return value;
 		
 	}
+
+
+	private function get_autos3d ():Bool { return lime_stage_get_autos3d (__handle); }
+	private function set_autos3d (value:Bool):Bool {
+		
+		lime_stage_set_autos3d (__handle, value);
+		return value;
+		
+	}
 	
 	
 	private function get_stageHeight ():Int {
@@ -1322,6 +1332,8 @@ class Stage extends DisplayObjectContainer {
 	
 	private static var lime_set_stage_handler = Lib.load ("lime", "lime_set_stage_handler", 4);
 	private static var lime_render_stage = Lib.load ("lime", "lime_render_stage", 1);
+	private static var lime_stage_get_autos3d = Lib.load ("lime", "lime_stage_get_autos3d", 1);
+	private static var lime_stage_set_autos3d = Lib.load ("lime", "lime_stage_set_autos3d", 2);
 	private static var lime_stage_get_focus_id = Lib.load ("lime", "lime_stage_get_focus_id", 1);
 	private static var lime_stage_set_focus = Lib.load ("lime", "lime_stage_set_focus", 3);
 	private static var lime_stage_get_focus_rect = Lib.load ("lime", "lime_stage_get_focus_rect", 1);

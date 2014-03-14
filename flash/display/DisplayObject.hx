@@ -42,6 +42,7 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	public var width (get, set):Float;
 	public var x (get, set):Float;
 	public var y (get, set):Float;
+	public var z (get, set):Float;
 	
 	@:noCompletion public var __handle:Dynamic;
 	@:noCompletion private var __filters:Array<Dynamic>;
@@ -747,6 +748,15 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 		
 	}
 	
+
+	private function get_z ():Float { return lime_display_object_get_z (__handle); }
+	private function set_z (value:Float):Float {
+		
+		lime_display_object_set_z (__handle, value);
+		return value;
+		
+	}
+	
 	
 	
 	
@@ -763,6 +773,8 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	private static var lime_display_object_set_x = Lib.load ("lime", "lime_display_object_set_x", 2);
 	private static var lime_display_object_get_y = Lib.load ("lime", "lime_display_object_get_y", 1);
 	private static var lime_display_object_set_y = Lib.load ("lime", "lime_display_object_set_y", 2);
+	private static var lime_display_object_get_z = Lib.load ("lime", "lime_display_object_get_z", 1);
+	private static var lime_display_object_set_z = Lib.load ("lime", "lime_display_object_set_z", 2);
 	private static var lime_display_object_get_scale_x = Lib.load ("lime", "lime_display_object_get_scale_x", 1);
 	private static var lime_display_object_set_scale_x = Lib.load ("lime", "lime_display_object_set_scale_x", 2);
 	private static var lime_display_object_get_scale_y = Lib.load ("lime", "lime_display_object_get_scale_y", 1);
