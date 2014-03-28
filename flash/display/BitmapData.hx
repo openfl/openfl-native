@@ -750,7 +750,7 @@ class BitmapData implements IBitmapDrawable {
 	private static var lime_bitmap_data_height = Lib.load ("lime", "lime_bitmap_data_height", 1);
 	private static var lime_bitmap_data_width = Lib.load ("lime", "lime_bitmap_data_width", 1);
 	private static var lime_bitmap_data_get_transparent = Lib.load ("lime", "lime_bitmap_data_get_transparent", 1);
-	private static var lime_bitmap_data_set_flags = Lib.load ("lime", "lime_bitmap_data_set_flags", 1);
+	private static var lime_bitmap_data_set_flags = Lib.load ("lime", "lime_bitmap_data_set_flags", 2);
 	private static var lime_bitmap_data_encode = Lib.load ("lime", "lime_bitmap_data_encode", 3);
 	private static var lime_bitmap_data_dump_bits = Lib.load ("lime", "lime_bitmap_data_dump_bits", 1);
 	private static var lime_bitmap_data_flood_fill = Lib.load ("lime", "lime_bitmap_data_flood_fill", 4);
