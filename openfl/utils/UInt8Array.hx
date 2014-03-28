@@ -42,7 +42,7 @@ class UInt8Array extends ArrayBufferView implements ArrayAccess<Int> {
 			for (i in 0...this.length) {
 				
 				#if cpp
-				untyped __global__.__hxcpp_memory_set_byte (bytes, i, ints[i]);
+				untyped __global__.__hxcpp_memory_set_byte (bytes, i, ints[i + start]);
 				#else
 				buffer.writeByte(ints[i + start]);
 				#end
