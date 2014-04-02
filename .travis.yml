@@ -14,7 +14,7 @@ before_install:
   - haxelib setup ~/haxelib
   - haxelib git openfl https://github.com/openfl/openfl
   - haxelib git lime-tools https://github.com/openfl/lime-tools
-  - haxelib git hxlibc https://github.com/openfl/hxlibc
+  - haxelib git hxcpp https://github.com/openfl/hxcpp
   - haxelib git lime https://github.com/openfl/lime
   - haxelib git lime-build https://github.com/openfl/lime-build
   - haxelib install munit
@@ -24,6 +24,6 @@ before_install:
   - haxelib dev openfl-native $(pwd)
 
 script:
-  - haxelib run openfl rebuild linux,tools
-  #- haxelib run openfl test ~/openfl-validation linux
-  #- haxelib run openfl test ~/openfl-validation neko
+  - haxelib run lime rebuild linux,tools
+  #- haxelib run lime test ~/openfl-validation linux
+  #- haxelib run lime test ~/openfl-validation neko
