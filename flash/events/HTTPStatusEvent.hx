@@ -7,14 +7,14 @@ class HTTPStatusEvent extends Event {
 	public static var HTTP_STATUS = "httpStatus";
 	
 	public var status:Int;
-	
+	public var responseHeaders : Array<flash.net.URLRequestHeader>;
 	
 	public function new (type:String, bubbles:Bool = false, cancelable:Bool = false, status:Int = 0) {
 		
 		super (type, bubbles, cancelable);
 		
 		this.status = status;
-		
+		this.responseHeaders = [];
 	}
 	
 	

@@ -114,6 +114,9 @@ class Stage extends DisplayObjectContainer {
 		__touchInfo = new Map <Int, TouchInfo> ();
 		__joyAxisData = new Map <Int, Array<Float>> ();
 		
+		#if(cpp && (safeMode || debug))
+ 		untyped __global__.__hxcpp_set_critical_error_handler( function(message:String) { throw message; } );
+ 		#end
 	}
 	
 	

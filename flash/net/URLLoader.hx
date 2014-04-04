@@ -143,8 +143,15 @@ class URLLoader extends EventDispatcher {
 	
 	private function dispatchHTTPStatus (code:Int):Void {
 		
-		dispatchEvent (new HTTPStatusEvent (HTTPStatusEvent.HTTP_STATUS, false, false, code));
-		
+		var o = new HTTPStatusEvent (HTTPStatusEvent.HTTP_STATUS, false, false, code);
+ 		var headers : Array<String> = lime_curl_get_headers (__handle);
+ 		for( h in headers ){
+ 			var idx = h.indexOf(": ");
+ 			if( idx > 0 )
+ 				o.responseHeaders.push( new flash.net.URLRequestHeader( h.substr(0,idx), h.substr(idx+2,h.length-idx-4) ) );
+ 		}
+ 		dispatchEvent (o);
+	
 	}
 	
 	
@@ -282,7 +289,7 @@ class URLLoader extends EventDispatcher {
 	private static var lime_curl_get_error_message = Lib.load ("lime", "lime_curl_get_error_message", 1);
 	private static var lime_curl_get_data = Lib.load ("lime", "lime_curl_get_data", 1);
 	private static var lime_curl_get_cookies = Lib.load ("lime", "lime_curl_get_cookies", 1);
+	private static var lime_curl_get_headers = Lib.load ("lime", "lime_curl_get_headers", 1);
 	private static var lime_curl_initialize = Lib.load ("lime", "lime_curl_initialize", 1);
-	
 	
 }

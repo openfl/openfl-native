@@ -23,6 +23,7 @@ class URLRequest {
 	public var requestHeaders:Array<URLRequestHeader>;
 	public var url:String;
 	public var verbose:Bool;
+	public var followRedirects:Bool;
 	
 	@:noCompletion public var __bytes:ByteArray;
 	
@@ -43,7 +44,7 @@ class URLRequest {
 		authType = 0;
 		contentType = "application/x-www-form-urlencoded";
 		credentials = "";
-		
+		followRedirects = true;
 	}
 	
 	
