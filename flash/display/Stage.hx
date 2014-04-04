@@ -416,6 +416,12 @@ class Stage extends DisplayObjectContainer {
 					
 					var touchInfo = __touchInfo.get (event.value);
 					__onTouch (event, TouchEvent.TOUCH_MOVE, touchInfo);
+
+					if ((event.flags & 0x8000) > 0) {
+						
+						__onMouse (event, MouseEvent.MOUSE_MOVE, false);
+						
+					}
 				
 				case 17: // etTouchEnd
 					
@@ -957,30 +963,9 @@ class Stage extends DisplayObjectContainer {
 			touchEvent.touchPointID = event.value;
 			touchEvent.isPrimaryTouchPoint = (event.flags & 0x8000) > 0;
 			
-			if (touchEvent.isPrimaryTouchPoint) {
-				
-				var mouseEvent = MouseEvent.__create (type, event, local, object);
-				__checkInOuts (mouseEvent, stack);
-				object.__fireEvent (touchEvent);
-				
-			}
-			
 			__checkInOuts (touchEvent, stack, touchInfo);
 			object.__fireEvent (touchEvent);
-			
-			if (touchEvent.isPrimaryTouchPoint && type == TouchEvent.TOUCH_MOVE) {
 				
-				if (__dragObject != null) {
-					
-					__drag (new Point (event.x, event.y));
-					
-				}
-				
-				var mouseEvent = MouseEvent.__create(MouseEvent.MOUSE_MOVE, event, local, object);
-				object.__fireEvent (mouseEvent);
-				
-			}
-			
 		} else {
 			
 			var touchEvent = TouchEvent.__create (type, event, new Point (event.x, event.y), null, event.scaleX, event.scaleY);
