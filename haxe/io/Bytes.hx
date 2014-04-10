@@ -21,6 +21,10 @@
  */
 package haxe.io;
 
+#if ((haxe_ver > 3.102) && cpp)
+using cpp.NativeArray;
+#end
+
 class Bytes {
 
 	public var length(default,null) : Int;
@@ -83,6 +87,8 @@ class Bytes {
 		java.lang.System.arraycopy(src.b, srcpos, b, pos, len);
 		#elseif cs
 		cs.system.Array.Copy(src.b, srcpos, b, pos, len);
+		#elseif ((haxe_ver > 3.102) && cpp)
+		b.blit(pos, src.b, srcpos, len);
 		#else
 		var b1 = b;
 		var b2 = src.b;
@@ -110,6 +116,8 @@ class Bytes {
 		pos += len&~3;
 		for( i in 0...len&3 )
 			set(pos++,value);
+		#elseif ((haxe_ver > 3.102) && cpp)
+		untyped __global__.__hxcpp_memory_memset(b,pos,len,value);
 		#else
 		for( i in 0...len )
 			set(pos++, value);
@@ -175,6 +183,8 @@ class Bytes {
 		return untyped __php__("$this->b < $other->b ? -1 : ($this->b == $other->b ? 0 : 1)");
 		//#elseif cs
 		//TODO: memcmp if unsafe flag is on
+		#elseif ((haxe_ver > 3.102) && cpp)
+		return b.memcmp(other.b);
 		#else
 		var b1 = b;
 		var b2 = other.b;
@@ -190,13 +200,16 @@ class Bytes {
 		#end
 	}
 
-	#if (haxe_ver > 3101)
+	#if (haxe_ver > 3.101)
 	public function getDouble( pos : Int ) : Float {
 		#if neko
 		return untyped Input._double_of_bytes(sub(pos,8).b,false);
 		#elseif flash9
 		b.position = pos;
 		return b.readDouble();
+		#elseif ((haxe_ver > 3.102) && cpp)
+		if( pos < 0 || pos + 8 > length ) throw Error.OutsideBounds;
+		return untyped __global__.__hxcpp_memory_get_double(b,pos);
 		#else
 		var b = new haxe.io.BytesInput(this,pos,8);
 		return b.readDouble();
@@ -209,6 +222,9 @@ class Bytes {
 		#elseif flash9
 		b.position = pos;
 		return b.readFloat();
+		#elseif ((haxe_ver > 3.102) && cpp)
+		if( pos < 0 || pos + 4 > length ) throw Error.OutsideBounds;
+		return untyped __global__.__hxcpp_memory_get_float(b,pos);
 		#else
 		var b = new haxe.io.BytesInput(this,pos,4);
 		return b.readFloat();
@@ -221,6 +237,9 @@ class Bytes {
 		#elseif flash9
 		b.position = pos;
 		b.writeDouble(v);
+		#elseif ((haxe_ver > 3.102) && cpp)
+		if( pos < 0 || pos + 8 > length ) throw Error.OutsideBounds;
+		untyped __global__.__hxcpp_memory_set_double(b,pos,v);
 		#else
 		throw "Not supported";
 		#end
@@ -232,13 +251,16 @@ class Bytes {
 		#elseif flash9
 		b.position = pos;
 		b.writeFloat(v);
+		#elseif ((haxe_ver > 3.102) && cpp)
+		if( pos < 0 || pos + 4 > length ) throw Error.OutsideBounds;
+		untyped __global__.__hxcpp_memory_set_float(b,pos,v);
 		#else
 		throw "Not supported";
 		#end
 	}
 	#end
 
-	#if (haxe_ver > 3101)
+	#if (haxe_ver > 3.101)
 	public function getString( pos : Int, len : Int ) : String {
 	#else
 	public function readString( pos : Int, len : Int ) : String {
@@ -293,7 +315,7 @@ class Bytes {
 		#end
 	}
 
-	#if (haxe_ver > 3101)
+	#if (haxe_ver > 3.101)
 	@:deprecated("readString is deprecated, use getString instead")
 	@:noCompletion
 	public inline function readString(pos:Int, len:Int):String {
@@ -318,7 +340,11 @@ class Bytes {
 		}
 		catch (e:Dynamic) throw e;
 		#else
+		#if (haxe_ver > 3.101)
 		return getString(0,length);
+		#else
+		return readString(0,length);
+		#end
 		#end
 	}
 
@@ -444,7 +470,11 @@ class Bytes {
 		#elseif php
 		return untyped __call__("ord", b[pos]);
 		#elseif cpp
+		#if (haxe_ver > 3.102)
+		return untyped b.unsafeGet(pos);
+		#else
 		return untyped b[pos];
+		#end
 		#elseif java
 		return untyped b[pos] & 0xFF;
 		#else
