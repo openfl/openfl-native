@@ -5,6 +5,7 @@
 	
 	<set name="openfl" />
 	<include haxelib="lime" />
+	<haxelib name="lime" if="setup" />
 	
 	<haxeflag name="--macro" value="allowPackage('flash')" />
 	

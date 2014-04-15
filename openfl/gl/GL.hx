@@ -433,165 +433,165 @@ class GL {
 	public static var drawingBufferWidth(get_drawingBufferWidth, null):Int;
 	public static var version(get_version, null):Int;
 
-	public static inline  function activeTexture(texture:Int):Void { lime_gl_active_texture(texture); }
+	public static inline function activeTexture(texture:Int):Void { lime_gl_active_texture(texture); }
 
-	public static inline  function attachShader(program:GLProgram, shader:GLShader):Void 
+	public static inline function attachShader(program:GLProgram, shader:GLShader):Void 
 	{
 		program.attach(shader);
 		lime_gl_attach_shader(program.id, shader.id);
 	}
 
-	public static inline  function bindAttribLocation(program:GLProgram, index:Int, name:String):Void 
+	public static inline function bindAttribLocation(program:GLProgram, index:Int, name:String):Void 
 	{
 		lime_gl_bind_attrib_location(program.id, index, name);
 	}
 
-	public static inline  function bindBitmapDataTexture(texture:BitmapData):Void 
+	public static inline function bindBitmapDataTexture(texture:BitmapData):Void 
 	{
 		lime_gl_bind_bitmap_data_texture(texture.__handle);
 	}
 
-	public static inline  function bindBuffer(target:Int, buffer:GLBuffer):Void 
+	public static inline function bindBuffer(target:Int, buffer:GLBuffer):Void 
 	{
-		lime_gl_bind_buffer(target, buffer == null ? 0 : buffer.id);
+		lime_gl_bind_buffer(target, buffer == null ? null : buffer.id);
 	}
 
-	public static inline  function bindFramebuffer(target:Int, framebuffer:GLFramebuffer):Void 
+	public static inline function bindFramebuffer(target:Int, framebuffer:GLFramebuffer):Void 
 	{
-		lime_gl_bind_framebuffer(target, framebuffer == null ? 0 : framebuffer.id);
+		lime_gl_bind_framebuffer(target, framebuffer == null ? null : framebuffer.id);
 	}
 
-	public static inline  function bindRenderbuffer(target:Int, renderbuffer:GLRenderbuffer):Void 
+	public static inline function bindRenderbuffer(target:Int, renderbuffer:GLRenderbuffer):Void 
 	{
-		lime_gl_bind_renderbuffer(target, renderbuffer == null ? 0 : renderbuffer.id);
+		lime_gl_bind_renderbuffer(target, renderbuffer == null ? null : renderbuffer.id);
 	}
 
-	public static inline  function bindTexture(target:Int, texture:GLTexture):Void 
+	public static inline function bindTexture(target:Int, texture:GLTexture):Void 
 	{
-		lime_gl_bind_texture(target, texture == null ? 0 : texture.id);
+		lime_gl_bind_texture(target, texture == null ? null : texture.id);
 	}
 
-	public static inline  function blendColor(red:Float, green:Float, blue:Float, alpha:Float):Void 
+	public static inline function blendColor(red:Float, green:Float, blue:Float, alpha:Float):Void 
 	{
 		lime_gl_blend_color(red, green, blue, alpha);
 	}
 
-	public static inline  function blendEquation(mode:Int):Void 
+	public static inline function blendEquation(mode:Int):Void 
 	{
 		lime_gl_blend_equation(mode);
 	}
 
-	public static inline  function blendEquationSeparate(modeRGB:Int, modeAlpha:Int):Void 
+	public static inline function blendEquationSeparate(modeRGB:Int, modeAlpha:Int):Void 
 	{
 		lime_gl_blend_equation_separate(modeRGB, modeAlpha);
 	}
 
-	public static inline  function blendFunc(sfactor:Int, dfactor:Int):Void 
+	public static inline function blendFunc(sfactor:Int, dfactor:Int):Void 
 	{
 		lime_gl_blend_func(sfactor, dfactor);
 	}
 
-	public static inline  function blendFuncSeparate(srcRGB:Int, dstRGB:Int, srcAlpha:Int, dstAlpha:Int):Void 
+	public static inline function blendFuncSeparate(srcRGB:Int, dstRGB:Int, srcAlpha:Int, dstAlpha:Int):Void 
 	{
 		lime_gl_blend_func_separate(srcRGB, dstRGB, srcAlpha, dstAlpha);
 	}
 
-	public static inline  function bufferData(target:Int, data:IMemoryRange, usage:Int):Void 
+	public static inline function bufferData(target:Int, data:IMemoryRange, usage:Int):Void 
 	{
 		lime_gl_buffer_data(target, data.getByteBuffer(), data.getStart(), data.getLength(), usage);
 	}
 
-	public static inline  function bufferSubData(target:Int, offset:Int, data:IMemoryRange):Void 
+	public static inline function bufferSubData(target:Int, offset:Int, data:IMemoryRange):Void 
 	{
 		lime_gl_buffer_sub_data(target, offset, data.getByteBuffer(), data.getStart(), data.getLength());
 	}
 
-	public static inline  function checkFramebufferStatus(target:Int):Int 
+	public static inline function checkFramebufferStatus(target:Int):Int 
 	{
 		return lime_gl_check_framebuffer_status(target);
 	}
 
-	public static inline  function clear(mask:Int):Void 
+	public static inline function clear(mask:Int):Void 
 	{
 		lime_gl_clear(mask);
 	}
 
-	public static inline  function clearColor(red:Float, green:Float, blue:Float, alpha:Float):Void 
+	public static inline function clearColor(red:Float, green:Float, blue:Float, alpha:Float):Void 
 	{
 		lime_gl_clear_color(red, green, blue, alpha);
 	}
 
-	public static inline  function clearDepth(depth:Float):Void 
+	public static inline function clearDepth(depth:Float):Void 
 	{
 		lime_gl_clear_depth(depth);
 	}
 
-	public static inline  function clearStencil(s:Int):Void 
+	public static inline function clearStencil(s:Int):Void 
 	{
 		lime_gl_clear_stencil(s);
 	}
 
-	public static inline  function colorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool):Void 
+	public static inline function colorMask(red:Bool, green:Bool, blue:Bool, alpha:Bool):Void 
 	{
 		lime_gl_color_mask(red, green, blue, alpha);
 	}
 
-	public static inline  function compileShader(shader:GLShader):Void 
+	public static inline function compileShader(shader:GLShader):Void 
 	{
 		lime_gl_compile_shader(shader.id);
 	}
 
-	public static inline  function compressedTexImage2D(target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, data:IMemoryRange):Void 
+	public static inline function compressedTexImage2D(target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, data:IMemoryRange):Void 
 	{
 		lime_gl_compressed_tex_image_2d(target, level, internalformat, width, height, border, data == null ? null : data.getByteBuffer(), data == null ? null : data.getStart());
 	}
 
-	public static inline  function compressedTexSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, width:Int, height:Int, format:Int, data:IMemoryRange):Void 
+	public static inline function compressedTexSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, width:Int, height:Int, format:Int, data:IMemoryRange):Void 
 	{
 		lime_gl_compressed_tex_sub_image_2d(target, level, xoffset, yoffset, width, height, format, data == null ? null : data.getByteBuffer(), data == null ? null : data.getStart());
 	}
 
-	public static inline  function copyTexImage2D(target:Int, level:Int, internalformat:Int, x:Int, y:Int, width:Int, height:Int, border:Int):Void 
+	public static inline function copyTexImage2D(target:Int, level:Int, internalformat:Int, x:Int, y:Int, width:Int, height:Int, border:Int):Void 
 	{
 		lime_gl_copy_tex_image_2d(target, level, internalformat, x, y, width, height, border);
 	}
 
-	public static inline  function copyTexSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, x:Int, y:Int, width:Int, height:Int):Void 
+	public static inline function copyTexSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, x:Int, y:Int, width:Int, height:Int):Void 
 	{
 		lime_gl_copy_tex_sub_image_2d(target, level, xoffset, yoffset, x, y, width, height);
 	}
 
-	public static inline  function createBuffer():GLBuffer 
+	public static inline function createBuffer():GLBuffer 
 	{
 		return new GLBuffer(version, lime_gl_create_buffer());
 	}
 
-	public static inline  function createFramebuffer():GLFramebuffer 
+	public static inline function createFramebuffer():GLFramebuffer 
 	{
 		return new GLFramebuffer(version, lime_gl_create_framebuffer());
 	}
 
-	public static inline  function createProgram():GLProgram 
+	public static inline function createProgram():GLProgram 
 	{
 		return new GLProgram(version, lime_gl_create_program());
 	}
 
-	public static inline  function createRenderbuffer():GLRenderbuffer 
+	public static inline function createRenderbuffer():GLRenderbuffer 
 	{
 		return new GLRenderbuffer(version, lime_gl_create_render_buffer());
 	}
 
-	public static inline  function createShader(type:Int):GLShader 
+	public static inline function createShader(type:Int):GLShader 
 	{
 		return new GLShader(version, lime_gl_create_shader(type));
 	}
 
-	public static inline  function createTexture():GLTexture 
+	public static inline function createTexture():GLTexture 
 	{
 		return new GLTexture(version, lime_gl_create_texture());
 	}
 
-	public static inline  function cullFace(mode:Int):Void 
+	public static inline function cullFace(mode:Int):Void 
 	{
 		lime_gl_cull_face(mode);
 	}
@@ -750,7 +750,7 @@ class GL {
 		return lime_gl_get_error();
 	}
 
-	public static inline  function getExtension(name:String):Dynamic 
+	public static inline function getExtension(name:String):Dynamic 
 	{
 		// Hmmm
 		return null;
@@ -818,7 +818,7 @@ class GL {
 		return lime_gl_get_uniform(program.id, location);
 	}
 
-	public static inline  function getUniformLocation(program:GLProgram, name:String):Dynamic 
+	public static inline function getUniformLocation(program:GLProgram, name:String):Dynamic 
 	{
 		return lime_gl_get_uniform_location(program.id, name);
 	}
@@ -833,54 +833,54 @@ class GL {
 		return lime_gl_get_vertex_attrib_offset(index, pname);
 	}
 
-	public static inline  function hint(target:Int, mode:Int):Void 
+	public static inline function hint(target:Int, mode:Int):Void 
 	{
 		lime_gl_hint(target, mode);
 	}
 
-	public static inline  function isBuffer(buffer:GLBuffer):Bool 
+	public static inline function isBuffer(buffer:GLBuffer):Bool 
 	{
-		return buffer != null && buffer.id > 0 && lime_gl_is_buffer(buffer.id);
+		return buffer != null && lime_gl_is_buffer(buffer.id);
 	}
 
 	// This is non-static
 	// public function isContextLost():Bool { return false; }
-	public static inline  function isEnabled(cap:Int):Bool 
+	public static inline function isEnabled(cap:Int):Bool 
 	{
 		return lime_gl_is_enabled(cap);
 	}
 
-	public static inline  function isFramebuffer(framebuffer:GLFramebuffer):Bool 
+	public static inline function isFramebuffer(framebuffer:GLFramebuffer):Bool 
 	{
-		return framebuffer != null && framebuffer.id > 0 && lime_gl_is_framebuffer(framebuffer.id);
+		return framebuffer != null && lime_gl_is_framebuffer(framebuffer.id);
 	}
 
-	public static inline  function isProgram(program:GLProgram):Bool 
+	public static inline function isProgram(program:GLProgram):Bool 
 	{
-		return program != null && program.id > 0 && lime_gl_is_program(program.id);
+		return program != null && lime_gl_is_program(program.id);
 	}
 
-	public static inline  function isRenderbuffer(renderbuffer:GLRenderbuffer):Bool 
+	public static inline function isRenderbuffer(renderbuffer:GLRenderbuffer):Bool 
 	{
-		return renderbuffer != null && renderbuffer.id > 0 && lime_gl_is_renderbuffer(renderbuffer.id);
+		return renderbuffer != null && lime_gl_is_renderbuffer(renderbuffer.id);
 	}
 
-	public static inline  function isShader(shader:GLShader):Bool 
+	public static inline function isShader(shader:GLShader):Bool 
 	{
-		return shader != null && shader.id > 0 && lime_gl_is_shader(shader.id);
+		return shader != null && lime_gl_is_shader(shader.id);
 	}
 
-	public static inline  function isTexture(texture:GLTexture):Bool 
+	public static inline function isTexture(texture:GLTexture):Bool 
 	{
-		return texture != null && texture.id > 0 && lime_gl_is_texture(texture.id);
+		return texture != null && lime_gl_is_texture(texture.id);
 	}
 
-	public static inline  function lineWidth(width:Float):Void 
+	public static inline function lineWidth(width:Float):Void 
 	{
 		lime_gl_line_width(width);
 	}
 
-	public static inline  function linkProgram(program:GLProgram):Void 
+	public static inline function linkProgram(program:GLProgram):Void 
 	{
 		lime_gl_link_program(program.id);
 	}
@@ -898,263 +898,263 @@ class GL {
 		}
 	}
 
-	public static inline  function pixelStorei(pname:Int, param:Int):Void 
+	public static inline function pixelStorei(pname:Int, param:Int):Void 
 	{
 		lime_gl_pixel_storei(pname, param);
 	}
 
-	public static inline  function polygonOffset(factor:Float, units:Float):Void 
+	public static inline function polygonOffset(factor:Float, units:Float):Void 
 	{
 		lime_gl_polygon_offset(factor, units);
 	}
 
-	public static inline  function readPixels(x:Int, y:Int, width:Int, height:Int, format:Int, type:Int, pixels:ByteArray):Void 
+	public static inline function readPixels(x:Int, y:Int, width:Int, height:Int, format:Int, type:Int, pixels:ByteArray):Void 
 	{
 		lime_gl_read_pixels(x, y, width, height, format, type, pixels == null ? null : pixels.getByteBuffer(), pixels == null ? null : pixels.getStart());
 	}
 
-	public static inline  function renderbufferStorage(target:Int, internalformat:Int, width:Int, height:Int):Void 
+	public static inline function renderbufferStorage(target:Int, internalformat:Int, width:Int, height:Int):Void 
 	{
 		lime_gl_renderbuffer_storage(target, internalformat, width, height);
 	}
 
-	public static inline  function sampleCoverage(value:Float, invert:Bool):Void 
+	public static inline function sampleCoverage(value:Float, invert:Bool):Void 
 	{
 		lime_gl_sample_coverage(value, invert);
 	}
 
-	public static inline  function scissor(x:Int, y:Int, width:Int, height:Int):Void 
+	public static inline function scissor(x:Int, y:Int, width:Int, height:Int):Void 
 	{
 		lime_gl_scissor(x, y, width, height);
 	}
 
-	public static inline  function shaderSource(shader:GLShader, source:String):Void 
+	public static inline function shaderSource(shader:GLShader, source:String):Void 
 	{
 		lime_gl_shader_source(shader.id, source);
 	}
 
-	public static inline  function stencilFunc(func:Int, ref:Int, mask:Int):Void 
+	public static inline function stencilFunc(func:Int, ref:Int, mask:Int):Void 
 	{
 		lime_gl_stencil_func(func, ref, mask);
 	}
 
-	public static inline  function stencilFuncSeparate(face:Int, func:Int, ref:Int, mask:Int):Void 
+	public static inline function stencilFuncSeparate(face:Int, func:Int, ref:Int, mask:Int):Void 
 	{
 		lime_gl_stencil_func_separate(face, func, ref, mask);
 	}
 
-	public static inline  function stencilMask(mask:Int):Void 
+	public static inline function stencilMask(mask:Int):Void 
 	{
 		lime_gl_stencil_mask(mask);
 	}
 
-	public static inline  function stencilMaskSeparate(face:Int, mask:Int):Void 
+	public static inline function stencilMaskSeparate(face:Int, mask:Int):Void 
 	{
 		lime_gl_stencil_mask_separate(face, mask);
 	}
 
-	public static inline  function stencilOp(fail:Int, zfail:Int, zpass:Int):Void 
+	public static inline function stencilOp(fail:Int, zfail:Int, zpass:Int):Void 
 	{
 		lime_gl_stencil_op(fail, zfail, zpass);
 	}
 
-	public static inline  function stencilOpSeparate(face:Int, fail:Int, zfail:Int, zpass:Int):Void 
+	public static inline function stencilOpSeparate(face:Int, fail:Int, zfail:Int, zpass:Int):Void 
 	{
 		lime_gl_stencil_op_separate(face, fail, zfail, zpass);
 	}
 
-	public static inline  function texImage2D(target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, pixels:ArrayBufferView):Void
+	public static inline function texImage2D(target:Int, level:Int, internalformat:Int, width:Int, height:Int, border:Int, format:Int, type:Int, pixels:ArrayBufferView):Void
 	{
 		lime_gl_tex_image_2d(target, level, internalformat, width, height, border, format, type, pixels == null ? null : pixels.getByteBuffer(), pixels == null ? null : pixels.getStart());
 	}
 
-	public static inline  function texParameterf(target:Int, pname:Int, param:Float):Void 
+	public static inline function texParameterf(target:Int, pname:Int, param:Float):Void 
 	{
 		lime_gl_tex_parameterf(target, pname, param);
 	}
 
-	public static inline  function texParameteri(target:Int, pname:Int, param:Int):Void 
+	public static inline function texParameteri(target:Int, pname:Int, param:Int):Void 
 	{
 		lime_gl_tex_parameteri(target, pname, param);
 	}
 
-	public static inline  function texSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, width:Int, height:Int, format:Int, type:Int, pixels:ArrayBufferView):Void
+	public static inline function texSubImage2D(target:Int, level:Int, xoffset:Int, yoffset:Int, width:Int, height:Int, format:Int, type:Int, pixels:ArrayBufferView):Void
 	{
 		lime_gl_tex_sub_image_2d(target, level, xoffset, yoffset, width, height, format, type, pixels == null ? null : pixels.getByteBuffer(), pixels == null ? null : pixels.getStart());
 	}
 
-	public static inline  function uniform1f(location:GLUniformLocation, x:Float):Void 
+	public static inline function uniform1f(location:GLUniformLocation, x:Float):Void 
 	{
 		lime_gl_uniform1f(location, x);
 	}
 
-	public static inline  function uniform1fv(location:GLUniformLocation, x:Float32Array):Void 
+	public static inline function uniform1fv(location:GLUniformLocation, x:Float32Data):Void 
 	{
-		lime_gl_uniform1fv(location, x.getByteBuffer());
+		lime_gl_uniform1fv(location, x);
 	}
 
-	public static inline  function uniform1i(location:GLUniformLocation, x:Int):Void 
+	public static inline function uniform1i(location:GLUniformLocation, x:Int):Void 
 	{
 		lime_gl_uniform1i(location, x);
 	}
 
-	public static inline  function uniform1iv(location:GLUniformLocation, v:Array<Int>):Void 
+	public static inline function uniform1iv(location:GLUniformLocation, v:Array<Int>):Void 
 	{
 		lime_gl_uniform1iv(location, v);
 	}
 
-	public static inline  function uniform2f(location:GLUniformLocation, x:Float, y:Float):Void 
+	public static inline function uniform2f(location:GLUniformLocation, x:Float, y:Float):Void 
 	{
 		lime_gl_uniform2f(location, x, y);
 	}
 
-	public static inline  function uniform2fv(location:GLUniformLocation, v:Float32Array):Void 
+	public static inline function uniform2fv(location:GLUniformLocation, v:Float32Data):Void 
 	{
-		lime_gl_uniform2fv(location, v.getByteBuffer());
+		lime_gl_uniform2fv(location, v);
 	}
 
-	public static inline  function uniform2i(location:GLUniformLocation, x:Int, y:Int):Void 
+	public static inline function uniform2i(location:GLUniformLocation, x:Int, y:Int):Void 
 	{
 		lime_gl_uniform2i(location, x, y);
 	}
 
-	public static inline  function uniform2iv(location:GLUniformLocation, v:Array<Int>):Void 
+	public static inline function uniform2iv(location:GLUniformLocation, v:Array<Int>):Void 
 	{
 		lime_gl_uniform2iv(location, v);
 	}
 
-	public static inline  function uniform3f(location:GLUniformLocation, x:Float, y:Float, z:Float):Void 
+	public static inline function uniform3f(location:GLUniformLocation, x:Float, y:Float, z:Float):Void 
 	{
 		lime_gl_uniform3f(location, x, y, z);
 	}
 
-	public static inline  function uniform3fv(location:GLUniformLocation, v:Float32Array):Void 
+	public static inline function uniform3fv(location:GLUniformLocation, v:Float32Data):Void 
 	{
-		lime_gl_uniform3fv(location, v.getByteBuffer());
+		lime_gl_uniform3fv(location, v);
 	}
 
-	public static inline  function uniform3i(location:GLUniformLocation, x:Int, y:Int, z:Int):Void 
+	public static inline function uniform3i(location:GLUniformLocation, x:Int, y:Int, z:Int):Void 
 	{
 		lime_gl_uniform3i(location, x, y, z);
 	}
 
-	public static inline  function uniform3iv(location:GLUniformLocation, v:Array<Int>):Void 
+	public static inline function uniform3iv(location:GLUniformLocation, v:Array<Int>):Void 
 	{
 		lime_gl_uniform3iv(location, v);
 	}
 
-	public static inline  function uniform4f(location:GLUniformLocation, x:Float, y:Float, z:Float, w:Float):Void 
+	public static inline function uniform4f(location:GLUniformLocation, x:Float, y:Float, z:Float, w:Float):Void 
 	{
 		lime_gl_uniform4f(location, x, y, z, w);
 	}
 
-	public static inline  function uniform4fv(location:GLUniformLocation, v:Float32Array):Void 
+	public static inline function uniform4fv(location:GLUniformLocation, v:Float32Data):Void 
 	{
-		lime_gl_uniform4fv(location, v.getByteBuffer());
+		lime_gl_uniform4fv(location, v);
 	}
 
-	public static inline  function uniform4i(location:GLUniformLocation, x:Int, y:Int, z:Int, w:Int):Void 
+	public static inline function uniform4i(location:GLUniformLocation, x:Int, y:Int, z:Int, w:Int):Void 
 	{
 		lime_gl_uniform4i(location, x, y, z, w);
 	}
 
-	public static inline  function uniform4iv(location:GLUniformLocation, v:Float32Array):Void 
+	public static inline function uniform4iv(location:GLUniformLocation, v:Float32Data):Void 
 	{
 		lime_gl_uniform4iv(location, v);
 	}
 
-	public static inline  function uniformMatrix2fv(location:GLUniformLocation, transpose:Bool, v:Float32Array):Void 
+	public static inline function uniformMatrix2fv(location:GLUniformLocation, transpose:Bool, v:Float32Data):Void 
 	{
 		#if mobile
 			if( transpose )
 				throw "Unsupported in GLES";
 		#end
 		
-		lime_gl_uniform_matrix(location, transpose, v.getByteBuffer(), 2);
+		lime_gl_uniform_matrix(location, transpose, v, 2);
 	}
 
-	public static inline  function uniformMatrix3fv(location:GLUniformLocation, transpose:Bool, v:Float32Array):Void 
+	public static inline function uniformMatrix3fv(location:GLUniformLocation, transpose:Bool, v:Float32Data):Void 
 	{
 		#if mobile
 			if( transpose )
 				throw "Unsupported in GLES";
 		#end
 		
-		lime_gl_uniform_matrix(location, transpose, v.getByteBuffer(), 3);
+		lime_gl_uniform_matrix(location, transpose, v, 3);
 	}
 
 	//
-	public static inline  function uniformMatrix4fv(location:GLUniformLocation, transpose:Bool, v:Float32Array):Void 
+	public static inline function uniformMatrix4fv(location:GLUniformLocation, transpose:Bool, v:Float32Data):Void 
 	{
 		#if mobile
 			if( transpose )
 				throw "Unsupported in GLES";
 		#end
 
-		lime_gl_uniform_matrix(location, transpose, v.getByteBuffer(), 4);
+		lime_gl_uniform_matrix(location, transpose, v, 4);
 	}
 
-	public static inline  function uniformMatrix3D(location:GLUniformLocation, transpose:Bool, matrix:Matrix3D):Void 
+	public static inline function uniformMatrix3D(location:GLUniformLocation, transpose:Bool, matrix:Matrix3D):Void 
 	{
-		lime_gl_uniform_matrix(location, transpose, Float32Array.fromMatrix(matrix).getByteBuffer() , 4);
+		lime_gl_uniform_matrix(location, transpose, Float32Array.fromMatrix(matrix), 4);
 	}
 
-	public static inline  function useProgram(program:GLProgram):Void 
+	public static inline function useProgram(program:GLProgram):Void 
 	{
-		lime_gl_use_program(program == null ? 0 : program.id);
+		lime_gl_use_program(program == null ? null : program.id);
 	}
 
-	public static inline  function validateProgram(program:GLProgram):Void 
+	public static inline function validateProgram(program:GLProgram):Void 
 	{
 		lime_gl_validate_program(program.id);
 	}
 
-	public static inline  function vertexAttrib1f(indx:Int, x:Float):Void 
+	public static inline function vertexAttrib1f(indx:Int, x:Float):Void 
 	{
 		lime_gl_vertex_attrib1f(indx, x);
 	}
 
-	public static inline  function vertexAttrib1fv(indx:Int, values:Float32Array):Void 
+	public static inline function vertexAttrib1fv(indx:Int, values:Float32Data):Void 
 	{
-		lime_gl_vertex_attrib1fv(indx, values.getByteBuffer());
+		lime_gl_vertex_attrib1fv(indx, values);
 	}
 
-	public static inline  function vertexAttrib2f(indx:Int, x:Float, y:Float):Void 
+	public static inline function vertexAttrib2f(indx:Int, x:Float, y:Float):Void 
 	{
 		lime_gl_vertex_attrib2f(indx, x, y);
 	}
 
-	public static inline  function vertexAttrib2fv(indx:Int, values:Float32Array):Void 
+	public static inline function vertexAttrib2fv(indx:Int, values:Float32Data):Void 
 	{
-		lime_gl_vertex_attrib2fv(indx, values.getByteBuffer());
+		lime_gl_vertex_attrib2fv(indx, values);
 	}
 
-	public static inline  function vertexAttrib3f(indx:Int, x:Float, y:Float, z:Float):Void 
+	public static inline function vertexAttrib3f(indx:Int, x:Float, y:Float, z:Float):Void 
 	{
 		lime_gl_vertex_attrib3f(indx, x, y, z);
 	}
 
-	public static inline  function vertexAttrib3fv(indx:Int, values:Float32Array):Void 
+	public static inline function vertexAttrib3fv(indx:Int, values:Float32Data):Void 
 	{
-		lime_gl_vertex_attrib3fv(indx, values.getByteBuffer());
+		lime_gl_vertex_attrib3fv(indx, values);
 	}
 
-	public static inline  function vertexAttrib4f(indx:Int, x:Float, y:Float, z:Float, w:Float):Void 
+	public static inline function vertexAttrib4f(indx:Int, x:Float, y:Float, z:Float, w:Float):Void 
 	{
 		lime_gl_vertex_attrib4f(indx, x, y, z, w);
 	}
 
-	public static inline  function vertexAttrib4fv(indx:Int, values:Float32Array):Void 
+	public static inline function vertexAttrib4fv(indx:Int, values:Float32Data):Void 
 	{
-		lime_gl_vertex_attrib4fv(indx, values.getByteBuffer());
+		lime_gl_vertex_attrib4fv(indx, values);
 	}
 
-	public static inline  function vertexAttribPointer(indx:Int, size:Int, type:Int, normalized:Bool, stride:Int, offset:Int):Void 
+	public static inline function vertexAttribPointer(indx:Int, size:Int, type:Int, normalized:Bool, stride:Int, offset:Int):Void 
 	{
 		lime_gl_vertex_attrib_pointer(indx, size, type, normalized, stride, offset);
 	}
 
-	public static inline  function viewport(x:Int, y:Int, width:Int, height:Int):Void 
+	public static inline function viewport(x:Int, y:Int, width:Int, height:Int):Void 
 	{
 		lime_gl_viewport(x, y, width, height);
 	}
@@ -1324,3 +1324,15 @@ typedef ShaderPrecisionFormat =
 	precision : Int,
 
 };
+
+
+abstract Float32Data(Dynamic) {
+	
+	public inline function new (data:Dynamic) this = data;
+	@:to inline function toDynamic () return this;
+	@:from inline static function fromFloat32Array (f:Float32Array)
+		return new Float32Data (f.getByteBuffer ());
+	@:from inline static function fromArrayFloat (f:Array<Float>)
+    	return new Float32Data (f);
+    
+}
