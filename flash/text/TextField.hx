@@ -83,7 +83,14 @@ class TextField extends InteractiveObject {
 		lime_text_field_get_text_format (__handle, result, beginIndex, endIndex);
 		return result;
 		
-	} 
+	}
+	
+	
+	public function replaceText (beginIndex:Int, endIndex:Int, newText:String):Void {
+		
+		
+		
+	}
 	
 	
 	public function setSelection (beginIndex:Int, endIndex:Int):Void {
