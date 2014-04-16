@@ -182,14 +182,6 @@ class Lib {
 		return cpp.Lib.load (library, method, args);
 		#end
 		
-		#if cpp
-		if (library == "std" || library == "zlib" || library == "regexp") {
-			
-			return cpp.Lib.loadLazy ("lime", prim, nargs);
-			
-		}
-		#end
-		
 		if (__moduleNames == null) __moduleNames = new Map<String, String> ();
 		if (__moduleNames.exists (library)) {
 			
