@@ -19,11 +19,11 @@ class URLRequest {
 	public var cookieString:String;
 	public var credentials:String;
 	public var data:Dynamic;
+	public var followRedirects:Bool;
 	public var method:String;
 	public var requestHeaders:Array<URLRequestHeader>;
 	public var url:String;
 	public var verbose:Bool;
-	public var followRedirects:Bool;
 	
 	@:noCompletion public var __bytes:ByteArray;
 	
@@ -45,6 +45,7 @@ class URLRequest {
 		contentType = "application/x-www-form-urlencoded";
 		credentials = "";
 		followRedirects = true;
+		
 	}
 	
 	

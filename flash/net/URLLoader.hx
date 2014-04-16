@@ -58,6 +58,27 @@ class URLLoader extends EventDispatcher {
 	}
 	
 	
+	private function dispatchHTTPStatus (code:Int):Void {
+		
+		var event = new HTTPStatusEvent (HTTPStatusEvent.HTTP_STATUS, false, false, code);
+		var headers:Array<String> = lime_curl_get_headers (__handle);
+		
+		for (header in headers) {
+			
+			var index = header.indexOf(": ");
+			if (index > 0) {
+				
+				event.responseHeaders.push (new URLRequestHeader (header.substr (0, index), header.substr (index + 2, header.length - index - 4)));
+				
+			}
+			
+		}
+		
+		dispatchEvent (event);
+		
+	}
+	
+	
 	public function getCookies ():Array<String> {
 		
 		return lime_curl_get_cookies (__handle);
@@ -138,20 +159,6 @@ class URLLoader extends EventDispatcher {
 		activeLoaders.remove (this);
 		dispatchEvent (new IOErrorEvent (IOErrorEvent.IO_ERROR, true, false, msg));
 		
-	}
-	
-	
-	private function dispatchHTTPStatus (code:Int):Void {
-		
-		var o = new HTTPStatusEvent (HTTPStatusEvent.HTTP_STATUS, false, false, code);
- 		var headers : Array<String> = lime_curl_get_headers (__handle);
- 		for( h in headers ){
- 			var idx = h.indexOf(": ");
- 			if( idx > 0 )
- 				o.responseHeaders.push( new flash.net.URLRequestHeader( h.substr(0,idx), h.substr(idx+2,h.length-idx-4) ) );
- 		}
- 		dispatchEvent (o);
-	
 	}
 	
 	
