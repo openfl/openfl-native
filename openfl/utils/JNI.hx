@@ -112,7 +112,7 @@ class JNI {
 	
 	
 	private static var lime_jni_create_field = Lib.load ("lime", "lime_jni_create_field", 4);
-	private static var lime_jni_create_method = Lib.load ("lime", "lime_jni_create_method", 4);
+	private static var lime_jni_create_method = Lib.load ("lime", "lime_jni_create_method", 5);
 	private static var lime_jni_get_env = Lib.load ("lime", "lime_jni_get_env", 0);
 	//private static var lime_jni_create_interface = Lib.load("lime", "lime_jni_create_interface", 3);
 	
