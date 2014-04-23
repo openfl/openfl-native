@@ -69,6 +69,13 @@ class Event {
 	}
 	
 	
+	public function isDefaultPrevented ():Bool {
+		
+		return (__isCancelled || __isCancelledNow);
+		
+	}
+	
+	
 	public function stopImmediatePropagation ():Void {
 		
 		if (cancelable) {
