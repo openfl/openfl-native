@@ -598,7 +598,7 @@ class Stage extends DisplayObjectContainer {
 		
 		if (object != null) {
 			
-			object.__fireEvent (new Event (Event.CHANGE));
+			object.__fireEvent (new Event (Event.CHANGE, true));
 			
 		}
 		
