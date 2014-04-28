@@ -204,6 +204,8 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 	
 	@:noCompletion private function __findByID (id:Int):DisplayObject {
 		
+		// TODO: Make this global, instead of walking the display list
+		
 		if (__id == id) {
 			
 			return this;
@@ -225,15 +227,17 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 			
 		}
 		
+		var length = stack.length;
+		
 		if (stack.length > 0) {
 			
 			event.__setPhase (EventPhase.CAPTURING_PHASE);
-			stack.reverse ();
+			event.target = this;
+			var i = length - 1;
 			
-			for (object in stack) {
+			while (i >= 0) {
 				
-				event.currentTarget = object;
-				object.__dispatchEvent (event);
+				stack[i].__dispatchEvent (event);
 				
 				if (event.__getIsCancelled ()) {
 					
@@ -241,12 +245,13 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 					
 				}
 				
+				i--;
+				
 			}
 			
 		}
-		
+			
 		event.__setPhase (EventPhase.AT_TARGET);
-		event.currentTarget = this;
 		__dispatchEvent (event);
 		
 		if (event.__getIsCancelled ()) {
@@ -258,12 +263,10 @@ class DisplayObject extends EventDispatcher implements IBitmapDrawable {
 		if (event.bubbles) {
 			
 			event.__setPhase (EventPhase.BUBBLING_PHASE);
-			stack.reverse ();
 			
-			for (object in stack) {
+			for (i in 0...length) {
 				
-				event.currentTarget = object;
-				object.__dispatchEvent (event);
+				stack[i].__dispatchEvent (event);
 				
 				if (event.__getIsCancelled ()) {
 					
