@@ -52,9 +52,7 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public function iterator<T> ():Iterator<T> {
 		
-		// TODO: Limit if allocated more than actual length?
-
-		return this.data.toArray ().iterator ();
+		return new VectorDataIterator<T> (this);
 		
 	}
 	
@@ -380,11 +378,11 @@ abstract Vector<T>(VectorData<T>) {
 				this.data = data;
 
 			}
-
+			
 			this.length = value;
-
+			
 		}
-
+		
 		return value;
 		
 	}
@@ -419,6 +417,38 @@ class VectorData<T> {
 		
 		length = 0;
 		
+	}
+
+
+}
+
+
+class VectorDataIterator<T> {
+
+
+	private var index:Int;
+	private var vectorData:VectorData<T>;
+
+
+	public function new (data:VectorData<T>) {
+		
+		index = 0;
+		vectorData = data;
+
+	}
+
+
+	public function hasNext ():Bool {
+		
+		return index < vectorData.length;
+
+	}
+
+
+	public function next ():T {
+		
+		return vectorData.data[index++];
+
 	}
 
 
