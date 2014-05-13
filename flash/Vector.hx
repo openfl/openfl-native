@@ -1,9 +1,10 @@
-// Need to temporarily use old implementation for C++, since the abstract class
-// is causing runtime errors :(
-
-#if !cpp
-
 package flash;
+
+
+// Haxe abstracts resolve to Dynamic types, which are slower on C++
+// ...by using Array directly, instead of haxe.ds.Vector, we can eliminate
+// some of this performance overhead, but not completely. Should probably
+// switch to the haxe.ds.Vector type for every target when this is resolved
 
 
 abstract Vector<T>(VectorData<T>) {
@@ -16,7 +17,11 @@ abstract Vector<T>(VectorData<T>) {
 	public function new (?length:Int = 0, ?fixed:Bool = false):Void {
 		
 		this = new VectorData<T> ();
+		#if cpp
+		this.data = untyped (new Array<T>()).__SetSizeExact(length);
+		#else
 		this.data = new haxe.ds.Vector<T> (length);
+		#end
 		this.length = length;
 		this.fixed = fixed;
 		
@@ -28,15 +33,16 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = (a != null) ? this.length + a.length : this.length;
 		vectorData.fixed = false;
+
+		#if cpp
+		vectorData.data = this.data.slice (0, this.length).concat (a.data);
+		#else
 		vectorData.data = new haxe.ds.Vector<T> (vectorData.length);
-
 		haxe.ds.Vector.blit (this.data, 0, vectorData.data, 0, this.length);
-
 		if (a != null) {
-			
 			haxe.ds.Vector.blit (a.data, 0, vectorData.data, this.length, a.length);
-			
 		}
+		#end
 
 		return cast vectorData;
 		
@@ -48,8 +54,12 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = length;
 		vectorData.fixed = fixed;
+		#if cpp
+		vectorData.data = this.data.copy ();
+		#else
 		vectorData.data = new haxe.ds.Vector<T> (length);
 		haxe.ds.Vector.blit (this.data, 0, vectorData.data, 0, this.length);
+		#end
 		return cast vectorData;
 		
 	}
@@ -104,9 +114,13 @@ abstract Vector<T>(VectorData<T>) {
 
 			if (this.data.length < this.length) {
 				
+				#if cpp
+				untyped (this.data).__SetSizeExact (this.data.length + 10);
+				#else
 				var data = new haxe.ds.Vector<T> (this.data.length + 10);
 				haxe.ds.Vector.blit (this.data, 0, data, 0, this.data.length);
 				this.data = data;
+				#end
 
 			}
 
@@ -121,16 +135,17 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public function reverse ():Void {
 		
+		#if cpp
+		untyped (this.data).__SetSizeExact (this.length);
+		this.data.reverse ();
+		#else
 		var data = new haxe.ds.Vector<T> (this.length);
-
 		for (i in 0...this.length) {
-			
 			data[this.length - 1 - i] = this.data[i];
-
 		}
-
 		this.data = data;
-		
+		#end
+
 	}
 	
 	
@@ -138,10 +153,15 @@ abstract Vector<T>(VectorData<T>) {
 		
 		if (!this.fixed && this.length > 0) {
 			
-			var value = this.data[0];
 			this.length--;
+
+			#if cpp
+			return this.data.shift ();
+			#else
+			var value = this.data[0];
 			haxe.ds.Vector.blit (this.data, 1, this.data, 0, this.length);
 			return value;
+			#end
 
 		}
 
@@ -158,17 +178,27 @@ abstract Vector<T>(VectorData<T>) {
 
 			if (this.data.length < this.length) {
 				
+				#if cpp
+				untyped (this.data).__SetSizeExact (this.length + 10);
+				#else
 				var data = new haxe.ds.Vector<T> (this.length + 10);
 				haxe.ds.Vector.blit (this.data, 0, data, 1, this.data.length);
 				this.data = data;
+				#end
 
 			} else {
 				
+				#if !cpp
 				haxe.ds.Vector.blit (this.data, 0, this.data, 1, this.length - 1);
+				#end
 
 			}
 
+			#if cpp
+			this.data.unshift (x);
+			#else
 			this.data[0] = x;
+			#end
 
 		}
 		
@@ -186,8 +216,12 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = end - pos;
 		vectorData.fixed = true;
+		#if cpp
+		vectorData.data = this.data.slice (pos, end);
+		#else
 		vectorData.data = new haxe.ds.Vector<T> (length);
 		haxe.ds.Vector.blit (this.data, pos, vectorData.data, 0, length);
+		#end
 		return cast vectorData;
 		
 	}
@@ -195,9 +229,13 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public function sort (f:T -> T -> Int):Void {
 		
+		#if cpp
+		this.data.sort (f);
+		#else
 		var array = this.data.toArray ();
 		array.sort (f);
 		this.data = haxe.ds.Vector.fromArrayCopy (array);
+		#end
 		
 	}
 	
@@ -211,13 +249,20 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = len;
 		vectorData.fixed = false;
+
+		#if cpp
+		vectorData.data = this.data.splice (pos, len);
+		#else
 		vectorData.data = new haxe.ds.Vector<T> (len);
 		haxe.ds.Vector.blit (this.data, pos, vectorData.data, 0, len);
+		#end
 
 		if (len > 0) {
 			
 			this.length -= len;
+			#if !cpp
 			haxe.ds.Vector.blit (this.data, pos + len, this.data, pos, this.length - pos);
+			#end
 
 		}
 
@@ -229,8 +274,11 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public function toString ():String {
 		
-		return "";
-		//return this.toString ();
+		#if cpp
+		return this.data.toString ();
+		#else
+		return this.data.toArray ().toString ();
+		#end
 		
 	}
 	
@@ -273,7 +321,11 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = a.length;
 		vectorData.fixed = true;
+		#if cpp
+		vectorData.data = cast a.copy ();
+		#else
 		vectorData.data = haxe.ds.Vector.fromArrayCopy (a);
+		#end
 		return cast vectorData;
 		
 	}
@@ -286,16 +338,16 @@ abstract Vector<T>(VectorData<T>) {
 	}
 
 
-	@:arrayAccess public inline function arrayAccess (key:Int):T {
+	@:arrayAccess public inline function get (index:Int):Null<T> {
 		
-        return this.data[key];
+        return this.data[index];
 
     }
 
 
-	@:arrayAccess public inline function arrayWrite (key:Int, value:T):T {
+	@:arrayAccess public inline function set (index:Int, value:T):T {
 		
-       return this.data[key] = value;
+		return this.data[index] = value;
 
     }
 
@@ -305,7 +357,11 @@ abstract Vector<T>(VectorData<T>) {
         var vectorData = new VectorData<T> ();
         vectorData.length = value.length;
         vectorData.fixed = true;
+        #if cpp
+        vectorData.data = value.copy ();
+        #else
         vectorData.data = haxe.ds.Vector.fromArrayCopy (value);
+        #end
         return cast vectorData;
 
     }
@@ -313,15 +369,15 @@ abstract Vector<T>(VectorData<T>) {
 
     @:to public inline function toArray<T> ():Array<T> {
 		
+		#if cpp
+		return cast this.data;
+		#else
         var value = new Array ();
-
         for (i in 0...this.data.length) {
-        	
         	value.push (this.data[i]);
-
         }
-
         return value;
+        #end
 
     }
 
@@ -331,7 +387,15 @@ abstract Vector<T>(VectorData<T>) {
 		var vectorData = new VectorData<T> ();
 		vectorData.length = value.length;
 		vectorData.fixed = true;
+		#if cpp
+		vectorData.data = new Array ();
+		untyped (vectorData.data).__SetSize (value.length);
+        for (i in 0...value.length) {
+        	vectorData.data[i] = value[i];
+        }
+        #else
         vectorData.data = value;
+        #end
         return cast vectorData;
 
     }
@@ -339,7 +403,11 @@ abstract Vector<T>(VectorData<T>) {
 
     @:to public inline function toHaxeVector<T> ():haxe.ds.Vector<T> {
 		
+		#if cpp
+		return haxe.ds.Vector.fromArrayCopy (this.data);
+		#else
         return this.data;
+        #end
 
     }
 
@@ -378,9 +446,13 @@ abstract Vector<T>(VectorData<T>) {
 			
 			if (value > this.length) {
 				
+				#if cpp
+				untyped (this.data).__SetSizeExact (value);
+				#else
 				var data = new haxe.ds.Vector<T> (value);
 				haxe.ds.Vector.blit (this.data, 0, data, 0, Std.int (Math.min (this.data.length, value)));
 				this.data = data;
+				#end
 
 			}
 			
@@ -413,7 +485,11 @@ abstract Vector<T>(VectorData<T>) {
 class VectorData<T> {
 
 
+	#if cpp
+	public var data:Array<T>;
+	#else
 	public var data:haxe.ds.Vector<T>;
+	#end
 	public var fixed:Bool;
 	public var length:Int;
 
@@ -458,199 +534,3 @@ class VectorDataIterator<T> {
 
 
 }
-
-#else
-
-package flash;
-
-
-@:arrayAccess abstract Vector<T>(Array<T>) from Array<T> to Array<T> {
-	
-	
-	public var length (get, set):Int;
-	public var fixed (get, set):Bool;
-	
-	
-	public function new (?length:Int, ?fixed:Bool):Void {
-		
-		this = new Array<T> ();
-		
-	}
-	
-	
-	public function concat (?a:Array<T>):Vector<T> {
-		
-		return this.concat (a);
-		
-	}
-	
-	
-	public function copy ():Vector<T> {
-		
-		return this.copy ();
-		
-	}
-	
-	
-	public function iterator<T> ():Iterator<T> {
-		
-		return this.iterator ();
-		
-	}
-	
-	
-	public function join (sep:String):String {
-		
-		return this.join (sep);
-		
-	}
-	
-	
-	public inline function pop ():Null<T> {
-		
-		return this.pop ();
-		
-	}
-	
-	
-	public inline function push (x:T):Int {
-		
-		return this.push (x);
-		
-	}
-	
-	
-	public function reverse ():Void {
-		
-		this.reverse ();
-		
-	}
-	
-	
-	public inline function shift ():Null<T> {
-		
-		return this.shift ();
-		
-	}
-	
-	
-	public inline function unshift (x:T):Void {
-		
-		this.unshift (x);
-		
-	}
-	
-	
-	public function slice (?pos:Int, ?end:Int):Vector<T> {
-		
-		return this.slice (pos, end);
-		
-	}
-	
-	
-	public function sort (f:T -> T -> Int):Void {
-		
-		this.sort (f);
-		
-	}
-	
-	
-	public function splice (pos:Int, len:Int):Vector<T> {
-		
-		return this.splice (pos, len);
-		
-	}
-	
-	
-	public function toString ():String {
-		
-		return this.toString ();
-		
-	}
-	
-	
-	public function indexOf (x:T, ?from:Int = 0):Int {
-		
-		for (i in from...this.length) {
-			
-			if (this[i] == x) {
-				
-				return i;
-				
-			}
-			
-		}
-		
-		return -1;
-		
-	}
-	
-	
-	public function lastIndexOf (x:T, ?from:Int = 0):Int {
-		
-		var i = this.length - 1;
-		
-		while (i >= from) {
-			
-			if (this[i] == x) return i;
-			i--;
-			
-		}
-		
-		return -1;
-		
-	}
-	
-	
-	public inline static function ofArray<T> (a:Array<Dynamic>):Vector<T> {
-		
-		return new Vector<T> ().concat (cast a);
-		
-	}
-	
-	
-	public inline static function convert<T,U> (v:Array<T>):Vector<U> {
-		
-		return cast v;
-		
-	}
-	
-	
-	
-	
-	// Getters & Setters
-	
-	
-	
-	
-	private inline function get_length ():Int {
-		
-		return this.length;
-		
-	}
-	
-	
-	private inline function set_length (value:Int):Int {
-		
-		return value;
-		
-	}
-	
-	
-	private inline function get_fixed ():Bool {
-		
-		return false;
-		
-	}
-	
-	
-	private inline function set_fixed (value:Bool):Bool {
-		
-		return value;
-		
-	}
-	
-	
-}
-
-#end
