@@ -6,6 +6,8 @@ package flash;
 // some of this performance overhead, but not completely. Should probably
 // switch to the haxe.ds.Vector type for every target when this is resolved
 
+#if !cpp
+
 
 abstract Vector<T>(VectorData<T>) {
 	
@@ -90,18 +92,20 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public inline function pop ():Null<T> {
 		
+		var value = null;
+
 		if (!this.fixed) {
 			
 			if (this.length > 0) {
 				
 				this.length--;
-				return this.data[this.length];
+				value = this.data[this.length];
 
 			}
 
 		}
 
-		return null;
+		return value;
 		
 	}
 	
@@ -285,11 +289,14 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public inline function indexOf (x:T, ?from:Int = 0):Int {
 		
+		var value = -1;
+
 		for (i in from...this.length) {
 			
 			if (this.data[i] == x) {
 				
-				return i;
+				value = i;
+				break;
 				
 			}
 			
@@ -302,16 +309,23 @@ abstract Vector<T>(VectorData<T>) {
 	
 	public inline function lastIndexOf (x:T, ?from:Int = 0):Int {
 		
+		var value = -1;
 		var i = this.length - 1;
 		
 		while (i >= from) {
 			
-			if (this.data[i] == x) return i;
+			if (this.data[i] == x) {
+				
+				value = i;
+				break;
+
+			}
+
 			i--;
 			
 		}
 		
-		return -1;
+		return value;
 		
 	}
 	
@@ -534,3 +548,198 @@ class VectorDataIterator<T> {
 
 
 }
+
+
+#else
+
+
+using cpp.NativeArray;
+
+
+@:arrayAccess abstract Vector<T>(Array<T>) from Array<T> to Array<T> {
+	
+	
+	public var length (get, set):Int;
+	public var fixed (get, set):Bool;
+	
+	
+	public inline function new (?length:Int, ?fixed:Bool):Void {
+		
+		this = untyped (new Array<T> ()).__SetSizeExact (length);
+		
+	}
+	
+	
+	public inline function concat (?a:Array<T>):Vector<T> {
+		
+		return this.concat (a);
+		
+	}
+	
+	
+	public inline function copy ():Vector<T> {
+		
+		return this.copy ();
+		
+	}
+	
+	
+	public inline function iterator<T> ():Iterator<T> {
+		
+		return this.iterator ();
+		
+	}
+	
+	
+	public inline function join (sep:String):String {
+		
+		return this.join (sep);
+		
+	}
+	
+	
+	public inline function pop ():Null<T> {
+		
+		return this.pop ();
+		
+	}
+	
+	
+	public inline function push (x:T):Int {
+		
+		return this.push (x);
+		
+	}
+	
+	
+	public inline function reverse ():Void {
+		
+		this.reverse ();
+		
+	}
+	
+	
+	public inline function shift ():Null<T> {
+		
+		return this.shift ();
+		
+	}
+	
+	
+	public inline function unshift (x:T):Void {
+		
+		this.unshift (x);
+		
+	}
+	
+	
+	public inline function slice (?pos:Int, ?end:Int):Vector<T> {
+		
+		return this.slice (pos, end);
+		
+	}
+	
+	
+	public inline function sort (f:T -> T -> Int):Void {
+		
+		this.sort (f);
+		
+	}
+	
+	
+	public inline function splice (pos:Int, len:Int):Vector<T> {
+		
+		return this.splice (pos, len);
+		
+	}
+	
+	
+	public inline function toString ():String {
+		
+		return this.toString ();
+		
+	}
+	
+	
+	public inline function indexOf (x:T, ?from:Int = 0):Int {
+		
+		return this.indexOf (x, from);
+		
+	}
+	
+	
+	public inline function lastIndexOf (x:T, ?from:Int):Int {
+		
+		return this.lastIndexOf (x, from);
+		
+	}
+
+
+	@:arrayAccess public inline function get (index:Int):Null<T> {
+		
+        return this.unsafeGet (index);
+
+    }
+
+
+	@:arrayAccess public inline function set (index:Int, value:T):T {
+		
+		return this.unsafeSet (index, value);
+
+    }
+	
+	
+	public inline static function ofArray<T> (a:Array<Dynamic>):Vector<T> {
+		
+		return new Vector<T> ().concat (cast a);
+		
+	}
+	
+	
+	public inline static function convert<T,U> (v:Array<T>):Vector<U> {
+		
+		return cast v;
+		
+	}
+	
+	
+	
+	
+	// Getters & Setters
+	
+	
+	
+	
+	private inline function get_length ():Int {
+		
+		return this.length;
+		
+	}
+	
+	
+	private inline function set_length (value:Int):Int {
+		
+		untyped (this).__SetSizeExact (value);
+		return value;
+		
+	}
+	
+	
+	private inline function get_fixed ():Bool {
+		
+		return false;
+		
+	}
+	
+	
+	private inline function set_fixed (value:Bool):Bool {
+		
+		return value;
+		
+	}
+	
+	
+}
+
+
+#end
