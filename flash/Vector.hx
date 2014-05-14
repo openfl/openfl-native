@@ -705,22 +705,14 @@ using cpp.NativeArray;
 
 	@:from static public inline function fromHaxeVector<T> (value:haxe.ds.Vector<T>):Vector<T> {
 		
-		var data = untyped (new Array<T> ()).__SetSizeExact (value.length);
-		
-		for (i in 0...value.length) {
-			
-			data[i] = value[i];
-			
-        }
-		
-        return cast data;
+		return cast value;
 		
     }
 
 
     @:to public inline function toHaxeVector<T> ():haxe.ds.Vector<T> {
 		
-		return haxe.ds.Vector.fromArrayCopy (this);
+		return cast this;
 
     }
 	
