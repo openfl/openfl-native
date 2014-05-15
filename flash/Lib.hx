@@ -189,6 +189,8 @@ class Lib {
 			return cpp.Lib.load (__moduleNames.get (library), method, args);
 			#elseif neko
 			return neko.Lib.load (__moduleNames.get (library), method, args);
+			#else
+			return null;
 			#end
 			
 		}
@@ -329,7 +331,7 @@ class Lib {
 			#elseif (neko)
 			var result = neko.Lib.load (name, func, args);
 			#else
-			return null;
+			var result = null;
 			#end
 			
 			if (result != null) {

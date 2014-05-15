@@ -11,6 +11,9 @@ import flash.Lib;
 #if neko
 import neko.vm.Thread;
 import neko.vm.Mutex;
+#elseif java
+import java.vm.Thread;
+import java.vm.Mutex;
 #else
 import cpp.vm.Thread;
 import cpp.vm.Mutex;

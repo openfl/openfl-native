@@ -6,17 +6,9 @@ import flash.utils.CompressionAlgorithm;
 import flash.Lib;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
+import haxe.zip.Compress;
+import haxe.zip.Uncompress;
 import openfl.utils.IMemoryRange;
-
-#if neko
-import neko.zip.Compress;
-import neko.zip.Uncompress;
-import neko.zip.Flush;
-#else
-import cpp.zip.Compress;
-import cpp.zip.Uncompress;
-import cpp.zip.Flush;
-#end
 
 
 @:autoBuild(openfl.Assets.embedFile())
@@ -46,6 +38,10 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 			allocated = size < 16 ? 16 : size;
 			var bytes = untyped __dollar__smake (allocated);
 			super (size, bytes);
+			
+			#elseif java
+			
+			super (size, new BytesData (size));
 			
 			#else
 			
@@ -285,6 +281,12 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var bytes = new Bytes (8, untyped __dollar__ssub (b, position, 8));
 		#elseif cpp
 		var bytes = new Bytes (8, b.slice (position, position + 8));
+		#elseif java
+		var data = new BytesData (8);
+		for (i in 0...8) {
+			data[i] = b[position + i];
+		}
+		var bytes = new Bytes (8, data);
 		#end
 		
 		position += 8;
@@ -316,6 +318,12 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var bytes = new Bytes (4, untyped __dollar__ssub (b, position, 4));
 		#elseif cpp
 		var bytes = new Bytes (4, b.slice (position, position + 4));
+		#elseif java
+		var data = new BytesData (4);
+		for (i in 0...4) {
+			data[i] = b[position + i];
+		}
+		var bytes = new Bytes (4, data);
 		#end
 		
 		position += 4;
@@ -416,6 +424,10 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		var result = "";
 		untyped __global__.__hxcpp_string_of_bytes (b, result, p, length);
 		return result;
+		#elseif java
+		try
+			return new String(b, p, length, "UTF-8")
+		catch (e:Dynamic) throw e;
 		#end
 		
 	}
@@ -530,8 +542,10 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		
 		#if cpp
 		untyped b.__unsafe_set (position++, byte);
-		#else
+		#elseif neko
 		untyped __dollar__sset (b, position++, byte & 0xff);
+		#else
+		untyped b[position++] = byte;
 		#end
 		
 	}
@@ -551,10 +565,12 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		
 		ensureElem (position, true);
 		
-		#if cpp
+		#if neko
+		untyped __dollar__sset (b, position++, value & 0xff);
+		#elseif cpp
 		b[position++] = untyped value;
 		#else
-		untyped __dollar__sset (b, position++, value & 0xff);
+		b[position++] = value;
 		#end
 		
 	}
@@ -575,7 +591,7 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 		
 		#if neko
 		var bytes = new Bytes (8, _double_bytes (x, bigEndian));
-		#elseif cpp
+		#else
 		var bytes = Bytes.ofData (_double_bytes (x, bigEndian));
 		#end
 		
@@ -597,10 +613,10 @@ class ByteArray extends Bytes implements ArrayAccess<Int> implements IDataInput 
 	
 	public function writeFloat (x:Float):Void {
 		
-		#if neko
-		var bytes = new Bytes (4, _float_bytes (x, bigEndian));
-		#elseif cpp
+		#if cpp
 		var bytes = Bytes.ofData (_float_bytes (x, bigEndian));
+		#else
+		var bytes = new Bytes (4, _float_bytes (x, bigEndian));
 		#end
 		
 		writeBytes (bytes, 0, 0);

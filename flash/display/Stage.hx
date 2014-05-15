@@ -989,7 +989,9 @@ class Stage extends DisplayObjectContainer {
 			
 		}
 		
+		#if !java
 		Timer.__checkTimers ();
+		#end
 		SoundChannel.__pollComplete ();
 		URLLoader.__pollData ();
 		__checkRender ();
@@ -1116,6 +1118,9 @@ class Stage extends DisplayObjectContainer {
 	
 	@:noCompletion public function __updateNextWake ():Float {
 		
+		#if java
+		return 0;
+		#else
 		var nextWake = Timer.__nextWake (315000000.0);
 		
 		if (nextWake > 0.001 && SoundChannel.__dynamicSoundCount > 0) {
@@ -1133,6 +1138,7 @@ class Stage extends DisplayObjectContainer {
 		nextWake = __nextFrameDue (nextWake);
 		lime_stage_set_next_wake (__handle, nextWake);
 		return nextWake;
+		#end
 		
 	}
 	

@@ -4,6 +4,7 @@ package flash;
 import flash.utils.ByteArray;
 import flash.Lib;
 import haxe.io.BytesData;
+import haxe.io.Bytes;
 
 
 class Memory {
@@ -11,6 +12,8 @@ class Memory {
 	
 	#if neko
 	private static var b:BytesData;
+	#elseif java
+	private static var b:Bytes;
 	#else
 	private static var gcRef:ByteArray;
 	#end
@@ -29,6 +32,8 @@ class Memory {
 			b = untyped bytes.getData ();
 			
 		}
+		#elseif java
+		b = bytes;
 		#else
 		gcRef = bytes;
 		if (bytes == null) {
@@ -108,6 +113,82 @@ class Memory {
 	static inline public function setFloat (addr:Int, v:Float):Void {
 		
 		untyped __dollar__sblit (b, addr, _float_bytes (v, false), 0, 4);
+		
+	}
+	
+	
+	static public function setI16 (addr:Int, v:Int):Void {
+		
+		setByte (addr++, v & 0xff);
+		setByte (addr++, (v >> 8) & 0xff);
+		
+	}
+	
+	
+	static public function setI32 (addr:Int, v:Int):Void {
+		
+		setByte (addr++, v & 0xff);
+		setByte (addr++, (v >> 8) & 0xff);
+		setByte (addr++, (v >> 16) & 0xff);
+		setByte (addr++, (v >> 24));
+		
+	}
+	
+	
+	#elseif java
+	
+	
+	static inline public function getByte (addr:Int):Int {
+		
+		return b.get (addr);
+		
+	}
+	
+	static inline public function getDouble (addr:Int):Float {
+		
+		return b.getDouble (addr);
+		
+	}
+	
+	
+	static inline public function getFloat (addr:Int):Float {
+		
+		return b.getFloat (addr);
+		
+	}
+	
+	
+	static public function getI32 (addr:Int):Int {
+		
+		return getByte (addr++) | (getByte (addr++) << 8) | (getByte (addr++) << 16) | (getByte (addr) << 24);
+		
+	}
+	
+	
+	static inline public function getUI16 (addr:Int):Int {
+		
+		return getByte (addr++) | (getByte (addr++) << 8);
+		
+	}
+	
+	
+	static inline public function setByte (addr:Int, v:Int):Void {
+		
+		b.set (addr, v);
+		
+	}
+	
+	
+	static inline public function setDouble (addr:Int, v:Float):Void {
+		
+		b.setDouble (addr, v);
+		
+	}
+	
+	
+	static inline public function setFloat (addr:Int, v:Float):Void {
+		
+		b.setFloat (addr, v);
 		
 	}
 	
