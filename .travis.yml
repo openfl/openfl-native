@@ -33,3 +33,6 @@ script:
   - haxelib run lime rebuild linux,tools
   #- haxelib run lime test ~/openfl-validation linux
   #- haxelib run lime test ~/openfl-validation neko
+
+notifications:
+  slack: openfl:ba3HbgtZflW8TNcJEQ1B4tAY
