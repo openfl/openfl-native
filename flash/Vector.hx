@@ -744,7 +744,9 @@ class VectorDataIterator<T> {
 #else
 
 
+#if (haxe_ver > 3.100)
 using cpp.NativeArray;
+#end
 
 
 @:arrayAccess abstract Vector<T>(Array<T>) from Array<T> to Array<T> {
@@ -864,20 +866,28 @@ using cpp.NativeArray;
 		return this.lastIndexOf (x, from);
 		
 	}
-
-
+	
+	
 	@:arrayAccess public inline function get (index:Int):Null<T> {
 		
-        return this.unsafeGet (index);
-
-    }
-
-
+		#if (haxe_ver > 3.100)
+		return this.unsafeGet (index);
+		#else
+		return this[index];
+		#end
+		
+	}
+	
+	
 	@:arrayAccess public inline function set (index:Int, value:T):T {
 		
+		#if (haxe_ver > 3.100)
 		return this.unsafeSet (index, value);
-
-    }
+		#else
+		return this[index] = value;
+		#end
+		
+	}
 	
 	
 	public inline static function ofArray<T> (a:Array<Dynamic>):Vector<T> {
@@ -892,20 +902,20 @@ using cpp.NativeArray;
 		return cast v;
 		
 	}
-
-
+	
+	
 	@:from static public inline function fromHaxeVector<T> (value:haxe.ds.Vector<T>):Vector<T> {
 		
 		return cast value;
 		
-    }
-
-
-    @:to public inline function toHaxeVector<T> ():haxe.ds.Vector<T> {
+	}
+	
+	
+	@:to public inline function toHaxeVector<T> ():haxe.ds.Vector<T> {
 		
 		return cast this;
-
-    }
+		
+	}
 	
 	
 	
