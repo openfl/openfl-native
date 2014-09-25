@@ -1,3 +1,5 @@
+_openfl-native was merged into the [main openfl repository](https://github.com/openfl/openfl) in version 2.0 so this repository is deprecated_
+
 openfl-native
 ============
 [![Build Status](https://travis-ci.org/openfl/openfl-native.png)](https://travis-ci.org/openfl/openfl-native)
