@@ -8,7 +8,7 @@ openfl-native
 Install
 -------
 
-http://www.openfl.org/developer/documentation/get-started
+http://www.openfl.org/documentation/
 
 
 Development Build
